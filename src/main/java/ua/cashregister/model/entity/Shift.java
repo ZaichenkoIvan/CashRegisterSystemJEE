@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Shift {
-    private final int id;
+    private final Long id;
     private final Timestamp startTime;
     private final Timestamp endTime;
     private final User cashier;
@@ -22,7 +22,7 @@ public class Shift {
         return new ShiftBuilder();
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -71,7 +71,7 @@ public class Shift {
     }
 
     public static final class ShiftBuilder {
-        private int id;
+        private Long id;
         private Timestamp startTime;
         private Timestamp endTime;
         private User cashier;
@@ -84,7 +84,7 @@ public class Shift {
             return new ShiftBuilder();
         }
 
-        public ShiftBuilder withId(int id) {
+        public ShiftBuilder withId(Long id) {
             this.id = id;
             return this;
         }

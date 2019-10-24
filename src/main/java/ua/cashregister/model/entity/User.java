@@ -3,7 +3,7 @@ package ua.cashregister.model.entity;
 import java.util.Objects;
 
 public class User {
-    private final int id;
+    private final Long id;
     private final String surname;
     private final String email;
     private final String password;
@@ -21,7 +21,7 @@ public class User {
         return new UserBuilder();
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -71,7 +71,7 @@ public class User {
     }
 
     public static final class UserBuilder {
-        private int id;
+        private Long id;
         private String surname;
         private String email;
         private String password;
@@ -84,7 +84,7 @@ public class User {
             return new UserBuilder();
         }
 
-        public UserBuilder withId(int id) {
+        public UserBuilder withId(Long id) {
             this.id = id;
             return this;
         }

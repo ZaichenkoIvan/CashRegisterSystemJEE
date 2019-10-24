@@ -1,6 +1,7 @@
 package ua.cashregister.model.entity;
 
 public class Product {
+    private final Long id;
     private final int code;
     private final String name;
     private final long price;
@@ -10,7 +11,8 @@ public class Product {
     private final long weight;
     private final User manager;
 
-    public Product(ProductBuilder builder) {
+    private Product(ProductBuilder builder) {
+        this.id = builder.id;
         this.code = builder.code;
         this.name = builder.name;
         this.price = builder.price;
@@ -23,6 +25,42 @@ public class Product {
 
     public static ProductBuilder builder() {
         return new ProductBuilder();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public long getPrice() {
+        return price;
+    }
+
+    public boolean isSoldByWeight() {
+        return soldByWeight;
+    }
+
+    public Check getCheck() {
+        return check;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public long getWeight() {
+        return weight;
+    }
+
+    public User getManager() {
+        return manager;
     }
 
     @Override
@@ -38,6 +76,7 @@ public class Product {
     }
 
     public static final class ProductBuilder {
+        private Long id;
         private int code;
         private String name;
         private long price;
@@ -52,6 +91,11 @@ public class Product {
 
         public static ProductBuilder aProduct() {
             return new ProductBuilder();
+        }
+
+        public ProductBuilder withId(Long id) {
+            this.id = id;
+            return this;
         }
 
         public ProductBuilder withCode(int code) {

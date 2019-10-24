@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Check {
-    private final int id;
+    private final Long id;
     private final Timestamp createTime;
     private final User cashier;
     private final long totalPrice;
@@ -25,7 +25,7 @@ public class Check {
         return new CheckBuilder();
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -81,7 +81,7 @@ public class Check {
 
 
     public static final class CheckBuilder {
-        private int id;
+        private Long id;
         private Timestamp createTime;
         private User cashier;
         private long totalPrice;
@@ -95,7 +95,7 @@ public class Check {
             return new CheckBuilder();
         }
 
-        public CheckBuilder withId(int id) {
+        public CheckBuilder withId(Long id) {
             this.id = id;
             return this;
         }
