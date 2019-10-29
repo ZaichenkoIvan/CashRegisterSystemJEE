@@ -1,19 +1,12 @@
 package ua.cashregister.model.dao;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
 public interface CrudDao<E, ID> {
-    E save(E entity);
 
-    Optional<E> findById(ID id);
+    boolean addToDB(E entity);
 
-    List<E> findAll();
+    E findById(ID id);
 
-    void update(E entity);
+    boolean updateInDB(E user);
 
-    void deleteById(ID id);
-
-    void deleteAllByIds(Set<ID> ids);
+    boolean deleteFromDB(E user);
 }

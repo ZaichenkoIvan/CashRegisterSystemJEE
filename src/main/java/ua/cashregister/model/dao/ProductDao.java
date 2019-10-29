@@ -1,6 +1,18 @@
 package ua.cashregister.model.dao;
 
-import ua.cashregister.model.entity.Product;
+import ua.cashregister.model.domain.Product;
 
-public interface ProductDao extends CrudDao<Product, Long> {
+import java.util.List;
+
+public interface ProductDao extends CrudDao<Product, Integer> {
+
+    Integer calculateProductNumber();
+
+    List<Product> findAllProductsInDB();
+
+    List<Product> findProductsInDB(Integer first, Integer offset);
+
+    Product findProductByCode(String code);
+
+    boolean deleteProductFromDB(String code);
 }
