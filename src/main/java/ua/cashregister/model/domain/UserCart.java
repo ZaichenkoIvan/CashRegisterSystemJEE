@@ -6,7 +6,6 @@ import java.util.Map;
 public class UserCart {
 
     private final String userName;
-    private String orderNotes;
     private Map<String, Double> products;
     private Double totalCost = 0d;
 
@@ -17,10 +16,6 @@ public class UserCart {
 
     public String getUserName() {
         return userName;
-    }
-
-    public String getOrderNotes() {
-        return orderNotes;
     }
 
     public Map<String, Double> getProducts() {
@@ -35,10 +30,6 @@ public class UserCart {
         return products.size();
     }
 
-    public void setOrderNotes(String orderNotes) {
-        this.orderNotes = orderNotes;
-    }
-
     public void setProducts(Map<String, Double> products) {
         this.products = products;
     }
@@ -51,8 +42,7 @@ public class UserCart {
         if (products.containsKey(productCode)) {
             Double newQuantity = products.get(productCode) + quantity;
             products.replace(productCode, newQuantity);
-        }
-        else
+        } else
             products.put(productCode, quantity);
     }
 
@@ -68,7 +58,6 @@ public class UserCart {
     public String toString() {
         return "UserCart{" +
                 "userName='" + userName + '\'' +
-                ", orderNotes='" + orderNotes + '\'' +
                 ", products=" + products +
                 '}';
     }

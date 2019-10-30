@@ -11,7 +11,7 @@ public class Invoice implements Serializable {
 
     private Integer invoiceId;
     private Long invoiceCode;
-    private String userName;
+    private Integer userId;
     private Boolean isPaid;
     private InvoiceStatus status;
     private Timestamp date;
@@ -20,8 +20,20 @@ public class Invoice implements Serializable {
     private Map<String, Product> products;
 
 
-    public Invoice() {
-        products = new HashMap<>();
+    private Invoice(InvoiceBuilder builder) {
+        this.invoiceId = builder.invoiceId;
+        this.invoiceCode = builder.invoiceCode;
+        this.userId = builder.userId;
+        this.isPaid = builder.isPaid;
+        this.status = builder.status;
+        this.date = builder.date;
+        this.invoiceNotes = builder.invoiceNotes;
+        this.cost = builder.cost;
+        this.products = builder.products;
+    }
+
+    public static InvoiceBuilder builder() {
+        return new InvoiceBuilder();
     }
 
     public Integer getInvoiceId() {
@@ -32,8 +44,8 @@ public class Invoice implements Serializable {
         return invoiceCode;
     }
 
-    public String getUserName() {
-        return userName;
+    public Integer getUserId() {
+        return userId;
     }
 
     public Boolean getPaid() {
@@ -60,43 +72,6 @@ public class Invoice implements Serializable {
         return cost;
     }
 
-    public void setInvoiceId(Integer invoiceId) {
-        this.invoiceId = invoiceId;
-    }
-
-    public void setInvoiceCode(Long invoiceCode) {
-        this.invoiceCode = invoiceCode;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setPaid(Boolean paid) {
-        isPaid = paid;
-    }
-
-    public void setStatus(InvoiceStatus status) {
-        this.status = status;
-    }
-
-    public void setDate(Timestamp date) {
-        this.date = date;
-    }
-
-    public void setInvoiceNotes(String invoiceNotes) {
-        this.invoiceNotes = invoiceNotes;
-    }
-
-    public void setCost(Double cost) {
-        this.cost = cost;
-    }
-
-    public void setProducts(Map<String, Product> products) {
-        this.products = products;
-    }
-
-    @Deprecated
     public void addProduct(String productCode, Product product) {
         products.put(productCode, product);
     }
@@ -110,7 +85,7 @@ public class Invoice implements Serializable {
         int num = 0;
         StringBuilder sb = new StringBuilder(String.format("%n%-15s", "Order Id =")).append(invoiceId);
         sb.append(String.format("%n%-15s", "Order code:")).append(invoiceCode);
-        sb.append(String.format("%n%-15s", "User name:")).append(userName);
+        sb.append(String.format("%n%-15s", "User id:")).append(userId);
         sb.append(String.format("%n%-15s", "Is payd:")).append(isPaid);
         sb.append(String.format("%n%-15s", "Order status:")).append(status);
         sb.append(String.format("%n%-15s", "Order date:")).append(date);
@@ -118,14 +93,78 @@ public class Invoice implements Serializable {
         sb.append(String.format("%n%12s", "Invoice:"));
         sb.append("\n************************************************************************************************");
         for (Map.Entry<String, Product> entry : products.entrySet()) {
-            num ++;
+            num++;
             String productCode = entry.getKey();
             Product product = entry.getValue();
-            sb.append(String.format("%n%-4s",num)).append(String.format("%-8s", product.getCode()));
-            sb.append(String.format("%-6s", product.getUomEn()));
+            sb.append(String.format("%n%-4s", num)).append(String.format("%-8s", product.getCode()));
+            sb.append(String.format("%-6s", product.getName()));
         }
         sb.append("\n************************************************************************************************");
         sb.append("\n------------------------------------------------------------------------------------------------");
         return sb.toString();
+    }
+
+    public static final class InvoiceBuilder {
+        private Integer invoiceId;
+        private Long invoiceCode;
+        private Integer userId;
+        private Boolean isPaid;
+        private InvoiceStatus status;
+        private Timestamp date;
+        private String invoiceNotes;
+        private Double cost = 0d;
+        private Map<String, Product> products;
+
+        private InvoiceBuilder() {
+        }
+
+        public InvoiceBuilder withInvoiceId(Integer invoiceId) {
+            this.invoiceId = invoiceId;
+            return this;
+        }
+
+        public InvoiceBuilder withInvoiceCode(Long invoiceCode) {
+            this.invoiceCode = invoiceCode;
+            return this;
+        }
+
+        public InvoiceBuilder withUserId(Integer userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public InvoiceBuilder withIsPaid(Boolean isPaid) {
+            this.isPaid = isPaid;
+            return this;
+        }
+
+        public InvoiceBuilder withStatus(InvoiceStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public InvoiceBuilder withDate(Timestamp date) {
+            this.date = date;
+            return this;
+        }
+
+        public InvoiceBuilder withInvoiceNotes(String invoiceNotes) {
+            this.invoiceNotes = invoiceNotes;
+            return this;
+        }
+
+        public InvoiceBuilder withCost(Double cost) {
+            this.cost = cost;
+            return this;
+        }
+
+        public InvoiceBuilder withProducts(Map<String, Product> products) {
+            this.products = new HashMap<>(products);
+            return this;
+        }
+
+        public Invoice build() {
+            return new Invoice(this);
+        }
     }
 }

@@ -6,21 +6,24 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-    private Integer id;
-    private String name;
-    private String password;
-    private String phoneNumber;
-    private String email;
-    private String address;
-    private UserRole userRole;
-    private String notes;
+    private final Integer id;
+    private final String name;
+    private final String password;
+    private final String phoneNumber;
+    private final String email;
+    private final UserRole userRole;
 
-    public User() {
+    private User(UserBuilder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.password = builder.password;
+        this.phoneNumber = builder.phoneNumber;
+        this.email = builder.email;
+        this.userRole = builder.userRole;
     }
 
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
+    public static UserBuilder builder() {
+        return new UserBuilder();
     }
 
     public Integer getId() {
@@ -43,48 +46,8 @@ public class User implements Serializable {
         return email;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
     public UserRole getUserRole() {
         return userRole;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     @Override
@@ -107,14 +70,12 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return  "\nUser ID = " + id +
+        return "\nUser ID = " + id +
                 "\nName: " + name +
                 "\nPassword: " + password +
                 "\nPhone: " + phoneNumber +
                 "\ne-mail: " + email +
-                "\nAddress: " + address +
                 "\nRole: " + userRole +
-                "\nNotes: " + notes +
                 "\n---------------------------------------------------------------------------------------------------";
     }
 
@@ -124,15 +85,9 @@ public class User implements Serializable {
         private String password;
         private String phoneNumber;
         private String email;
-        private String address;
         private UserRole userRole;
-        private String notes;
 
         private UserBuilder() {
-        }
-
-        public static UserBuilder anUser() {
-            return new UserBuilder();
         }
 
         public UserBuilder withId(Integer id) {
@@ -160,32 +115,13 @@ public class User implements Serializable {
             return this;
         }
 
-        public UserBuilder withAddress(String address) {
-            this.address = address;
-            return this;
-        }
-
         public UserBuilder withUserRole(UserRole userRole) {
             this.userRole = userRole;
             return this;
         }
 
-        public UserBuilder withNotes(String notes) {
-            this.notes = notes;
-            return this;
-        }
-
         public User build() {
-            User user = new User();
-            user.setId(id);
-            user.setName(name);
-            user.setPassword(password);
-            user.setPhoneNumber(phoneNumber);
-            user.setEmail(email);
-            user.setAddress(address);
-            user.setUserRole(userRole);
-            user.setNotes(notes);
-            return user;
+            return new User(this);
         }
     }
 }
