@@ -5,9 +5,8 @@ import ua.cashregister.model.dao.Mapper;
 import ua.cashregister.model.dao.UserDao;
 import ua.cashregister.model.dao.exception.DataNotFoundRuntimeException;
 import ua.cashregister.model.domain.User;
-import ua.cashregister.model.domain.UserRole;
+import ua.cashregister.model.domain.enums.UserRole;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,6 +46,7 @@ public class UserDaoImpl extends GenericAbstractDao<User> implements UserDao {
         } catch (SQLException e) {
             throw new DataNotFoundRuntimeException();
         }
+        return null;
     };
 
     private Mapper<ResultSet, User> mapperFromDB = (ResultSet resultSet, User user) -> {
@@ -62,18 +62,14 @@ public class UserDaoImpl extends GenericAbstractDao<User> implements UserDao {
         } catch (SQLException e) {
             throw new DataNotFoundRuntimeException();
         }
+        return null;
     };
 
-    public UserDaoImpl(Connection connection) {
-        this.connection = connection;
+    public UserDaoImpl() {
         super.setMapperToDB(mapperToDB);
         super.setMapperFromDB(mapperFromDB);
     }
 
-    @Override
-    public Integer calculateUsersNumber() {
-        return calculateRowCounts("users");
-    }
 
     @Override
     public List<User> findAllUsersInDB() {
@@ -81,8 +77,8 @@ public class UserDaoImpl extends GenericAbstractDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> findUsers(Integer first, Integer offset) {
-        return findAllFromTo(User.class, first, offset, SQL_select_base);
+    public List<User> findUsers() {
+        return findAllFromTo(User.class, SQL_select_base);
     }
 
     @Override

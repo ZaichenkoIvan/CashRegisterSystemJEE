@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class UserCart {
 
-    private String userName;
+    private final String userName;
     private String orderNotes;
     private Map<String, Double> products;
     private Double totalCost = 0d;
@@ -33,10 +33,6 @@ public class UserCart {
 
     public Integer getSize() {
         return products.size();
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public void setOrderNotes(String orderNotes) {

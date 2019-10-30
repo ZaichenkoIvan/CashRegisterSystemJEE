@@ -1,5 +1,7 @@
 package ua.cashregister.model.domain;
 
+import ua.cashregister.model.domain.enums.UserRole;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -114,5 +116,76 @@ public class User implements Serializable {
                 "\nRole: " + userRole +
                 "\nNotes: " + notes +
                 "\n---------------------------------------------------------------------------------------------------";
+    }
+
+    public static final class UserBuilder {
+        private Integer id;
+        private String name;
+        private String password;
+        private String phoneNumber;
+        private String email;
+        private String address;
+        private UserRole userRole;
+        private String notes;
+
+        private UserBuilder() {
+        }
+
+        public static UserBuilder anUser() {
+            return new UserBuilder();
+        }
+
+        public UserBuilder withId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public UserBuilder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserBuilder withPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public UserBuilder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserBuilder withAddress(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public UserBuilder withUserRole(UserRole userRole) {
+            this.userRole = userRole;
+            return this;
+        }
+
+        public UserBuilder withNotes(String notes) {
+            this.notes = notes;
+            return this;
+        }
+
+        public User build() {
+            User user = new User();
+            user.setId(id);
+            user.setName(name);
+            user.setPassword(password);
+            user.setPhoneNumber(phoneNumber);
+            user.setEmail(email);
+            user.setAddress(address);
+            user.setUserRole(userRole);
+            user.setNotes(notes);
+            return user;
+        }
     }
 }

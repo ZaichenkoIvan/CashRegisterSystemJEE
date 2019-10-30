@@ -1,4 +1,4 @@
-package ua.cashregister.model.domain;
+package ua.cashregister.model.domain.enums;
 
 public enum UserRole {
     USER,

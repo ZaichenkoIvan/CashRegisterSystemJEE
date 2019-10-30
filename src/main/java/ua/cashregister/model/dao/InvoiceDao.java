@@ -6,11 +6,9 @@ import java.util.List;
 
 
 public interface InvoiceDao extends CrudDao<Invoice, Integer> {
-    Integer calculateInvoiceNumber();
-
     List<Invoice> findAllInvoices();
 
-    List<Invoice> findInvoices(Integer first, Integer offset);
+    List<Invoice> findInvoices();
 
     List<Invoice> findAllNewInvoices();
 

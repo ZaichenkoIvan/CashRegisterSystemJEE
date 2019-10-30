@@ -5,32 +5,29 @@ import ua.cashregister.model.dao.InvoiceDao;
 import ua.cashregister.model.dao.Mapper;
 import ua.cashregister.model.dao.exception.DataNotFoundRuntimeException;
 import ua.cashregister.model.domain.Invoice;
-import ua.cashregister.model.domain.InvoiceStatus;
+import ua.cashregister.model.domain.enums.InvoiceStatus;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.List;
 
 public class InvoiceDaoImpl extends GenericAbstractDao<Invoice> implements InvoiceDao {
-
-    private Connection connection;
-    private static String SQL_select_base = "SELECT * FROM invoices " +
+    private static final String SQL_select_base = "SELECT * FROM invoices " +
             "JOIN invoice_status ON invoices.status_id=invoice_status.status_id ";
-    private static String SQL_selectAll = "SELECT * FROM invoices " +
+    private static final String SQL_selectAll = "SELECT * FROM invoices " +
             "JOIN invoice_status ON invoices.status_id=invoice_status.status_id;";
-    private static String SQL_selectAllByStatus = "SELECT * FROM invoices " +
+    private static final String SQL_selectAllByStatus = "SELECT * FROM invoices " +
             "JOIN invoice_status ON invoices.status_id=invoice_status.status_id WHERE invoices.status_id=?;";
-    private static String SQL_selectAllByUserName = "SELECT * FROM invoices " +
+    private static final String SQL_selectAllByUserName = "SELECT * FROM invoices " +
             "JOIN invoice_status ON invoices.status_id=invoice_status.status_id WHERE user_name=?;";
-    private static String SQL_selectByCode = "SELECT * FROM invoices " +
+    private static final String SQL_selectByCode = "SELECT * FROM invoices " +
             "JOIN invoice_status ON invoices.status_id=invoice_status.status_id WHERE invoice_code=?;";
-    private static String SQL_addNew = "INSERT INTO project.invoices (invoice_code, user_name, is_paid, status_id, invoice_notes)" +
+    private static final String SQL_addNew = "INSERT INTO project.invoices (invoice_code, user_name, is_paid, status_id, invoice_notes)" +
             " VALUES (?,?,?,?,?);";
-    private static String SQL_update = "UPDATE project.invoices SET invoice_code=?, user_name=?, is_paid=?, status_id=?, invoice_notes=? " +
+    private static final String SQL_update = "UPDATE project.invoices SET invoice_code=?, user_name=?, is_paid=?, status_id=?, invoice_notes=? " +
             "WHERE invoice_code=?;";
-    private static String SQL_deleteByCode = "DELETE FROM project.invoices WHERE invoice_code=?;";
+    private static final String SQL_deleteByCode = "DELETE FROM project.invoices WHERE invoice_code=?;";
 
     private Mapper<Invoice, PreparedStatement> mapperToDB = (Invoice invoice, PreparedStatement preparedStatement) -> {
         try {
@@ -42,6 +39,7 @@ public class InvoiceDaoImpl extends GenericAbstractDao<Invoice> implements Invoi
         } catch (SQLException e) {
             throw new DataNotFoundRuntimeException();
         }
+        return null;
     };
 
     private Mapper<ResultSet, Invoice> mapperFromDB = (ResultSet resultSet, Invoice invoice) -> {
@@ -56,17 +54,13 @@ public class InvoiceDaoImpl extends GenericAbstractDao<Invoice> implements Invoi
         } catch (SQLException e) {
             throw new DataNotFoundRuntimeException();
         }
+        return null;
+
     };
 
-    public InvoiceDaoImpl(Connection connection) {
+    public InvoiceDaoImpl() {
         super.setMapperToDB(mapperToDB);
         super.setMapperFromDB(mapperFromDB);
-        this.connection = connection;
-    }
-
-    @Override
-    public Integer calculateInvoiceNumber() {
-        return calculateRowCounts("invoices");
     }
 
     @Override
@@ -75,8 +69,8 @@ public class InvoiceDaoImpl extends GenericAbstractDao<Invoice> implements Invoi
     }
 
     @Override
-    public List<Invoice> findInvoices(Integer first, Integer offset) {
-        return findAllFromTo(Invoice.class, first, offset, SQL_select_base);
+    public List<Invoice> findInvoices() {
+        return findAllFromTo(Invoice.class, SQL_select_base);
     }
 
     @Override

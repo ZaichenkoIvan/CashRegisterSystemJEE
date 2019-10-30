@@ -1,5 +1,7 @@
 package ua.cashregister.model.domain;
 
+import ua.cashregister.model.domain.enums.InvoiceStatus;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -93,8 +95,6 @@ public class Invoice implements Serializable {
     public void setProducts(Map<String, Product> products) {
         this.products = products;
     }
-
-    /** Add methods for storing payments and products to hashMap */
 
     @Deprecated
     public void addProduct(String productCode, Product product) {

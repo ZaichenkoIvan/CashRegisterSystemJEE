@@ -14,15 +14,11 @@ public abstract class GenericAbstractDao<T> {
 
     private Mapper<T, PreparedStatement> mapperToDB;
     private Mapper<ResultSet, T> mapperFromDB;
-    protected Connection connection;
+    private DaoFactory connector = new DaoFactory();
 
     private static final Logger log = Logger.getLogger(GenericAbstractDao.class);
 
     protected GenericAbstractDao() {
-    }
-
-    protected void setConnection(Connection connection) {
-        this.connection = connection;
     }
 
     protected void setMapperToDB(Mapper<T, PreparedStatement> mapperToDB) {
@@ -35,8 +31,8 @@ public abstract class GenericAbstractDao<T> {
 
     protected List<T> findAll(Class t, String SQL_getAll) {
         List<T> items = new LinkedList<>();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_getAll);
+        try(Connection connection = connector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_getAll)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 T item = getItemInstance(t);
@@ -49,11 +45,11 @@ public abstract class GenericAbstractDao<T> {
         return items;
     }
 
-    protected List<T> findAllFromTo(Class t, Integer first, Integer offset, String SQL_getAll_base) {
+    protected List<T> findAllFromTo(Class t, String SQL_getAll_base) {
         List<T> items = new LinkedList<>();
-        try {
-            PreparedStatement ps = connection.prepareStatement(SQL_getAll_base + " limit " + first + ", " + offset + ";");
-            ResultSet resultSet = ps.executeQuery();
+        try(Connection connection = connector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_getAll_base)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 T item = getItemInstance(t);
                 mapperFromDB.map(resultSet, item);
@@ -68,8 +64,8 @@ public abstract class GenericAbstractDao<T> {
     protected <V> T findBy(Class t, String SQL_selectByParameter, V value)
             throws DataNotFoundRuntimeException {
         T item = getItemInstance(t);
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_selectByParameter);
+        try (Connection connection = connector.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_selectByParameter)){
             addParameterToPreparedStatement(preparedStatement, 1, value);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next())
@@ -83,11 +79,10 @@ public abstract class GenericAbstractDao<T> {
         return item;
     }
 
-    protected <V> List<T> findAsListBy(Class t, String SQL_selectByParameter, V value)
-            throws DataNotFoundRuntimeException {
+    protected <V> List<T> findAsListBy(Class t, String SQL_selectByParameter, V value) {
         List<T> items = new LinkedList<>();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_selectByParameter);
+        try(Connection connection = connector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_selectByParameter)) {
             addParameterToPreparedStatement(preparedStatement, 1, value);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -104,8 +99,8 @@ public abstract class GenericAbstractDao<T> {
 
     protected boolean addToDB(T item, String SQL_addNew) {
         boolean result;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_addNew);
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_addNew)){
             mapperToDB.map(item, preparedStatement);
             result = preparedStatement.executeUpdate() > 0;
         } catch (SQLException sqle) {
@@ -117,8 +112,8 @@ public abstract class GenericAbstractDao<T> {
 
     protected <V> boolean updateInDB(T item, String SQL_update, Integer paramNum, V value) {
         boolean result;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_update);
+        try(Connection connection = connector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_update)) {
             mapperToDB.map(item, preparedStatement);
             addParameterToPreparedStatement(preparedStatement, paramNum, value);
             result = preparedStatement.executeUpdate() > 0;
@@ -131,8 +126,8 @@ public abstract class GenericAbstractDao<T> {
 
     protected <V> boolean deleteFromDB(String SQL_delete, V value) {
         boolean result;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_delete);
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_delete)){
             addParameterToPreparedStatement(preparedStatement, 1, value);
             result = preparedStatement.executeUpdate() > 0;
         } catch (SQLException sqle) {
@@ -140,36 +135,6 @@ public abstract class GenericAbstractDao<T> {
             return false;
         }
         return result;
-    }
-
-    /**
-     * Method for table row count calculation. Used for pagination
-     */
-    public Integer calculateRowCounts(String tableName) {
-        Integer result = 0;
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) AS ROWCOUNT FROM " + tableName + ";");
-            ResultSet resultSet = ps.executeQuery();
-            if (resultSet.next()) {
-                result = resultSet.getInt("ROWCOUNT");
-            }
-        } catch (SQLException sqle) {
-            throw new DataNotFoundRuntimeException();
-        }
-        return result;
-    }
-
-    /**
-     * Private method witch returns a concrete instance on entity
-     */
-    private T getItemInstance(Class t) {
-        T item = null;
-        try {
-            item = (T) t.newInstance();
-        } catch (InstantiationException | IllegalAccessException ie) {
-            log.error(ie);
-        }
-        return item;
     }
 
     private <V> void addParameterToPreparedStatement(PreparedStatement preparedStatement, Integer paramNum, V value)

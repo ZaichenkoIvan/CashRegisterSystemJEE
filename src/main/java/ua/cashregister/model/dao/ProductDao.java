@@ -6,11 +6,9 @@ import java.util.List;
 
 public interface ProductDao extends CrudDao<Product, Integer> {
 
-    Integer calculateProductNumber();
-
     List<Product> findAllProductsInDB();
 
-    List<Product> findProductsInDB(Integer first, Integer offset);
+    List<Product> findProductsInDB();
 
     Product findProductByCode(String code);
 

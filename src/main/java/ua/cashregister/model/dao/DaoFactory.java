@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 
 public class DaoFactory {
 
-    private static BasicDataSource basicDataSource;
+    private BasicDataSource basicDataSource;
     private static final Logger log = Logger.getLogger(DaoFactory.class);
     private Connection connection;
 
@@ -41,7 +41,7 @@ public class DaoFactory {
         }
     }
 
-    private static Connection getConnection() {
+    Connection getConnection() {
         try {
             return basicDataSource.getConnection();
         } catch (SQLException sqle) {
@@ -83,14 +83,14 @@ public class DaoFactory {
     }
 
     public UserDao getUserDao() {
-        return new UserDaoImpl(connection);
+        return new UserDaoImpl();
     }
 
     public ProductDao getProductDao() {
-        return new ProductDaoImpl(connection);
+        return new ProductDaoImpl();
     }
 
     public InvoiceDao getInvoiceDao() {
-        return new InvoiceDaoImpl(connection);
+        return new InvoiceDaoImpl();
     }
 }

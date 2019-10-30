@@ -6,15 +6,12 @@ import ua.cashregister.model.dao.ProductDao;
 import ua.cashregister.model.dao.exception.DataNotFoundRuntimeException;
 import ua.cashregister.model.domain.Product;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 public class ProductDaoImpl extends GenericAbstractDao<Product> implements ProductDao {
-
-    private Connection connection;
     private static String SQL_select_base = "SELECT * FROM products ";
     private static String SQL_selectAll = "SELECT * FROM products;";
     private static String SQL_selectById = "SELECT * FROM products WHERE product_id=?;";
@@ -29,10 +26,6 @@ public class ProductDaoImpl extends GenericAbstractDao<Product> implements Produ
             "product_notes_en=?, product_notes_ru=? WHERE product_id=?;";
     private static String SQL_deleteProductById = "DELETE FROM project.products WHERE product_id=?;";
     private static String SQL_deleteProductByCode = "DELETE FROM project.products WHERE product_code=?;";
-
-    /**
-     * Private methods for serving methods implementing DAO interface
-     */
 
     private Mapper<Product, PreparedStatement> mapperToDB = (Product product, PreparedStatement preparedStatement) -> {
         try {
@@ -52,6 +45,7 @@ public class ProductDaoImpl extends GenericAbstractDao<Product> implements Produ
         } catch (SQLException e) {
             throw new DataNotFoundRuntimeException("");
         }
+        return null;
     };
 
     private Mapper<ResultSet, Product> mapperFromDB = (ResultSet resultSet, Product product) -> {
@@ -73,28 +67,23 @@ public class ProductDaoImpl extends GenericAbstractDao<Product> implements Produ
         } catch (SQLException e) {
             throw new DataNotFoundRuntimeException("");
         }
+        return null;
     };
 
-    public ProductDaoImpl(Connection connection) {
+    public ProductDaoImpl() {
         super.setMapperToDB(mapperToDB);
         super.setMapperFromDB(mapperFromDB);
-        this.connection = connection;
     }
 
-    @Override
-    public Integer calculateProductNumber() {
-        return calculateRowCounts("products");
-    }
 
     @Override
     public List<Product> findAllProductsInDB() {
-        List<Product> products = findAll(Product.class, SQL_selectAll);
-        return products;
+        return findAll(Product.class, SQL_selectAll);
     }
 
     @Override
-    public List<Product> findProductsInDB(Integer first, Integer offset) {
-        return findAllFromTo(Product.class, first, offset, SQL_select_base);
+    public List<Product> findProductsInDB() {
+        return findAllFromTo(Product.class, SQL_select_base);
     }
 
     @Override
