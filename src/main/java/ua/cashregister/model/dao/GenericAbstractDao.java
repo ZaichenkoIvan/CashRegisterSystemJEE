@@ -12,8 +12,8 @@ import java.util.List;
 
 public abstract class GenericAbstractDao<T> {
 
-    private Mapper<T, PreparedStatement> mapperToDB;
-    private Mapper<ResultSet, T> mapperFromDB;
+    private MapperToDB<T, PreparedStatement> mapperToDB;
+    private MapperFromDB<ResultSet, T> mapperFromDB;
     private DaoFactory connector = new DaoFactory();
 
     private static final Logger log = Logger.getLogger(GenericAbstractDao.class);
@@ -21,73 +21,69 @@ public abstract class GenericAbstractDao<T> {
     protected GenericAbstractDao() {
     }
 
-    protected void setMapperToDB(Mapper<T, PreparedStatement> mapperToDB) {
+    protected void setMapperToDB(MapperToDB<T, PreparedStatement> mapperToDB) {
         this.mapperToDB = mapperToDB;
     }
 
-    protected void setMapperFromDB(Mapper<ResultSet, T> mapperFromDB) {
+    protected void setMapperFromDB(MapperFromDB<ResultSet, T> mapperFromDB) {
         this.mapperFromDB = mapperFromDB;
     }
 
-    protected List<T> findAll(Class t, String SQL_getAll) {
+    protected List<T> findAll(String SQL_getAll) {
         List<T> items = new LinkedList<>();
         try(Connection connection = connector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_getAll)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                T item = getItemInstance(t);
-                mapperFromDB.map(resultSet, item);
+                T item = mapperFromDB.map(resultSet);
                 items.add(item);
             }
         } catch (SQLException sqle) {
-            throw new DataNotFoundRuntimeException();
+            throw new DataNotFoundRuntimeException("2");
         }
         return items;
     }
 
-    protected List<T> findAllFromTo(Class t, String SQL_getAll_base) {
+    protected List<T> findAllFromTo(String SQL_getAll_base) {
         List<T> items = new LinkedList<>();
         try(Connection connection = connector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_getAll_base)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                T item = getItemInstance(t);
-                mapperFromDB.map(resultSet, item);
+                T item = mapperFromDB.map(resultSet);
                 items.add(item);
             }
         } catch (SQLException sqle) {
-            throw new DataNotFoundRuntimeException();
+            throw new DataNotFoundRuntimeException("1");
         }
         return items;
     }
 
-    protected <V> T findBy(Class t, String SQL_selectByParameter, V value)
+    protected <V> T findBy(String SQL_selectByParameter, V value)
             throws DataNotFoundRuntimeException {
-        T item = getItemInstance(t);
         try (Connection connection = connector.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_selectByParameter)){
             addParameterToPreparedStatement(preparedStatement, 1, value);
             ResultSet resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next())
-                mapperFromDB.map(resultSet, item);
+                return mapperFromDB.map(resultSet);
             else
                 throw new DataNotFoundRuntimeException();
         } catch (SQLException sqle) {
             log.error(sqle);
             throw new DataNotFoundRuntimeException();
         }
-        return item;
     }
 
-    protected <V> List<T> findAsListBy(Class t, String SQL_selectByParameter, V value) {
+    protected <V> List<T> findAsListBy(String SQL_selectByParameter, V value) {
         List<T> items = new LinkedList<>();
         try(Connection connection = connector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_selectByParameter)) {
             addParameterToPreparedStatement(preparedStatement, 1, value);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                T item = getItemInstance(t);
-                mapperFromDB.map(resultSet, item);
+                T item = mapperFromDB.map(resultSet);
                 items.add(item);
             }
         } catch (SQLException sqle) {

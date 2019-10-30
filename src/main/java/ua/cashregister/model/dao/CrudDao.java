@@ -2,11 +2,11 @@ package ua.cashregister.model.dao;
 
 public interface CrudDao<E, ID> {
 
-    boolean addToDB(E entity);
+    boolean save(E entity);
 
     E findById(ID id);
 
-    boolean updateInDB(E user);
+    boolean update(E user);
 
-    boolean deleteFromDB(E user);
+    boolean deleteById(E user);
 }
