@@ -16,9 +16,9 @@ public abstract class GenericAbstractDao<T> {
 
     private MapperToDB<T, PreparedStatement> mapperToDB;
     private MapperFromDB<ResultSet, T> mapperFromDB;
-    private DaoFactory connector = new DaoFactory();
+    protected DaoFactory connector = new DaoFactory();
 
-    private static final Logger log = Logger.getLogger(GenericAbstractDao.class);
+    protected static final Logger log = Logger.getLogger(GenericAbstractDao.class);
 
     protected GenericAbstractDao() {
     }

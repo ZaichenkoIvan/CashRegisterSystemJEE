@@ -41,7 +41,7 @@ public class DaoFactory {
         }
     }
 
-    Connection getConnection() {
+    public Connection getConnection() {
         try {
             return basicDataSource.getConnection();
         } catch (SQLException sqle) {

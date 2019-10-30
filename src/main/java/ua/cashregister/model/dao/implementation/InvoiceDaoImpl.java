@@ -8,6 +8,7 @@ import ua.cashregister.model.dao.exception.DataNotFoundRuntimeException;
 import ua.cashregister.model.domain.Invoice;
 import ua.cashregister.model.domain.enums.InvoiceStatus;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,6 +27,8 @@ public class InvoiceDaoImpl extends GenericAbstractDao<Invoice> implements Invoi
             "JOIN invoice_status ON invoices.status_id=invoice_status.status_id WHERE invoice_code=?;";
     private static final String INSERT_INVOICE = "INSERT INTO project.invoices (invoice_code, user_id, is_paid, status_id)" +
             " VALUES (?,?,?,?);";
+    private static final String INSERT_ORDER = "INSERT INTO project.orders (invoice_id, product_id)" +
+            " VALUES (?,?);";
     private static final String UPDATE_INVOICE = "UPDATE project.invoices SET invoice_code=?, user_id=?, is_paid=?, status_id=? " +
             "WHERE invoice_code=?;";
     private static final String DELETE_INVOICE_BY_CODE = "DELETE FROM project.invoices WHERE invoice_code=?;";
@@ -50,7 +53,6 @@ public class InvoiceDaoImpl extends GenericAbstractDao<Invoice> implements Invoi
                     .withUserId(resultSet.getInt("user_id"))
                     .withIsPaid(resultSet.getBoolean("is_paid"))
                     .withStatus(InvoiceStatus.valueOf(resultSet.getString("status_description")))
-                    .withDate(resultSet.getTimestamp("invoice_date"))
                     .build();
         } catch (SQLException e) {
             throw new DataNotFoundRuntimeException();
@@ -99,7 +101,19 @@ public class InvoiceDaoImpl extends GenericAbstractDao<Invoice> implements Invoi
 
     @Override
     public boolean save(Invoice invoice) {
-        return addToDB(invoice, INSERT_INVOICE);
+        boolean result;
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatementInsertInvoice = connection.prepareStatement(INSERT_INVOICE);
+             PreparedStatement preparedStatementInsertListProduct = connection.prepareStatement(INSERT_ORDER)){
+            mapperToDB.map(invoice, preparedStatementInsertInvoice);
+            result = preparedStatementInsertInvoice.executeUpdate() > 0;
+
+
+        } catch (SQLException sqle) {
+            log.error(sqle);
+            return false;
+        }
+        return result;
     }
 
     @Override

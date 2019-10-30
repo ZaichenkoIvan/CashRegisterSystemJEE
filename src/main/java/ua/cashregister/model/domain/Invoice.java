@@ -14,7 +14,6 @@ public class Invoice implements Serializable {
     private Integer userId;
     private Boolean isPaid;
     private InvoiceStatus status;
-    private Timestamp date;
     private String invoiceNotes;
     private Double cost = 0d;
     private Map<String, Product> products;
@@ -26,7 +25,6 @@ public class Invoice implements Serializable {
         this.userId = builder.userId;
         this.isPaid = builder.isPaid;
         this.status = builder.status;
-        this.date = builder.date;
         this.invoiceNotes = builder.invoiceNotes;
         this.cost = builder.cost;
         this.products = builder.products;
@@ -54,10 +52,6 @@ public class Invoice implements Serializable {
 
     public InvoiceStatus getStatus() {
         return status;
-    }
-
-    public Timestamp getDate() {
-        return date;
     }
 
     public String getInvoiceNotes() {
@@ -88,7 +82,6 @@ public class Invoice implements Serializable {
         sb.append(String.format("%n%-15s", "User id:")).append(userId);
         sb.append(String.format("%n%-15s", "Is payd:")).append(isPaid);
         sb.append(String.format("%n%-15s", "Order status:")).append(status);
-        sb.append(String.format("%n%-15s", "Order date:")).append(date);
         sb.append(String.format("%n%-15s", "Order notes:")).append(invoiceNotes);
         sb.append(String.format("%n%12s", "Invoice:"));
         sb.append("\n************************************************************************************************");
