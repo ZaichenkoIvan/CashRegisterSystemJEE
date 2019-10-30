@@ -1,8 +1,8 @@
 package ua.cashregister.model.dao.implementation;
 
 import ua.cashregister.model.dao.GenericAbstractDao;
-import ua.cashregister.model.dao.MapperFromDB;
-import ua.cashregister.model.dao.MapperToDB;
+import ua.cashregister.model.dao.mapper.MapperFromDB;
+import ua.cashregister.model.dao.mapper.MapperToDB;
 import ua.cashregister.model.dao.ProductDao;
 import ua.cashregister.model.dao.exception.DataNotFoundRuntimeException;
 import ua.cashregister.model.domain.Product;
@@ -13,20 +13,20 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ProductDaoImpl extends GenericAbstractDao<Product> implements ProductDao {
-    private static String SQL_select_base = "SELECT * FROM products ";
-    private static String SQL_selectAll = "SELECT * FROM products;";
-    private static String SQL_selectById = "SELECT * FROM products WHERE product_id=?;";
-    private static String SQL_selectByCode = "SELECT * FROM products WHERE product_code=?;";
-    private static String SQL_addNewProduct = "INSERT INTO project.products (product_code, is_available, " +
+    private static final String SELECT_FROM_PRODUCTS = "SELECT * FROM products ";
+    private static final String SELECT_FROM_PRODUCTS1 = "SELECT * FROM products;";
+    private static final String SELECT_BY_ID_PRODUCT = "SELECT * FROM products WHERE product_id=?;";
+    private static final String SELECT_FROM_PRODUCTS_WHERE_PRODUCT_CODE = "SELECT * FROM products WHERE product_code=?;";
+    private static final String INSERT_PRODUCT = "INSERT INTO project.products (product_code, is_available, " +
             "product_name, product_description, " +
             "product_cost, product_quantity, reserved_quantity" +
             ") VALUES (?,?,?,?,?,?,?);";
-    private static String SQL_updateProduct = "UPDATE project.products SET product_code=?, is_available=?, " +
+    private static final String UPDATE_PRODUCT = "UPDATE project.products SET product_code=?, is_available=?, " +
             "product_name,product_description, " +
             "product_cost=?, product_quantity=?, reserved_quantity=?" +
             "WHERE product_id=?;";
-    private static String SQL_deleteProductById = "DELETE FROM project.products WHERE product_id=?;";
-    private static String SQL_deleteProductByCode = "DELETE FROM project.products WHERE product_code=?;";
+    private static final String DELETE_PRODUCT_BY_ID = "DELETE FROM project.products WHERE product_id=?;";
+    private static final String DELETE_PRODUCT_BY_CODE = "DELETE FROM project.products WHERE product_code=?;";
 
     private MapperToDB<Product, PreparedStatement> mapperToDB = (Product product, PreparedStatement preparedStatement) -> {
         try {
@@ -67,42 +67,42 @@ public class ProductDaoImpl extends GenericAbstractDao<Product> implements Produ
 
     @Override
     public List<Product> findAllProductsInDB() {
-        return findAll(SQL_selectAll);
+        return findAll(SELECT_FROM_PRODUCTS1);
     }
 
     @Override
     public List<Product> findProductsInDB() {
-        return findAllFromTo(SQL_select_base);
+        return findAllFromTo(SELECT_FROM_PRODUCTS);
     }
 
     @Override
     public Product findById(Integer id) {
-        return findBy(SQL_selectById, id);
+        return findBy(SELECT_BY_ID_PRODUCT, id);
     }
 
     @Override
     public Product findProductByCode(String code) {
-        return findBy(SQL_selectByCode, code);
+        return findBy(SELECT_FROM_PRODUCTS_WHERE_PRODUCT_CODE, code);
     }
 
     @Override
     public boolean save(Product product) {
-        return addToDB(product, SQL_addNewProduct);
+        return addToDB(product, INSERT_PRODUCT);
     }
 
     @Override
     public boolean update(Product product) {
         Integer id = product.getId();
-        return updateInDB(product, SQL_updateProduct, 14, id);
+        return updateInDB(product, UPDATE_PRODUCT, 14, id);
     }
 
     @Override
     public boolean deleteById(Product product) {
-        return deleteFromDB(SQL_deleteProductById, product.getId());
+        return deleteFromDB(DELETE_PRODUCT_BY_ID, product.getId());
     }
 
     @Override
     public boolean deleteProductFromDB(String code) {
-        return deleteFromDB(SQL_deleteProductByCode, code);
+        return deleteFromDB(DELETE_PRODUCT_BY_CODE, code);
     }
 }

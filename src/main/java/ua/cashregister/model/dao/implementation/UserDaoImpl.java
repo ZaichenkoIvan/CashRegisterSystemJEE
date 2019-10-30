@@ -1,8 +1,8 @@
 package ua.cashregister.model.dao.implementation;
 
 import ua.cashregister.model.dao.GenericAbstractDao;
-import ua.cashregister.model.dao.MapperFromDB;
-import ua.cashregister.model.dao.MapperToDB;
+import ua.cashregister.model.dao.mapper.MapperFromDB;
+import ua.cashregister.model.dao.mapper.MapperToDB;
 import ua.cashregister.model.dao.UserDao;
 import ua.cashregister.model.dao.exception.DataNotFoundRuntimeException;
 import ua.cashregister.model.domain.User;
@@ -14,23 +14,23 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserDaoImpl extends GenericAbstractDao<User> implements UserDao {
-    private static String SQL_select_base = "SELECT * FROM users JOIN user_roles ON users.role_id=user_roles.role_id " +
+    private static final String SELECT_BASE = "SELECT * FROM users JOIN user_roles ON users.role_id=user_roles.role_id " +
             "ORDER BY user_id ";
-    private static String SQL_selectAll = "SELECT * FROM users JOIN user_roles ON users.role_id=user_roles.role_id " +
+    private static final String SELECT_ALL_USER = "SELECT * FROM users JOIN user_roles ON users.role_id=user_roles.role_id " +
             "ORDER BY user_id;";
-    private static String SQL_selectById = "SELECT * FROM users JOIN user_roles ON users.role_id=user_roles.role_id " +
+    private static final String SELECT_BY_ID_USER = "SELECT * FROM users JOIN user_roles ON users.role_id=user_roles.role_id " +
             "WHERE user_id=?;";
-    private static String SQL_selectByName = "SELECT * FROM users JOIN user_roles ON users.role_id=user_roles.role_id " +
+    private static final String SELECT_BY_NAME_USER = "SELECT * FROM users JOIN user_roles ON users.role_id=user_roles.role_id " +
             "WHERE user_name=?;";
-    private static String SQL_selectByRole = "SELECT * FROM users JOIN user_roles ON users.role_id=user_roles.role_id " +
+    private static final String SELECT_BY_ROLE_USER = "SELECT * FROM users JOIN user_roles ON users.role_id=user_roles.role_id " +
             "WHERE user_roles.role_description=?;";
-    private static String SQL_addNew = "INSERT INTO project.users " +
+    private static final String INSERT_USER = "INSERT INTO project.users " +
             "(user_name, user_password, user_phone, user_address, role_id) " +
             "VALUES (?,?,?,?,?)";
-    private static String SQL_updateById = "UPDATE project.users SET " +
+    private static final String UPDATE_BY_ID_USER = "UPDATE project.users SET " +
             "user_name=?, user_password=?, user_phone=?, user_address=?, role_id=?" +
             "WHERE user_id=?;";
-    private static String SQL_deleteUser = "DELETE FROM project.users WHERE user_id=?;";
+    private static final String DELETE_USER = "DELETE FROM project.users WHERE user_id=?;";
 
     private MapperToDB<User, PreparedStatement> mapperToDB = (User user, PreparedStatement preparedStatement) -> {
         try {
@@ -67,41 +67,41 @@ public class UserDaoImpl extends GenericAbstractDao<User> implements UserDao {
 
     @Override
     public List<User> findAllUsersInDB() {
-        return findAll(SQL_selectAll);
+        return findAll(SELECT_ALL_USER);
     }
 
     @Override
     public List<User> findUsers() {
-        return findAllFromTo(SQL_select_base);
+        return findAllFromTo(SELECT_BASE);
     }
 
     @Override
     public List<User> findUserByRole(UserRole role) {
-        return findAsListBy(SQL_selectByRole, role.toString());
+        return findAsListBy(SELECT_BY_ROLE_USER, role.toString());
     }
 
     @Override
     public User findById(Integer id) {
-        return findBy(SQL_selectById, id);
+        return findBy(SELECT_BY_ID_USER, id);
     }
 
     @Override
     public User findUserByName(String name) {
-        return findBy(SQL_selectByName, name);
+        return findBy(SELECT_BY_NAME_USER, name);
     }
 
     @Override
     public boolean save(User user) {
-        return addToDB(user, SQL_addNew);
+        return addToDB(user, INSERT_USER);
     }
 
     @Override
     public boolean update(User user) {
-        return updateInDB(user, SQL_updateById, 8, user.getId());
+        return updateInDB(user, UPDATE_BY_ID_USER, 8, user.getId());
     }
 
     @Override
     public boolean deleteById(User user) {
-        return deleteFromDB(SQL_deleteUser, user.getId());
+        return deleteFromDB(DELETE_USER, user.getId());
     }
 }

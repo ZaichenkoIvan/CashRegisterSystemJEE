@@ -1,4 +1,4 @@
-package ua.cashregister.model.dao;
+package ua.cashregister.model.dao.mapper;
 
 @FunctionalInterface
 public interface MapperFromDB<R, E> {

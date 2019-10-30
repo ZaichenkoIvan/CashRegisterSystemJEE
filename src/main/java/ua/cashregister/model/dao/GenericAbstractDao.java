@@ -2,6 +2,8 @@ package ua.cashregister.model.dao;
 
 import org.apache.log4j.Logger;
 import ua.cashregister.model.dao.exception.DataNotFoundRuntimeException;
+import ua.cashregister.model.dao.mapper.MapperFromDB;
+import ua.cashregister.model.dao.mapper.MapperToDB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
