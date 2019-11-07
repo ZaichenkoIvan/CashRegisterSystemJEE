@@ -33,4 +33,3 @@ public class RegisterCommand implements Command {
         return "view/login.jsp";
     }
 }
-

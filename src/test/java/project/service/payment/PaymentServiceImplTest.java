@@ -27,11 +27,11 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PaymentServiceImplTest {
-    private static final Payment payment = new Payment(1, 2, null, null);
-    private static final List<PaymentEntity> entities = Arrays.asList(
+    private static final Payment PAYMENT = new Payment(1, 2, null, null);
+    private static final List<PaymentEntity> PAYMENT_ENTITIES = Arrays.asList(
             new PaymentEntity(1, 2, null, null),
             new PaymentEntity(1, 2, null, null));
-    private static final List<Payment> stories = Arrays.asList(payment, payment);
+    private static final List<Payment> PAYMENTS = Arrays.asList(PAYMENT, PAYMENT);
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
@@ -47,20 +47,19 @@ public class PaymentServiceImplTest {
 
     @After
     public void resetMock() {
-        reset(paymentDao);
-        reset(mapper);
+        reset(paymentDao, mapper);
     }
 
     @Test
-    public void shouldCreatepayment() {
-        when(mapper.mapPaymentToPaymentEntity(any(Payment.class))).thenReturn(entities.get(1));
+    public void shouldCreatePayment() {
+        when(mapper.mapPaymentToPaymentEntity(any(Payment.class))).thenReturn(PAYMENT_ENTITIES.get(1));
         when(paymentDao.save(any(PaymentEntity.class))).thenReturn(true);
 
-        assertTrue(service.createPayment(payment));
+        assertTrue(service.createPayment(PAYMENT));
     }
 
     @Test
-    public void shouldThrowInvalidEntityCreationWithNullpayment() {
+    public void shouldThrowInvalidEntityCreationWithNullPayment() {
         exception.expect(InvalidEntityCreation.class);
         exception.expectMessage("Payment is not valid");
 
@@ -76,13 +75,13 @@ public class PaymentServiceImplTest {
     }
 
     @Test
-    public void shouldShowAllStoriesByUser() {
-        when(paymentDao.findByUser(any(Integer.class))).thenReturn(entities);
-        when(mapper.mapPaymentEntityToPayment(any(PaymentEntity.class))).thenReturn(payment);
+    public void shouldShowAllPaymentsByUser() {
+        when(paymentDao.findByUser(any(Integer.class))).thenReturn(PAYMENT_ENTITIES);
+        when(mapper.mapPaymentEntityToPayment(any(PaymentEntity.class))).thenReturn(PAYMENT);
 
         List<Payment> actual = service.findPaymentByUser(1);
 
-        assertEquals(stories, actual);
+        assertEquals(PAYMENTS, actual);
     }
 
     @Test

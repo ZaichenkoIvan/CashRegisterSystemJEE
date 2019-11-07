@@ -27,11 +27,11 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProductServiceImplTest {
-    private static final Product product = Product.builder().withId(1).build();
-    private static final List<ProductEntity> entities = Arrays.asList(
+    private static final Product PRODUCT = Product.builder().withId(1).build();
+    private static final List<ProductEntity> PRODUCT_ENTITIES = Arrays.asList(
             ProductEntity.builder().withId(1).build(),
             ProductEntity.builder().withId(2).build());
-    private static final List<Product> products = Arrays.asList(product,product);
+    private static final List<Product> PRODUCTS = Arrays.asList(PRODUCT, PRODUCT);
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
@@ -47,20 +47,19 @@ public class ProductServiceImplTest {
 
     @After
     public void resetMock() {
-        reset(productDao);
-        reset(mapper);
+        reset(productDao, mapper);
     }
 
     @Test
-    public void shouldCreateproduct() {
-        when(mapper.mapProductToProductEntity(any(Product.class))).thenReturn(entities.get(1));
+    public void shouldCreateProduct() {
+        when(mapper.mapProductToProductEntity(any(Product.class))).thenReturn(PRODUCT_ENTITIES.get(1));
         when(productDao.save(any(ProductEntity.class))).thenReturn(true);
 
-        assertTrue(service.createProduct(product));
+        assertTrue(service.createProduct(PRODUCT));
     }
 
     @Test
-    public void shouldThrowInvalidEntityCreationWithNullproduct() {
+    public void shouldThrowInvalidEntityCreationWithNullProduct() {
         exception.expect(InvalidEntityCreation.class);
         exception.expectMessage("Product is not valid");
 
@@ -68,19 +67,18 @@ public class ProductServiceImplTest {
     }
 
     @Test
-    public void shouldShowAllproducts() {
-        when(productDao.findAll()).thenReturn(entities);
-        when(mapper.mapProductEntityToProduct(any(ProductEntity.class))).thenReturn(product);
+    public void shouldShowAllProducts() {
+        when(productDao.findAll()).thenReturn(PRODUCT_ENTITIES);
+        when(mapper.mapProductEntityToProduct(any(ProductEntity.class))).thenReturn(PRODUCT);
 
         List<Product> actual = service.findAllProducts();
 
-        assertEquals(products, actual);
+        assertEquals(PRODUCTS, actual);
     }
 
     @Test
     public void shouldReturnEmptyList() {
         when(productDao.findAll()).thenReturn(Collections.emptyList());
-
         List<Product> actual = service.findAllProducts();
 
         assertEquals(Collections.emptyList(), actual);

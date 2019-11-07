@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserEntityServiceImplTest {
-    private static final UserEntity entity = UserEntity.builder()
+    private static final UserEntity USER_ENTITY = UserEntity.builder()
             .withId(1)
             .withName("Name")
             .withSurname("Surname")
@@ -38,7 +38,7 @@ public class UserEntityServiceImplTest {
             .withEmail("correct@gmail.com")
             .build();
     ;
-    private static final User user = User.builder()
+    private static final User USER = User.builder()
             .withName("Name")
             .withSurname("Surname")
             .withPassword("Hello")
@@ -62,17 +62,15 @@ public class UserEntityServiceImplTest {
 
     @After
     public void resetMock() {
-        reset(repository);
-        reset(validator);
-        reset(encoder);
+        reset(repository, validator, encoder);
     }
 
     @Test
     public void shouldRegisterUser() {
         when(repository.save(any(UserEntity.class))).thenReturn(true);
-        when(mapper.mapUserToUserEntity(any(User.class))).thenReturn(entity);
-        when(encoder.encode(any(String.class))).thenReturn(Optional.of(entity.getPassword()));
-        boolean actual = userService.register(user);
+        when(mapper.mapUserToUserEntity(any(User.class))).thenReturn(USER_ENTITY);
+        when(encoder.encode(any(String.class))).thenReturn(Optional.of(USER_ENTITY.getPassword()));
+        boolean actual = userService.register(USER);
 
         assertTrue(actual);
     }
@@ -82,10 +80,10 @@ public class UserEntityServiceImplTest {
         exception.expect(AlreadyRegisteredException.class);
         exception.expectMessage("User is already registered by this e-mail");
 
-        when(repository.findByEmail(any(String.class))).thenReturn(Optional.ofNullable(entity));
+        when(repository.findByEmail(any(String.class))).thenReturn(Optional.ofNullable(USER_ENTITY));
 
 
-        userService.register(user);
+        userService.register(USER);
     }
 
     @Test
@@ -98,13 +96,13 @@ public class UserEntityServiceImplTest {
 
     @Test
     public void shouldLoginUser() {
-        when(repository.findByEmail("correct@gmail.com")).thenReturn(Optional.of(entity));
-        when(encoder.encode("hello")).thenReturn(Optional.of(entity.getPassword()));
-        when(mapper.mapUserEntityToUser(any(UserEntity.class))).thenReturn(user);
+        when(repository.findByEmail("correct@gmail.com")).thenReturn(Optional.of(USER_ENTITY));
+        when(encoder.encode("hello")).thenReturn(Optional.of(USER_ENTITY.getPassword()));
+        when(mapper.mapUserEntityToUser(any(UserEntity.class))).thenReturn(USER);
 
         User actual = userService.login("correct@gmail.com", "hello");
 
-        assertEquals(user, actual);
+        assertEquals(USER, actual);
     }
 
     @Test
@@ -113,18 +111,18 @@ public class UserEntityServiceImplTest {
         exception.expectMessage("Incorrect password");
 
         when(encoder.encode(any(String.class))).thenReturn(Optional.of("test"));
-        when(repository.findByEmail("correct@gmail.com")).thenReturn(Optional.ofNullable(entity));
+        when(repository.findByEmail("correct@gmail.com")).thenReturn(Optional.ofNullable(USER_ENTITY));
 
         userService.login("correct@gmail.com", "test");
     }
 
     @Test
     public void shouldReturnAllUsers() {
-        List<User> expected = Collections.singletonList(user);
-        List<UserEntity> entities = Collections.singletonList(entity);
+        List<User> expected = Collections.singletonList(USER);
+        List<UserEntity> entities = Collections.singletonList(USER_ENTITY);
 
         when(repository.findAll()).thenReturn(entities);
-        when(mapper.mapUserEntityToUser(entity)).thenReturn(user);
+        when(mapper.mapUserEntityToUser(USER_ENTITY)).thenReturn(USER);
         List<User> actual = userService.findAll();
 
         assertEquals(expected, actual);

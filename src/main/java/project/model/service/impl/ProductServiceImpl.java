@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
     private static final Logger LOGGER = Logger.getLogger(ProductServiceImpl.class);
 
-    private final project.model.dao.ProductDao ProductDao;
+    private final ProductDao ProductDao;
     private final ProductMapper mapper;
 
     public ProductServiceImpl(ProductDao ProductDao, ProductMapper mapper) {

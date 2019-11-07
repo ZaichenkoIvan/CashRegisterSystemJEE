@@ -25,11 +25,11 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InvoiceServiceImplTest {
-    private static final Invoice invoice = Invoice.builder().withId(1).build();
-    private static final List<InvoiceEntity> entities = Arrays.asList(
+    private static final Invoice INVOICE = Invoice.builder().withId(1).build();
+    private static final List<InvoiceEntity> INVOICE_ENTITIES = Arrays.asList(
             InvoiceEntity.builder().withId(1).build(),
             InvoiceEntity.builder().withId(2).build());
-    private static final List<Invoice> invoices = Arrays.asList(invoice, invoice);
+    private static final List<Invoice> INVOICES = Arrays.asList(INVOICE, INVOICE);
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
@@ -45,20 +45,19 @@ public class InvoiceServiceImplTest {
 
     @After
     public void resetMock() {
-        reset(invoiceDao);
-        reset(mapper);
+        reset(invoiceDao, mapper);
     }
 
     @Test
-    public void shouldCreateinvoice() {
-        when(mapper.mapInvoiceToInvoiceEntity(any(Invoice.class))).thenReturn(entities.get(1));
+    public void shouldCreateInvoice() {
+        when(mapper.mapInvoiceToInvoiceEntity(any(Invoice.class))).thenReturn(INVOICE_ENTITIES.get(1));
         when(invoiceDao.save(any(InvoiceEntity.class))).thenReturn(true);
 
-        assertTrue(service.createInvoice(invoice));
+        assertTrue(service.createInvoice(INVOICE));
     }
 
     @Test
-    public void shouldThrowInvalidEntityCreationWithNullinvoice() {
+    public void shouldThrowInvalidEntityCreationWithNullInvoice() {
         exception.expect(InvalidEntityCreation.class);
         exception.expectMessage("Invoice is not valid");
 
@@ -66,13 +65,13 @@ public class InvoiceServiceImplTest {
     }
 
     @Test
-    public void shouldShowAllinvoices() {
-        when(invoiceDao.findAll()).thenReturn(entities);
-        when(mapper.mapInvoiceEntityToInvoice(any(InvoiceEntity.class))).thenReturn(invoice);
+    public void shouldShowAllInvoices() {
+        when(invoiceDao.findAll()).thenReturn(INVOICE_ENTITIES);
+        when(mapper.mapInvoiceEntityToInvoice(any(InvoiceEntity.class))).thenReturn(INVOICE);
 
         List<Invoice> actual = service.findAllInvoices();
 
-        assertEquals(invoices, actual);
+        assertEquals(INVOICES, actual);
     }
 
     @Test

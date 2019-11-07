@@ -65,5 +65,4 @@ public class UserValidator implements Validator<User> {
             throw new InvalidRegistrationException("Incorrect surname");
         }
     }
-
 }

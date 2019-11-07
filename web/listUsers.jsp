@@ -17,7 +17,7 @@
             <th>Name</th>
             <th>Surname</th>
             <th>Email</th>
-            <th>Pass</th>
+            <th>Nick</th>
             <th>Role</th>
         </tr>
 
