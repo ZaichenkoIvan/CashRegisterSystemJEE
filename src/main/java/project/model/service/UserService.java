@@ -11,7 +11,5 @@ public interface UserService {
 
     List<User> findAll(int currentPage, int recordsPerPage);
 
-    List<User> findAll();
-
     int getNumberOfRows();
 }

@@ -15,7 +15,8 @@ import java.util.Optional;
 public class InvoiceDaoImpl extends AbstractDao<InvoiceEntity> implements InvoiceDao {
     private static final String INSERT_INVOICE = "INSERT INTO project.invoices(invoice_cost, invoice_isPaid, user_id, invoice_status) VALUES(?, ?, ?, ?)";
     private static final String FIND_BY_ID = "SELECT * FROM project.invoices WHERE invoice_id = ?";
-    private static final String FIND_ALL_INVOICES = "SELECT * FROM project.invoices";
+    private static final String FIND_ALL_INVOICES = "SELECT * FROM project.invoices LIMIT ?, ?";
+    private static final String COUNT = "SELECT * FROM project.invoices";
     private static final String UPDATE_INVOICE = "UPDATE project.invoices SET invoice_cost = ?, invoice_isPaid = ?, user_id =?, invoice_status =? WHERE invoice_id = ?";
     private static final String DELETE_BY_ID = "DELETE FROM project.invoices WHERE invoice_id = ?";
 
@@ -34,8 +35,8 @@ public class InvoiceDaoImpl extends AbstractDao<InvoiceEntity> implements Invoic
     }
 
     @Override
-    public List<InvoiceEntity> findAll() {
-        return findAll(FIND_ALL_INVOICES);
+    public List<InvoiceEntity> findAll(int currentPage, int recordsPerPage) {
+        return findAll(FIND_ALL_INVOICES, currentPage, recordsPerPage);
     }
 
     @Override
@@ -46,6 +47,11 @@ public class InvoiceDaoImpl extends AbstractDao<InvoiceEntity> implements Invoic
     @Override
     public boolean deleteById(Integer id) {
         return deleteById(id, DELETE_BY_ID);
+    }
+
+    @Override
+    public int getNumberOfRows() {
+        return getNumberOfRows(COUNT);
     }
 
     @Override

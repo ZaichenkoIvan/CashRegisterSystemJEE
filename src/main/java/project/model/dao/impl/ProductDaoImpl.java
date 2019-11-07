@@ -12,7 +12,8 @@ import java.util.Optional;
 public class ProductDaoImpl extends AbstractDao<ProductEntity> implements ProductDao {
     private static final String INSERT_PRODUCT = "INSERT INTO project.products(product_code, product_name, product_description, product_description, product_cost, product_quantity) VALUES(?, ?, ?, ?, ?, ?)";
     private static final String FIND_BY_ID = "SELECT * FROM project.products WHERE product_id = ?";
-    private static final String FIND_ALL_PRODUCTS = "SELECT * FROM project.products";
+    private static final String FIND_ALL_PRODUCTS = "SELECT * FROM project.products LIMIT ?, ?";
+    private static final String COUNT = "SELECT * FROM project.products";
     private static final String UPDATE_PRODUCT = "UPDATE project.products SET product_code = ?, product_name = ?, product_description = ?, product_description = ?, product_cost = ?, product_quantity = ?  WHERE product_id = ?";
     private static final String DELETE_BY_ID = "DELETE FROM project.products WHERE product_id = ?";
 
@@ -31,8 +32,8 @@ public class ProductDaoImpl extends AbstractDao<ProductEntity> implements Produc
     }
 
     @Override
-    public List<ProductEntity> findAll() {
-        return findAll(FIND_ALL_PRODUCTS);
+    public List<ProductEntity> findAll(int currentPage, int recordsPerPage) {
+        return findAll(FIND_ALL_PRODUCTS, currentPage, recordsPerPage);
     }
 
     @Override
@@ -43,6 +44,11 @@ public class ProductDaoImpl extends AbstractDao<ProductEntity> implements Produc
     @Override
     public boolean deleteById(Integer id) {
         return deleteById(id, DELETE_BY_ID);
+    }
+
+    @Override
+    public int getNumberOfRows() {
+        return getNumberOfRows(COUNT);
     }
 
     @Override

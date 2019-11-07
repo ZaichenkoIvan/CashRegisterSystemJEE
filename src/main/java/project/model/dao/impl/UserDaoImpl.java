@@ -1,21 +1,18 @@
 package project.model.dao.impl;
 
-import org.apache.log4j.Logger;
-import project.model.dao.UserDao;
-import project.model.entity.enums.Role;
-import project.model.entity.UserEntity;
 import project.model.dao.AbstractDao;
+import project.model.dao.UserDao;
 import project.model.dao.connector.PoolConnector;
-import project.model.exception.DatabaseRuntimeException;
+import project.model.entity.UserEntity;
+import project.model.entity.enums.Role;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
-    private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
-
     private static final String INSERT_USER = "INSERT INTO project.users(user_name, user_surname, user_email, user_password, user_role) VALUES(?, ?, ?, ?, ?)";
     private static final String FIND_BY_ID = "SELECT * FROM project.users WHERE user_id = ?";
     private static final String FIND_ALL_USERS = "SELECT * FROM project.users LIMIT ?, ?";
@@ -39,28 +36,8 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
     }
 
     @Override
-    public List<UserEntity> findAll() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<UserEntity> findAll(int currentPage, int recordsPerPage){
-        List<UserEntity> result = new ArrayList<>();
-        int start = currentPage * recordsPerPage - recordsPerPage;
-        try (Connection connection = connector.getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_ALL_USERS)) {
-            statement.setInt(1, start);
-            statement.setInt(2, recordsPerPage);
-            ResultSet entities = statement.executeQuery();
-
-            while(entities.next()) {
-                mapResultSetToEntity(entities).ifPresent(result::add);
-            }
-            return result;
-        } catch (SQLException e) {
-            LOGGER.error("Invalid entities search" + e.getMessage());
-            throw new DatabaseRuntimeException("Invalid entities search", e);
-        }
+    public List<UserEntity> findAll(int currentPage, int recordsPerPage) {
+        return findAll(FIND_ALL_USERS, currentPage, recordsPerPage);
     }
 
     @Override
@@ -110,5 +87,4 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
         preparedStatement.setString(4, user.getPassword());
         preparedStatement.setString(5, user.getRole().toString());
     }
-
 }

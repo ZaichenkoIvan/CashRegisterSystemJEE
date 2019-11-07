@@ -14,12 +14,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrderDaoImpl extends AbstractDao<OrderEntity> implements OrderDao {
-    private static final String INSERT_ORDER = "INSERT INTO project.orders(order_number, invoice_id, product_id) VALUES(?, ?, ?)";
-    private static final String FIND_BY_ID = "SELECT * FROM project.orders WHERE order_id = ?";
-    private static final String FIND_BY_INVOICE_ID = "SELECT * FROM project.orders WHERE invoice_id = ?";
-    private static final String FIND_ALL_ORDER = "SELECT * FROM project.orders";
-    private static final String UPDATE_ORDER = "UPDATE project.orders SET number = ?, invoice_id= ?, product_id = ? WHERE order_id = ?";
-    private static final String DELETE_BY_ID = "DELETE FROM project.orders WHERE order_id = ?";
+    private static final String INSERT_ORDER = "INSERT INTO project.order(order_number, invoice_id, product_id) VALUES(?, ?, ?)";
+    private static final String FIND_BY_ID = "SELECT * FROM project.order WHERE order_id = ?";
+    private static final String FIND_BY_INVOICE_ID = "SELECT * FROM project.order WHERE invoice_id = ?";
+    private static final String FIND_ALL_ORDER = "SELECT * FROM project.order LIMIT ?, ?";
+    private static final String COUNT = "SELECT * FROM project.order";
+    private static final String UPDATE_ORDER = "UPDATE project.order SET number = ?, invoice_id= ?, product_id = ? WHERE order_id = ?";
+    private static final String DELETE_BY_ID = "DELETE FROM project.order WHERE order_id = ?";
 
     public OrderDaoImpl(PoolConnector connector) {
         super(connector);
@@ -36,8 +37,8 @@ public class OrderDaoImpl extends AbstractDao<OrderEntity> implements OrderDao {
     }
 
     @Override
-    public List<OrderEntity> findAll() {
-        return findAll(FIND_ALL_ORDER);
+    public List<OrderEntity> findAll(int currentPage, int recordsPerPage) {
+        return findAll(FIND_ALL_ORDER, currentPage, recordsPerPage);
     }
 
     @Override
@@ -48,6 +49,11 @@ public class OrderDaoImpl extends AbstractDao<OrderEntity> implements OrderDao {
     @Override
     public boolean deleteById(Integer id) {
         return deleteById(id, DELETE_BY_ID);
+    }
+
+    @Override
+    public int getNumberOfRows() {
+        return getNumberOfRows(COUNT);
     }
 
     @Override

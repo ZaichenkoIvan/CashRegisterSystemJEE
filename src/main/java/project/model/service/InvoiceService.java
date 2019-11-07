@@ -7,5 +7,7 @@ import java.util.List;
 public interface InvoiceService {
     boolean createInvoice(Invoice Invoice);
 
-    List<Invoice> findAllInvoices();
+    List<Invoice> findAll(int currentPage, int recordsPerPage);
+
+    int getNumberOfRows();
 }

@@ -97,12 +97,15 @@ public abstract class AbstractDao<E> {
         }
     }
 
-    protected List<E> findAll(String query) {
+    protected List<E> findAll(String query, int currentPage, int recordsPerPage) {
         List<E> result = new ArrayList<>();
+        int start = currentPage * recordsPerPage - recordsPerPage;
 
         try (Connection connection = connector.getConnection();
-             Statement statement = connection.createStatement()) {
-            ResultSet entities = statement.executeQuery(query);
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, start);
+            statement.setInt(2, recordsPerPage);
+            ResultSet entities = statement.executeQuery();
 
             while(entities.next()) {
                 mapResultSetToEntity(entities).ifPresent(result::add);
