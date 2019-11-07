@@ -4,33 +4,44 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.Logger;
 import project.model.exception.InvalidDatabaseConnectionException;
 
-
-import java.sql.*;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public final class PoolConnector {
     private static final Logger LOGGER = Logger.getLogger(PoolConnector.class);
-
-    private static final BasicDataSource ds = new BasicDataSource();
+    private static volatile DataSource dataSource;
+    private static ResourceBundle resource;
 
     public PoolConnector(String fileConfigName) {
-        ResourceBundle resource = ResourceBundle.getBundle(fileConfigName);
-
-        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl(resource.getString("db.url"));
-        ds.setUsername(resource.getString("db.user"));
-        ds.setPassword(resource.getString("db.password"));
-        ds.setMinIdle(5);
-        ds.setMaxIdle(10);
-        ds.setMaxOpenPreparedStatements(100);
+        resource = ResourceBundle.getBundle(fileConfigName);
     }
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
+        if (dataSource == null) {
+            synchronized (DataSource.class) {
+                if (dataSource == null) {
+                    BasicDataSource bs = new BasicDataSource();
+                    bs.setUrl(resource.getString("db.url"));
+                    bs.setDriverClassName(resource.getString("db.driver"));
+                    bs.setUsername(resource.getString("db.user"));
+                    bs.setPassword(resource.getString("db.password"));
+                    bs.setMinIdle(5);
+                    bs.setMaxIdle(10);
+                    bs.setMaxOpenPreparedStatements(100);
+                    dataSource = bs;
+                }
+            }
+        }
         try {
-            return ds.getConnection();
+            return dataSource.getConnection();
         } catch (SQLException e) {
-            LOGGER.error("Could not get connection from database" + e.getMessage());
-            throw new InvalidDatabaseConnectionException("Could not get connection from database " + e.getMessage());
+            LOGGER.error("Could not get connection from database", e);
+            throw new InvalidDatabaseConnectionException("Could not get connection from database ", e);
         }
     }
 }
+
+
+
