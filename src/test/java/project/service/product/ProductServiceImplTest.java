@@ -68,18 +68,18 @@ public class ProductServiceImplTest {
 
     @Test
     public void shouldShowAllProducts() {
-        when(productDao.findAll()).thenReturn(PRODUCT_ENTITIES);
+        when(productDao.findAll(1, 2)).thenReturn(PRODUCT_ENTITIES);
         when(mapper.mapProductEntityToProduct(any(ProductEntity.class))).thenReturn(PRODUCT);
 
-        List<Product> actual = service.findAllProducts();
+        List<Product> actual = service.findAll(1, 2);
 
         assertEquals(PRODUCTS, actual);
     }
 
     @Test
     public void shouldReturnEmptyList() {
-        when(productDao.findAll()).thenReturn(Collections.emptyList());
-        List<Product> actual = service.findAllProducts();
+        when(productDao.findAll(1, 2)).thenReturn(Collections.emptyList());
+        List<Product> actual = service.findAll(1, 2);
 
         assertEquals(Collections.emptyList(), actual);
     }

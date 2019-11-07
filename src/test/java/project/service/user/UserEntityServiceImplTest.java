@@ -121,9 +121,9 @@ public class UserEntityServiceImplTest {
         List<User> expected = Collections.singletonList(USER);
         List<UserEntity> entities = Collections.singletonList(USER_ENTITY);
 
-        when(repository.findAll()).thenReturn(entities);
+        when(repository.findAll(1, 2)).thenReturn(entities);
         when(mapper.mapUserEntityToUser(USER_ENTITY)).thenReturn(USER);
-        List<User> actual = userService.findAll();
+        List<User> actual = userService.findAll(1, 2);
 
         assertEquals(expected, actual);
     }
@@ -132,8 +132,8 @@ public class UserEntityServiceImplTest {
     public void shouldReturnEmptyListWhenThereIsNoUsers() {
         List<User> expected = Collections.emptyList();
 
-        when(repository.findAll()).thenReturn(Collections.emptyList());
-        List<User> actual = userService.findAll();
+        when(repository.findAll(1, 2)).thenReturn(Collections.emptyList());
+        List<User> actual = userService.findAll(1, 2);
 
         assertEquals(expected, actual);
     }

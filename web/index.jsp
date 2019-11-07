@@ -8,7 +8,7 @@
 
 <body class="m-3">
 
-<h1>Show users</h1>
+<h1>Show info</h1>
 
 <form action="user">
 
@@ -22,6 +22,9 @@
     <select class="form-control" id="records" name="commandShow">
       <option value="showUsers">Users</option>
       <option value="showOrders" selected>Orders</option>
+      <option value="showInvoices">Invoices</option>
+      <option value="showPayments">Payments</option>
+      <option value="showProducts">Products</option>
     </select>
 
   </div>

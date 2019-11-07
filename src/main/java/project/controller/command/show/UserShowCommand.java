@@ -40,4 +40,3 @@ public class UserShowCommand implements Command {
         return "listUsers.jsp";
     }
 }
-
