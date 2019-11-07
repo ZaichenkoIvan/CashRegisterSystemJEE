@@ -1,8 +1,7 @@
 package project.controller.context;
 
 import project.controller.command.Command;
-import project.controller.command.show.OrderShowCommand;
-import project.controller.command.show.UserShowCommand;
+import project.controller.command.show.*;
 import project.controller.command.user.LoginCommand;
 import project.controller.command.user.LogoutCommand;
 import project.controller.command.user.RegisterCommand;
@@ -49,8 +48,11 @@ public final class ApplicationContextInjector {
     private static final Command LOGOUT_COMMAND = new LogoutCommand();
     private static final Command REGISTER_COMMAND = new RegisterCommand(USER_SERVICE);
 
-    private static final Command ORDER_SHOW_COMMAND = new OrderShowCommand();
+    private static final Command ORDER_SHOW_COMMAND = new OrderShowCommand(ORDER_SERVICE);
     private static final Command USER_SHOW_COMMAND = new UserShowCommand(USER_SERVICE);
+    private static final Command INVOICE_SHOW_COMMAND = new InvoiceShowCommand(INVOICE_SERVICE);
+    private static final Command PAYMENT_SHOW_COMMAND = new PaymentShowCommand(PAYMENT_SERVICE);
+    private static final Command PRODUCT_SHOW_COMMAND = new ProductShowCommand(PRODUCT_SERVICE);
 
     private static final Map<String, Command> USER_COMMANDS_NAME_TO_COMMAND = initUserCommand();
 
@@ -61,6 +63,9 @@ public final class ApplicationContextInjector {
         userCommandNameToCommand.put("register", REGISTER_COMMAND);
         userCommandNameToCommand.put("showUsers", USER_SHOW_COMMAND);
         userCommandNameToCommand.put("showOrders", ORDER_SHOW_COMMAND);
+        userCommandNameToCommand.put("showInvoices", INVOICE_SHOW_COMMAND);
+        userCommandNameToCommand.put("showPayments", PAYMENT_SHOW_COMMAND);
+        userCommandNameToCommand.put("showProducts", PRODUCT_SHOW_COMMAND);
 
         return userCommandNameToCommand;
     }

@@ -1,17 +1,17 @@
 package project.controller.command.show;
 
 import project.controller.command.Command;
-import project.model.domain.Order;
-import project.model.service.OrderService;
+import project.model.domain.Product;
+import project.model.service.ProductService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class OrderShowCommand implements Command {
-    private OrderService orderService;
+public class ProductShowCommand implements Command {
+    private ProductService productService;
 
-    public OrderShowCommand(OrderService orderService) {
-        this.orderService = orderService;
+    public ProductShowCommand(ProductService productService) {
+        this.productService = productService;
     }
 
     @Override
@@ -19,11 +19,11 @@ public class OrderShowCommand implements Command {
         int currentPage = Integer.valueOf(request.getParameter("currentPage"));
         int recordsPerPage = Integer.valueOf(request.getParameter("recordsPerPage"));
 
-        List<Order> orders = orderService.findAll(currentPage, recordsPerPage);
+        List<Product> products = productService.findAll(currentPage, recordsPerPage);
 
-        request.setAttribute("orders", orders);
+        request.setAttribute("products", products);
 
-        int rows = orderService.getNumberOfRows();
+        int rows = productService.getNumberOfRows();
 
         int nOfPages = rows / recordsPerPage;
 
@@ -35,8 +35,8 @@ public class OrderShowCommand implements Command {
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("recordsPerPage", recordsPerPage);
         final String command = request.getParameter("commandShow");
-        request.setAttribute("showOrders", command);
+        request.setAttribute("showProducts", command);
 
-        return "listOrders.jsp";
+        return "listProducts.jsp";
     }
 }
