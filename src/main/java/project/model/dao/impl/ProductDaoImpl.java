@@ -10,12 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProductDaoImpl extends AbstractDao<ProductEntity> implements ProductDao {
-    private static final String INSERT_Product = "INSERT INTO project.products(product_code, product_name, product_description, product_description, product_cost, product_quantity) VALUES(?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_PRODUCT = "INSERT INTO project.products(product_code, product_name, product_description, product_description, product_cost, product_quantity) VALUES(?, ?, ?, ?, ?, ?)";
     private static final String FIND_BY_ID = "SELECT * FROM project.products WHERE product_id = ?";
-    private static final String FIND_ALL_ProductS = "SELECT * FROM project.products";
-    private static final String UPDATE_Product = "UPDATE project.products SET product_code = ?, product_name = ?, product_description = ?, product_description = ?, product_cost = ?, product_quantity = ?  WHERE product_id = ?";
+    private static final String FIND_ALL_PRODUCTS = "SELECT * FROM project.products";
+    private static final String UPDATE_PRODUCT = "UPDATE project.products SET product_code = ?, product_name = ?, product_description = ?, product_description = ?, product_cost = ?, product_quantity = ?  WHERE product_id = ?";
     private static final String DELETE_BY_ID = "DELETE FROM project.products WHERE product_id = ?";
-
 
     public ProductDaoImpl(PoolConnector connector) {
         super(connector);
@@ -23,7 +22,7 @@ public class ProductDaoImpl extends AbstractDao<ProductEntity> implements Produc
 
     @Override
     public boolean save(ProductEntity entity) {
-        return save(entity, INSERT_Product);
+        return save(entity, INSERT_PRODUCT);
     }
 
     @Override
@@ -33,12 +32,12 @@ public class ProductDaoImpl extends AbstractDao<ProductEntity> implements Produc
 
     @Override
     public List<ProductEntity> findAll() {
-        return findAll(FIND_ALL_ProductS);
+        return findAll(FIND_ALL_PRODUCTS);
     }
 
     @Override
     public void update(ProductEntity entity) {
-        update(entity, UPDATE_Product);
+        update(entity, UPDATE_PRODUCT);
     }
 
     @Override
