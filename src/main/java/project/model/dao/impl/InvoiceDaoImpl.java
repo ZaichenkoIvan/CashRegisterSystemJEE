@@ -74,7 +74,7 @@ public class InvoiceDaoImpl extends AbstractDao<InvoiceEntity> implements Invoic
         UserEntity cashier = UserEntity.builder()
                 .withId(invoice.getInt(4))
                 .build();
-        
+
         return Optional.of(InvoiceEntity.builder()
                 .withId(invoice.getInt(1))
                 .withCost(invoice.getInt(2))
