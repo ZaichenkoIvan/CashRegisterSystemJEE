@@ -64,21 +64,13 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
     }
 
     @Override
-    public Optional<UserEntity> findByEmail(String email) {
-        return findOneByStringParam(email, FIND_BY_EMAIL);
+    public int getNumberOfRows() {
+        return getNumberOfRows(COUNT);
     }
 
     @Override
-    public int getNumberOfRows() {
-        try (Connection connection = connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(COUNT)) {
-            ResultSet entity = preparedStatement.executeQuery();
-            entity.last();
-            return entity.getInt(1);
-        } catch (SQLException e) {
-            LOGGER.error("Invalid entity search" + e.getMessage());
-            throw new DatabaseRuntimeException("Invalid entity search", e);
-        }
+    public Optional<UserEntity> findByEmail(String email) {
+        return findOneByStringParam(email, FIND_BY_EMAIL);
     }
 
     @Override

@@ -23,7 +23,6 @@ public abstract class AbstractDao<E> {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             createStatementMapper(entity, preparedStatement);
             int insert =  preparedStatement.executeUpdate();
-
             return insert != 0;
         } catch (SQLException e) {
             LOGGER.error("Invalid entity adding" + e.getMessage());
@@ -139,6 +138,19 @@ public abstract class AbstractDao<E> {
             throw new DatabaseRuntimeException("Invalid entity deleting", e);
         }
     }
+
+    public int getNumberOfRows(String query) {
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet entity = preparedStatement.executeQuery();
+            entity.last();
+            return entity.getInt(1);
+        } catch (SQLException e) {
+            LOGGER.error("Invalid entity search" + e.getMessage());
+            throw new DatabaseRuntimeException("Invalid entity search", e);
+        }
+    }
+
     protected abstract void updateStatementMapper(E entity, PreparedStatement preparedStatement) throws SQLException;
     protected abstract void createStatementMapper(E entity, PreparedStatement preparedStatement) throws SQLException;
     protected abstract Optional<E> mapResultSetToEntity(ResultSet entity) throws SQLException;
