@@ -2,6 +2,7 @@ package project.model.dao.impl;
 
 import project.model.dao.InvoiceDao;
 import project.model.entity.InvoiceEntity;
+import project.model.entity.UserEntity;
 import project.model.entity.enums.Status;
 import project.model.dao.AbstractDao;
 import project.model.dao.connector.PoolConnector;
@@ -69,12 +70,17 @@ public class InvoiceDaoImpl extends AbstractDao<InvoiceEntity> implements Invoic
     }
 
     @Override
-    protected Optional<InvoiceEntity> mapResultSetToEntity(ResultSet Invoice) throws SQLException {
+    protected Optional<InvoiceEntity> mapResultSetToEntity(ResultSet invoice) throws SQLException {
+        UserEntity cashier = UserEntity.builder()
+                .withId(invoice.getInt(4))
+                .build();
+        
         return Optional.of(InvoiceEntity.builder()
-                .withId(Invoice.getInt(1))
-                .withCost(Invoice.getInt(2))
-                .withPaid(Invoice.getBoolean(3))
-                .withStatus(Status.valueOf(Invoice.getString(5)))
+                .withId(invoice.getInt(1))
+                .withCost(invoice.getInt(2))
+                .withPaid(invoice.getBoolean(3))
+                .withCashier(cashier)
+                .withStatus(Status.valueOf(invoice.getString(5)))
                 .build());
     }
 }
