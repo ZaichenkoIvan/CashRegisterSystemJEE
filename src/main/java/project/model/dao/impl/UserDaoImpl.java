@@ -18,8 +18,8 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
 
     private static final String INSERT_USER = "INSERT INTO project.users(user_name, user_surname, user_email, user_password, user_role) VALUES(?, ?, ?, ?, ?)";
     private static final String FIND_BY_ID = "SELECT * FROM project.users WHERE user_id = ?";
-    private static final String FIND_ALL_USERS = "SELECT * FROM project.usersPage LIMIT ?, ?";
-    private static final String COUNT = "SELECT * FROM project.usersPage";
+    private static final String FIND_ALL_USERS = "SELECT * FROM project.users LIMIT ?, ?";
+    private static final String COUNT = "SELECT * FROM project.users";
     private static final String FIND_BY_EMAIL = "SELECT * FROM project.users WHERE user_email = ?";
     private static final String UPDATE_USER = "UPDATE project.users SET user_name = ?, user_surname = ?, user_email = ?, user_password = ?, user_role = ? WHERE user_id = ?";
     private static final String DELETE_BY_ID = "DELETE FROM project.users WHERE user_id = ?";
