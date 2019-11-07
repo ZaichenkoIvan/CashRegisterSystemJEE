@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 public class InvoiceServiceImpl implements InvoiceService {
     private static final Logger LOGGER = Logger.getLogger(InvoiceServiceImpl.class);
 
-    private final InvoiceDao InvoiceDao;
+    private final InvoiceDao invoiceDao;
     private final InvoiceMapper mapper;
 
-    public InvoiceServiceImpl(InvoiceDao InvoiceDao, InvoiceMapper mapper) {
-        this.InvoiceDao = InvoiceDao;
+    public InvoiceServiceImpl(InvoiceDao invoiceDao, InvoiceMapper mapper) {
+        this.invoiceDao = invoiceDao;
         this.mapper = mapper;
     }
 
@@ -31,16 +31,21 @@ public class InvoiceServiceImpl implements InvoiceService {
             throw new InvalidEntityCreation("Invoice is not valid");
         }
 
-        return InvoiceDao.save(mapper.mapInvoiceToInvoiceEntity(Invoice));
+        return invoiceDao.save(mapper.mapInvoiceToInvoiceEntity(Invoice));
     }
 
     @Override
-    public List<Invoice> findAllInvoices() {
-        List<InvoiceEntity> result = InvoiceDao.findAll();
+    public List<Invoice> findAll(int currentPage, int recordsPerPage) {
+        List<InvoiceEntity> result = invoiceDao.findAll(currentPage, recordsPerPage);
 
         return result.isEmpty() ? Collections.emptyList()
                 : result.stream()
                 .map(mapper::mapInvoiceEntityToInvoice)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public int getNumberOfRows() {
+        return invoiceDao.getNumberOfRows();
     }
 }

@@ -2,6 +2,7 @@ package project.controller.command.user;
 
 import project.controller.command.Command;
 import project.model.domain.User;
+import project.model.entity.enums.Role;
 import project.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,21 +16,24 @@ public class RegisterCommand implements Command {
     }
     @Override
     public String execute(HttpServletRequest request) {
-        final String name = (String) request.getAttribute("name");
-        final String email = (String) request.getAttribute("email");
+        final String name = request.getParameter("name");
+        final String email = request.getParameter("email");
+        final String surname = request.getParameter("surname");
 
-        final String password1 = (String) request.getAttribute("password1");
-        final String password2 = (String) request.getAttribute("password2");
-        if(!Objects.equals(password1, password2)){
-            return "view/register.jsp";
+        final String password = request.getParameter("password");
+        final String passwordConfirm = request.getParameter("passwordConfirm");
+        if(!Objects.equals(password, passwordConfirm)){
+            return "register.jsp";
         }
 
         User user = User.builder()
                 .withEmail(email)
                 .withName(name)
-                .withPassword(password1)
+                .withSurname(surname)
+                .withPassword(password)
+                .withRole(Role.USER)
                 .build();
         userService.register(user);
-        return "view/login.jsp";
+        return "login.jsp";
     }
 }

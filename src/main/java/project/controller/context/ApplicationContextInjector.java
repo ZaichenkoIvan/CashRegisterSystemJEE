@@ -1,5 +1,10 @@
 package project.controller.context;
 
+import project.controller.command.Command;
+import project.controller.command.show.*;
+import project.controller.command.user.LoginCommand;
+import project.controller.command.user.LogoutCommand;
+import project.controller.command.user.RegisterCommand;
 import project.model.dao.*;
 import project.model.dao.connector.PoolConnector;
 import project.model.dao.impl.*;
@@ -10,6 +15,9 @@ import project.model.service.impl.*;
 import project.model.service.mapper.*;
 import project.model.service.validator.UserValidator;
 import project.model.service.validator.Validator;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public final class ApplicationContextInjector {
     private static final PoolConnector CONNECTOR = new PoolConnector("database");
@@ -35,6 +43,32 @@ public final class ApplicationContextInjector {
     private static final PaymentService PAYMENT_SERVICE = new PaymentServiceImpl(PAYMENT_DAO, PAYMENT_MAPPER);
     private static final ProductService PRODUCT_SERVICE = new ProductServiceImpl(PRODUCT_DAO, PRODUCT_MAPPER);
     private static final OrderService ORDER_SERVICE = new OrderServiceImpl(ORDER_DAO, ORDER_MAPPER);
+
+    private static final Command LOGIN_COMMAND = new LoginCommand(USER_SERVICE);
+    private static final Command LOGOUT_COMMAND = new LogoutCommand();
+    private static final Command REGISTER_COMMAND = new RegisterCommand(USER_SERVICE);
+
+    private static final Command ORDER_SHOW_COMMAND = new OrderShowCommand(ORDER_SERVICE);
+    private static final Command USER_SHOW_COMMAND = new UserShowCommand(USER_SERVICE);
+    private static final Command INVOICE_SHOW_COMMAND = new InvoiceShowCommand(INVOICE_SERVICE);
+    private static final Command PAYMENT_SHOW_COMMAND = new PaymentShowCommand(PAYMENT_SERVICE);
+    private static final Command PRODUCT_SHOW_COMMAND = new ProductShowCommand(PRODUCT_SERVICE);
+
+    private static final Map<String, Command> USER_COMMANDS_NAME_TO_COMMAND = initUserCommand();
+
+    private static Map<String, Command> initUserCommand() {
+        Map<String, Command> userCommandNameToCommand = new HashMap<>();
+        userCommandNameToCommand.put("login", LOGIN_COMMAND);
+        userCommandNameToCommand.put("logout", LOGOUT_COMMAND);
+        userCommandNameToCommand.put("register", REGISTER_COMMAND);
+        userCommandNameToCommand.put("showUsers", USER_SHOW_COMMAND);
+        userCommandNameToCommand.put("showOrders", ORDER_SHOW_COMMAND);
+        userCommandNameToCommand.put("showInvoices", INVOICE_SHOW_COMMAND);
+        userCommandNameToCommand.put("showPayments", PAYMENT_SHOW_COMMAND);
+        userCommandNameToCommand.put("showProducts", PRODUCT_SHOW_COMMAND);
+
+        return userCommandNameToCommand;
+    }
 
     private static ApplicationContextInjector injector;
 
@@ -72,4 +106,7 @@ public final class ApplicationContextInjector {
         return PRODUCT_SERVICE;
     }
 
+    public Map<String, Command> getUserCommands() {
+        return USER_COMMANDS_NAME_TO_COMMAND;
+    }
 }

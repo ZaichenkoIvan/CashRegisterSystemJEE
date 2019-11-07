@@ -35,12 +35,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findAllOrders() {
-        List<OrderEntity> result = orderDao.findAll();
+    public List<Order> findAll(int currentPage, int recordsPerPage) {
+        List<OrderEntity> result = orderDao.findAll(currentPage, recordsPerPage);
 
         return result.isEmpty() ? Collections.emptyList()
                 : result.stream()
                 .map(mapper::mapOrderEntityToOrder)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public int getNumberOfRows() {
+        return orderDao.getNumberOfRows();
     }
 }

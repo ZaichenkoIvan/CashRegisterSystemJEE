@@ -17,7 +17,7 @@
             <th>Name</th>
             <th>Surname</th>
             <th>Email</th>
-            <th>Nick</th>
+            <th>Password</th>
             <th>Role</th>
         </tr>
 
@@ -38,7 +38,7 @@
     <ul class="pagination">
         <c:if test="${currentPage != 1}">
             <li class="page-item"><a class="page-link"
-                                     href="user?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}">Previous</a>
+                                     href="user?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}&commandShow=${showUsers}">Previous</a>
             </li>
         </c:if>
 
@@ -51,7 +51,7 @@
                 </c:when>
                 <c:otherwise>
                     <li class="page-item"><a class="page-link"
-                                             href="user?recordsPerPage=${recordsPerPage}&currentPage=${i}">${i}</a>
+                                             href="user?recordsPerPage=${recordsPerPage}&currentPage=${i}&commandShow=${showUsers}">${i}</a>
                     </li>
                 </c:otherwise>
             </c:choose>
@@ -59,11 +59,15 @@
 
         <c:if test="${currentPage lt noOfPages}">
             <li class="page-item"><a class="page-link"
-                                     href="user?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}">Next</a>
+                                     href="user?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}&commandShow=${showUsers}">Next</a>
             </li>
         </c:if>
     </ul>
 </nav>
+
+<a href=index.jsp>
+    <button type="submit" class="btn btn-primary">Back</button>
+</a>
 
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>

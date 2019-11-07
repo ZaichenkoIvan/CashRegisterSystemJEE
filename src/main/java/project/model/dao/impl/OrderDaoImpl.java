@@ -14,12 +14,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrderDaoImpl extends AbstractDao<OrderEntity> implements OrderDao {
-    private static final String INSERT_ORDER = "INSERT INTO project.orders(order_number, product_id, invoice_id) VALUES(?, ?, ?)";
-    private static final String FIND_BY_ID = "SELECT * FROM project.orders WHERE order_id = ?";
-    private static final String FIND_BY_INVOICE_ID = "SELECT * FROM project.orders WHERE invoice_id = ?";
-    private static final String FIND_ALL_ORDER = "SELECT * FROM project.orders";
-    private static final String UPDATE_ORDER = "UPDATE project.orders SET number = ?, product_id = ?, invoice_id = ? WHERE order_id = ?";
-    private static final String DELETE_BY_ID = "DELETE FROM project.orders WHERE order_id = ?";
+    private static final String INSERT_ORDER = "INSERT INTO project.order(order_number, invoice_id, product_id) VALUES(?, ?, ?)";
+    private static final String FIND_BY_ID = "SELECT * FROM project.order WHERE order_id = ?";
+    private static final String FIND_BY_INVOICE_ID = "SELECT * FROM project.order WHERE invoice_id = ?";
+    private static final String FIND_ALL_ORDER = "SELECT * FROM project.order LIMIT ?, ?";
+    private static final String COUNT = "SELECT * FROM project.order";
+    private static final String UPDATE_ORDER = "UPDATE project.order SET number = ?, invoice_id= ?, product_id = ? WHERE order_id = ?";
+    private static final String DELETE_BY_ID = "DELETE FROM project.order WHERE order_id = ?";
 
     public OrderDaoImpl(PoolConnector connector) {
         super(connector);
@@ -36,8 +37,8 @@ public class OrderDaoImpl extends AbstractDao<OrderEntity> implements OrderDao {
     }
 
     @Override
-    public List<OrderEntity> findAll() {
-        return findAll(FIND_ALL_ORDER);
+    public List<OrderEntity> findAll(int currentPage, int recordsPerPage) {
+        return findAll(FIND_ALL_ORDER, currentPage, recordsPerPage);
     }
 
     @Override
@@ -51,26 +52,31 @@ public class OrderDaoImpl extends AbstractDao<OrderEntity> implements OrderDao {
     }
 
     @Override
-    protected void updateStatementMapper(OrderEntity orderEntity , PreparedStatement preparedStatement) throws SQLException {
+    public int getNumberOfRows() {
+        return getNumberOfRows(COUNT);
+    }
+
+    @Override
+    protected void updateStatementMapper(OrderEntity orderEntity, PreparedStatement preparedStatement) throws SQLException {
         createStatementMapper(orderEntity, preparedStatement);
         preparedStatement.setInt(4, orderEntity.getId());
     }
 
     @Override
-    protected void createStatementMapper(OrderEntity orderEntity , PreparedStatement preparedStatement) throws SQLException {
+    protected void createStatementMapper(OrderEntity orderEntity, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setInt(1, orderEntity.getNumber());
-        preparedStatement.setInt(2, orderEntity.getProductEntity().getId());
-        preparedStatement.setInt(3, orderEntity.getInvoiceEntity().getId());
+        preparedStatement.setInt(2, orderEntity.getInvoiceEntity().getId());
+        preparedStatement.setInt(3, orderEntity.getProductEntity().getId());
     }
 
     @Override
     protected Optional<OrderEntity> mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         ProductEntity productEntity = ProductEntity.builder()
-                .withId(resultSet.getInt(3))
+                .withId(resultSet.getInt(4))
                 .build();
 
         InvoiceEntity invoiceEntity = InvoiceEntity.builder()
-                .withId(resultSet.getInt(4))
+                .withId(resultSet.getInt(3))
                 .build();
 
         return Optional.of(OrderEntity.builder().withId(resultSet.getInt(1))

@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
     private static final Logger LOGGER = Logger.getLogger(ProductServiceImpl.class);
 
-    private final ProductDao ProductDao;
+    private final ProductDao productDao;
     private final ProductMapper mapper;
 
-    public ProductServiceImpl(ProductDao ProductDao, ProductMapper mapper) {
-        this.ProductDao = ProductDao;
+    public ProductServiceImpl(ProductDao productDao, ProductMapper mapper) {
+        this.productDao = productDao;
         this.mapper = mapper;
     }
 
@@ -31,16 +31,20 @@ public class ProductServiceImpl implements ProductService {
             throw new InvalidEntityCreation("Product is not valid");
         }
 
-        return ProductDao.save(mapper.mapProductToProductEntity(Product));
+        return productDao.save(mapper.mapProductToProductEntity(Product));
     }
 
     @Override
-    public List<Product> findAllProducts() {
-        List<ProductEntity> result = ProductDao.findAll();
-
+    public List<Product> findAll(int currentPage, int recordsPerPage) {
+        List<ProductEntity> result = productDao.findAll(currentPage,recordsPerPage);
         return result.isEmpty() ? Collections.emptyList()
                 : result.stream()
                 .map(mapper::mapProductEntityToProduct)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public int getNumberOfRows() {
+        return productDao.getNumberOfRows();
     }
 }

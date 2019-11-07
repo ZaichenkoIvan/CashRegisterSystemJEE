@@ -70,21 +70,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll(int currentPage, int recordsPerPage) {
         List<UserEntity> result = userDao.findAll(currentPage,recordsPerPage);
-
-        System.out.println(result);
-
-        return result.isEmpty() ? Collections.emptyList()
-                : result.stream()
-                .map(mapper::mapUserEntityToUser)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<User> findAll() {
-        List<UserEntity> result = userDao.findAll();
-
-        System.out.println(result);
-
         return result.isEmpty() ? Collections.emptyList()
                 : result.stream()
                 .map(mapper::mapUserEntityToUser)

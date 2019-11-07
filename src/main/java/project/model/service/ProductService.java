@@ -7,5 +7,6 @@ import java.util.List;
 public interface ProductService {
     boolean createProduct(Product Product);
 
-    List<Product> findAllProducts();
-}
+    List<Product> findAll(int currentPage, int recordsPerPage);
+
+    int getNumberOfRows();}

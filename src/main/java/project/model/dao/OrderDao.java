@@ -4,6 +4,6 @@ import project.model.entity.OrderEntity;
 
 import java.util.List;
 
-public interface OrderDao extends CrudRepository<Integer, OrderEntity> {
+public interface OrderDao extends CrudDao<Integer, OrderEntity> {
     List<OrderEntity> findByInvoiceId(Integer id);
 }

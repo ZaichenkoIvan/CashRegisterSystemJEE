@@ -2,6 +2,7 @@ package project.model.dao.impl;
 
 import project.model.dao.InvoiceDao;
 import project.model.entity.InvoiceEntity;
+import project.model.entity.UserEntity;
 import project.model.entity.enums.Status;
 import project.model.dao.AbstractDao;
 import project.model.dao.connector.PoolConnector;
@@ -13,10 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class InvoiceDaoImpl extends AbstractDao<InvoiceEntity> implements InvoiceDao {
-    private static final String INSERT_INVOICE = "INSERT INTO project.invoices(invoice_cost, invoice_isPaid, invoice_status, user_id) VALUES(?, ?, ?, ?)";
+    private static final String INSERT_INVOICE = "INSERT INTO project.invoices(invoice_cost, invoice_isPaid, user_id, invoice_status) VALUES(?, ?, ?, ?)";
     private static final String FIND_BY_ID = "SELECT * FROM project.invoices WHERE invoice_id = ?";
-    private static final String FIND_ALL_INVOICES = "SELECT * FROM project.invoices";
-    private static final String UPDATE_INVOICE = "UPDATE project.invoices SET invoice_cost = ?, invoice_isPaid = ?, invoice_status =?, user_id =? WHERE invoice_id = ?";
+    private static final String FIND_ALL_INVOICES = "SELECT * FROM project.invoices LIMIT ?, ?";
+    private static final String COUNT = "SELECT * FROM project.invoices";
+    private static final String UPDATE_INVOICE = "UPDATE project.invoices SET invoice_cost = ?, invoice_isPaid = ?, user_id =?, invoice_status =? WHERE invoice_id = ?";
     private static final String DELETE_BY_ID = "DELETE FROM project.invoices WHERE invoice_id = ?";
 
     public InvoiceDaoImpl(PoolConnector connector) {
@@ -34,8 +36,8 @@ public class InvoiceDaoImpl extends AbstractDao<InvoiceEntity> implements Invoic
     }
 
     @Override
-    public List<InvoiceEntity> findAll() {
-        return findAll(FIND_ALL_INVOICES);
+    public List<InvoiceEntity> findAll(int currentPage, int recordsPerPage) {
+        return findAll(FIND_ALL_INVOICES, currentPage, recordsPerPage);
     }
 
     @Override
@@ -49,6 +51,11 @@ public class InvoiceDaoImpl extends AbstractDao<InvoiceEntity> implements Invoic
     }
 
     @Override
+    public int getNumberOfRows() {
+        return getNumberOfRows(COUNT);
+    }
+
+    @Override
     protected void updateStatementMapper(InvoiceEntity Invoice, PreparedStatement preparedStatement) throws SQLException {
         createStatementMapper(Invoice, preparedStatement);
         preparedStatement.setInt(5, Invoice.getId());
@@ -58,17 +65,22 @@ public class InvoiceDaoImpl extends AbstractDao<InvoiceEntity> implements Invoic
     protected void createStatementMapper(InvoiceEntity invoice, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setInt(1, invoice.getCost());
         preparedStatement.setBoolean(2, invoice.isPaid());
-        preparedStatement.setString(3, invoice.getStatus().toString());
-        preparedStatement.setInt(4, invoice.getCashier().getId());
+        preparedStatement.setInt(3, invoice.getCashier().getId());
+        preparedStatement.setString(4, invoice.getStatus().toString());
     }
 
     @Override
-    protected Optional<InvoiceEntity> mapResultSetToEntity(ResultSet Invoice) throws SQLException {
+    protected Optional<InvoiceEntity> mapResultSetToEntity(ResultSet invoice) throws SQLException {
+        UserEntity cashier = UserEntity.builder()
+                .withId(invoice.getInt(4))
+                .build();
+
         return Optional.of(InvoiceEntity.builder()
-                .withId(Invoice.getInt(1))
-                .withCost(Invoice.getInt(2))
-                .withPaid(Invoice.getBoolean(3))
-                .withStatus(Status.valueOf(Invoice.getString(4)))
+                .withId(invoice.getInt(1))
+                .withCost(invoice.getInt(2))
+                .withPaid(invoice.getBoolean(3))
+                .withCashier(cashier)
+                .withStatus(Status.valueOf(invoice.getString(5)))
                 .build());
     }
 }

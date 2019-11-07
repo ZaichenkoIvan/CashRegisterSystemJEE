@@ -100,4 +100,14 @@ public class PaymentServiceImplTest {
 
         service.findPaymentByUser(null);
     }
+
+    @Test
+    public void shouldShowAllProducts() {
+        when(paymentDao.findAll(1, 2)).thenReturn(PAYMENT_ENTITIES);
+        when(mapper.mapPaymentEntityToPayment(any(PaymentEntity.class))).thenReturn(PAYMENT);
+
+        List<Payment> actual = service.findAll(1, 2);
+
+        assertEquals(PAYMENTS, actual);
+    }
 }

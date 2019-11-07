@@ -66,19 +66,19 @@ public class InvoiceServiceImplTest {
 
     @Test
     public void shouldShowAllInvoices() {
-        when(invoiceDao.findAll()).thenReturn(INVOICE_ENTITIES);
+        when(invoiceDao.findAll(1, 2)).thenReturn(INVOICE_ENTITIES);
         when(mapper.mapInvoiceEntityToInvoice(any(InvoiceEntity.class))).thenReturn(INVOICE);
 
-        List<Invoice> actual = service.findAllInvoices();
+        List<Invoice> actual = service.findAll(1, 2);
 
         assertEquals(INVOICES, actual);
     }
 
     @Test
     public void shouldReturnEmptyList() {
-        when(invoiceDao.findAll()).thenReturn(Collections.emptyList());
+        when(invoiceDao.findAll(1, 2)).thenReturn(Collections.emptyList());
 
-        List<Invoice> actual = service.findAllInvoices();
+        List<Invoice> actual = service.findAll(1, 2);
 
         assertEquals(Collections.emptyList(), actual);
     }

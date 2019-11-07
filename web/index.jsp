@@ -8,20 +8,23 @@
 
 <body class="m-3">
 
-<h1>Show users</h1>
+<h1>Show info</h1>
 
 <form action="user">
 
   <input type="hidden" name="currentPage" value="1">
+  <input type="hidden" name="recordsPerPage" value="5">
 
   <div class="form-group col-md-4">
 
     <label for="records">Select records per page:</label>
 
-    <select class="form-control" id="records" name="recordsPerPage">
-      <option value="3">3</option>
-      <option value="5" selected>5</option>
-      <option value="7">7</option>
+    <select class="form-control" id="records" name="commandShow">
+      <option value="showUsers">Users</option>
+      <option value="showOrders" selected>Orders</option>
+      <option value="showInvoices">Invoices</option>
+      <option value="showPayments">Payments</option>
+      <option value="showProducts">Products</option>
     </select>
 
   </div>

@@ -15,12 +15,13 @@ import java.util.Optional;
 
 public class PaymentDaoImpl extends AbstractDao<PaymentEntity> implements PaymentDao {
 
-    private static final String INSERT_PAYMENT = "INSERT INTO project.payment(payment_value, invoice_id, user_id) VALUES(?, ?, ?)";
-    private static final String FIND_BY_ID = "SELECT * FROM project.payment WHERE Payment_id = ?";
-    private static final String FIND_BY_USER = "SELECT * FROM project.payment WHERE user_id = ?";
-    private static final String FIND_ALL_PAYMENT = "SELECT * FROM project.payment";
-    private static final String UPDATE_PAYMENT = "UPDATE project.payment SET payment_value = ?, invoice_id = ?, user_id = ? WHERE Payment_id = ?";
-    private static final String DELETE_BY_ID = "DELETE FROM project.payment WHERE Payment_id = ?";
+    private static final String INSERT_PAYMENT = "INSERT INTO project.payments(payment_value, invoice_id, user_id) VALUES(?, ?, ?)";
+    private static final String FIND_BY_ID = "SELECT * FROM project.payments WHERE Payment_id = ?";
+    private static final String FIND_BY_USER = "SELECT * FROM project.payments WHERE user_id = ?";
+    private static final String FIND_ALL_PAYMENT = "SELECT * FROM project.payments LIMIT ?, ?";
+    private static final String COUNT = "SELECT * FROM project.payments";
+    private static final String UPDATE_PAYMENT = "UPDATE project.payments SET payment_value = ?, invoice_id = ?, user_id = ? WHERE Payment_id = ?";
+    private static final String DELETE_BY_ID = "DELETE FROM project.payments WHERE Payment_id = ?";
 
     public PaymentDaoImpl(PoolConnector connector) {
         super(connector);
@@ -42,8 +43,8 @@ public class PaymentDaoImpl extends AbstractDao<PaymentEntity> implements Paymen
     }
 
     @Override
-    public List<PaymentEntity> findAll() {
-        return findAll(FIND_ALL_PAYMENT);
+    public List<PaymentEntity> findAll(int currentPage, int recordsPerPage) {
+        return findAll(FIND_ALL_PAYMENT, currentPage, recordsPerPage);
     }
 
     @Override
@@ -54,6 +55,11 @@ public class PaymentDaoImpl extends AbstractDao<PaymentEntity> implements Paymen
     @Override
     public boolean deleteById(Integer id) {
         return deleteById(id, DELETE_BY_ID);
+    }
+
+    @Override
+    public int getNumberOfRows() {
+        return getNumberOfRows(COUNT);
     }
 
     @Override
