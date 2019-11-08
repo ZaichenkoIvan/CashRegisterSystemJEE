@@ -24,16 +24,14 @@ public class OrderShowCommand implements Command {
         request.setAttribute("orders", orders);
 
         int rows = orderService.getNumberOfRows();
-
         int nOfPages = rows / recordsPerPage;
-
         if (nOfPages % recordsPerPage > 0) {
             nOfPages++;
         }
 
+        request.setAttribute("recordsPerPage", recordsPerPage);
         request.setAttribute("noOfPages", nOfPages);
         request.setAttribute("currentPage", currentPage);
-        request.setAttribute("recordsPerPage", recordsPerPage);
         final String command = request.getParameter("command");
         request.setAttribute("showOrders", command);
 

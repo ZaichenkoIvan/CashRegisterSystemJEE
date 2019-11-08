@@ -9,7 +9,7 @@ import java.util.Optional;
 public class PasswordEncoder {
     private static final Logger LOGGER = Logger.getLogger(PasswordEncoder.class);
 
-    public Optional<String> encode(String pass){
+    public Optional<String> encode(String pass) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] passBytes = pass.getBytes();

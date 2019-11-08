@@ -26,7 +26,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean createOrder(Order Order) {
-        if (Objects.isNull(Order) ) {
+        if (Objects.isNull(Order)) {
             LOGGER.warn("Order is not valid");
             throw new InvalidCreationRuntimeException("Order is not valid");
         }

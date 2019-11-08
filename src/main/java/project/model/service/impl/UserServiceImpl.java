@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll(int currentPage, int recordsPerPage) {
-        List<UserEntity> result = userDao.findAll(currentPage,recordsPerPage);
+        List<UserEntity> result = userDao.findAll(currentPage, recordsPerPage);
         return result.isEmpty() ? Collections.emptyList()
                 : result.stream()
                 .map(mapper::mapUserEntityToUser)

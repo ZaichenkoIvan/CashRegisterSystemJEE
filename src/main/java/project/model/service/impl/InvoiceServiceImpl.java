@@ -26,7 +26,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public boolean createInvoice(Invoice Invoice) {
-        if (Objects.isNull(Invoice) ) {
+        if (Objects.isNull(Invoice)) {
             LOGGER.warn("Invoice is not valid");
             throw new InvalidCreationRuntimeException("Invoice is not valid");
         }

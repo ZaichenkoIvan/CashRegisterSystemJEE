@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean createProduct(Product Product) {
-        if (Objects.isNull(Product) ) {
+        if (Objects.isNull(Product)) {
             LOGGER.warn("Product is not valid");
             throw new InvalidCreationRuntimeException("Product is not valid");
         }
@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findAll(int currentPage, int recordsPerPage) {
-        List<ProductEntity> result = productDao.findAll(currentPage,recordsPerPage);
+        List<ProductEntity> result = productDao.findAll(currentPage, recordsPerPage);
         return result.isEmpty() ? Collections.emptyList()
                 : result.stream()
                 .map(mapper::mapProductEntityToProduct)

@@ -26,7 +26,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public boolean createPayment(Payment Payment) {
-        if (Objects.isNull(Payment) ) {
+        if (Objects.isNull(Payment)) {
             LOGGER.warn("Payment is not valid");
             throw new InvalidCreationRuntimeException("Payment is not valid");
         }
@@ -57,7 +57,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<Payment> findAll(int currentPage, int recordsPerPage) {
-        List<PaymentEntity> result = paymentDao.findAll(currentPage,recordsPerPage);
+        List<PaymentEntity> result = paymentDao.findAll(currentPage, recordsPerPage);
         return result.isEmpty() ? Collections.emptyList()
                 : result.stream()
                 .map(mapper::mapPaymentEntityToPayment)

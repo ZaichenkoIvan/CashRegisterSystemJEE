@@ -20,19 +20,16 @@ public class InvoiceShowCommand implements Command {
         int recordsPerPage = Integer.valueOf(request.getParameter("recordsPerPage"));
 
         List<Invoice> invoices = invoiceService.findAll(currentPage, recordsPerPage);
-
         request.setAttribute("invoices", invoices);
 
         int rows = invoiceService.getNumberOfRows();
-
         int nOfPages = rows / recordsPerPage;
-
         if (nOfPages % recordsPerPage > 0) {
             nOfPages++;
         }
 
-        request.setAttribute("noOfPages", nOfPages);
         request.setAttribute("currentPage", currentPage);
+        request.setAttribute("noOfPages", nOfPages);
         request.setAttribute("recordsPerPage", recordsPerPage);
         final String command = request.getParameter("command");
         request.setAttribute("showInvoices", command);
