@@ -24,18 +24,16 @@ public class PaymentShowCommand implements Command {
         request.setAttribute("payments", payments);
 
         int rows = paymentService.getNumberOfRows();
-
         int nOfPages = rows / recordsPerPage;
-
         if (nOfPages % recordsPerPage > 0) {
             nOfPages++;
         }
 
-        request.setAttribute("noOfPages", nOfPages);
+        final String command = request.getParameter("command");
+        request.setAttribute("showPayments", command);
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("recordsPerPage", recordsPerPage);
-        final String command = request.getParameter("commandShow");
-        request.setAttribute("showPayments", command);
+        request.setAttribute("noOfPages", nOfPages);
 
         return "listPayments.jsp";
     }

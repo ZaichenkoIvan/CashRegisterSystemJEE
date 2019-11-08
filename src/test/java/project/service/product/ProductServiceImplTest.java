@@ -11,7 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import project.model.dao.ProductDao;
 import project.model.domain.Product;
 import project.model.entity.ProductEntity;
-import project.model.exception.InvalidEntityCreation;
+import project.model.exception.InvalidCreationRuntimeException;
 import project.model.service.impl.ProductServiceImpl;
 import project.model.service.mapper.ProductMapper;
 
@@ -60,7 +60,7 @@ public class ProductServiceImplTest {
 
     @Test
     public void shouldThrowInvalidEntityCreationWithNullProduct() {
-        exception.expect(InvalidEntityCreation.class);
+        exception.expect(InvalidCreationRuntimeException.class);
         exception.expectMessage("Product is not valid");
 
         service.createProduct(null);

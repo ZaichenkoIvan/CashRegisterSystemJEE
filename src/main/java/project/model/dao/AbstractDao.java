@@ -11,8 +11,8 @@ import java.util.Optional;
 
 public abstract class AbstractDao<E> {
     private static final Logger LOGGER = Logger.getLogger(AbstractDao.class);
-    
-    protected PoolConnector connector;
+
+    private PoolConnector connector;
 
     public AbstractDao(PoolConnector connector) {
         this.connector = connector;
@@ -22,10 +22,10 @@ public abstract class AbstractDao<E> {
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             createStatementMapper(entity, preparedStatement);
-            int insert =  preparedStatement.executeUpdate();
+            int insert = preparedStatement.executeUpdate();
             return insert != 0;
         } catch (SQLException e) {
-            LOGGER.error("Invalid entity adding" + e.getMessage());
+            LOGGER.error("Invalid entity adding", e);
             throw new DatabaseRuntimeException("Invalid entity adding", e);
         }
     }
@@ -39,7 +39,7 @@ public abstract class AbstractDao<E> {
 
             return entity.next() ? mapResultSetToEntity(entity) : Optional.empty();
         } catch (SQLException e) {
-            LOGGER.error("Invalid entity search" + e.getMessage());
+            LOGGER.error("Invalid entity search", e);
             throw new DatabaseRuntimeException("Invalid entity search", e);
         }
     }
@@ -52,13 +52,13 @@ public abstract class AbstractDao<E> {
             statement.setString(1, data);
             ResultSet entities = statement.executeQuery();
 
-            while(entities.next()) {
+            while (entities.next()) {
                 mapResultSetToEntity(entities).ifPresent(result::add);
             }
 
             return result;
         } catch (SQLException e) {
-            LOGGER.error("Invalid entity search by string parameter" + e.getMessage());
+            LOGGER.error("Invalid entity search by string parameter", e);
             throw new DatabaseRuntimeException("Invalid entity search by string parameter", e);
         }
     }
@@ -72,7 +72,7 @@ public abstract class AbstractDao<E> {
 
             return user.next() ? mapResultSetToEntity(user) : Optional.empty();
         } catch (SQLException e) {
-            LOGGER.error("Invalid entity search" + e.getMessage());
+            LOGGER.error("Invalid entity search", e);
             throw new DatabaseRuntimeException("Invalid entity search", e);
         }
     }
@@ -92,7 +92,7 @@ public abstract class AbstractDao<E> {
 
             return result;
         } catch (SQLException e) {
-            LOGGER.error("Invalid entities search by foreign key" + e.getMessage());
+            LOGGER.error("Invalid entities search by foreign key", e);
             throw new DatabaseRuntimeException("Invalid entities search by foreign key", e);
         }
     }
@@ -107,13 +107,13 @@ public abstract class AbstractDao<E> {
             statement.setInt(2, recordsPerPage);
             ResultSet entities = statement.executeQuery();
 
-            while(entities.next()) {
+            while (entities.next()) {
                 mapResultSetToEntity(entities).ifPresent(result::add);
             }
 
             return result;
         } catch (SQLException e) {
-            LOGGER.error("Invalid entities search" + e.getMessage());
+            LOGGER.error("Invalid entities search", e);
             throw new DatabaseRuntimeException("Invalid entities search", e);
         }
     }
@@ -124,7 +124,7 @@ public abstract class AbstractDao<E> {
             updateStatementMapper(entity, preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("Invalid entity updating" + e.getMessage());
+            LOGGER.error("Invalid entity updating", e);
             throw new DatabaseRuntimeException("Invalid entity updating", e);
         }
     }
@@ -137,7 +137,7 @@ public abstract class AbstractDao<E> {
             int delete = preparedStatement.executeUpdate();
             return delete != 0;
         } catch (SQLException e) {
-            LOGGER.error("Invalid entity deleting" + e.getMessage());
+            LOGGER.error("Invalid entity deleting", e);
             throw new DatabaseRuntimeException("Invalid entity deleting", e);
         }
     }
@@ -149,12 +149,14 @@ public abstract class AbstractDao<E> {
             entity.last();
             return entity.getInt(1);
         } catch (SQLException e) {
-            LOGGER.error("Invalid entity search" + e.getMessage());
+            LOGGER.error("Invalid entity search", e);
             throw new DatabaseRuntimeException("Invalid entity search", e);
         }
     }
 
     protected abstract void updateStatementMapper(E entity, PreparedStatement preparedStatement) throws SQLException;
+
     protected abstract void createStatementMapper(E entity, PreparedStatement preparedStatement) throws SQLException;
+
     protected abstract Optional<E> mapResultSetToEntity(ResultSet entity) throws SQLException;
 }

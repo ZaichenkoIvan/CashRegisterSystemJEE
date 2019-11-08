@@ -9,4 +9,5 @@ public interface ProductService {
 
     List<Product> findAll(int currentPage, int recordsPerPage);
 
-    int getNumberOfRows();}
+    int getNumberOfRows();
+}

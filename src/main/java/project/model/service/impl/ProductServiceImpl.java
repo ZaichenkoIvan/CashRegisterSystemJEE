@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import project.model.dao.ProductDao;
 import project.model.domain.Product;
 import project.model.entity.ProductEntity;
-import project.model.exception.InvalidEntityCreation;
+import project.model.exception.InvalidCreationRuntimeException;
 import project.model.service.ProductService;
 import project.model.service.mapper.ProductMapper;
 
@@ -26,9 +26,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean createProduct(Product Product) {
-        if (Objects.isNull(Product) ) {
+        if (Objects.isNull(Product)) {
             LOGGER.warn("Product is not valid");
-            throw new InvalidEntityCreation("Product is not valid");
+            throw new InvalidCreationRuntimeException("Product is not valid");
         }
 
         return productDao.save(mapper.mapProductToProductEntity(Product));
@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findAll(int currentPage, int recordsPerPage) {
-        List<ProductEntity> result = productDao.findAll(currentPage,recordsPerPage);
+        List<ProductEntity> result = productDao.findAll(currentPage, recordsPerPage);
         return result.isEmpty() ? Collections.emptyList()
                 : result.stream()
                 .map(mapper::mapProductEntityToProduct)

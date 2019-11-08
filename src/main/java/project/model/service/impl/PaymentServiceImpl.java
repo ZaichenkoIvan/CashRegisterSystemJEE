@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import project.model.dao.PaymentDao;
 import project.model.domain.Payment;
 import project.model.entity.PaymentEntity;
-import project.model.exception.InvalidEntityCreation;
+import project.model.exception.InvalidCreationRuntimeException;
 import project.model.service.PaymentService;
 import project.model.service.mapper.PaymentMapper;
 
@@ -26,9 +26,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public boolean createPayment(Payment Payment) {
-        if (Objects.isNull(Payment) ) {
+        if (Objects.isNull(Payment)) {
             LOGGER.warn("Payment is not valid");
-            throw new InvalidEntityCreation("Payment is not valid");
+            throw new InvalidCreationRuntimeException("Payment is not valid");
         }
 
         return paymentDao.save(mapper.mapPaymentToPaymentEntity(Payment));
@@ -57,7 +57,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<Payment> findAll(int currentPage, int recordsPerPage) {
-        List<PaymentEntity> result = paymentDao.findAll(currentPage,recordsPerPage);
+        List<PaymentEntity> result = paymentDao.findAll(currentPage, recordsPerPage);
         return result.isEmpty() ? Collections.emptyList()
                 : result.stream()
                 .map(mapper::mapPaymentEntityToPayment)

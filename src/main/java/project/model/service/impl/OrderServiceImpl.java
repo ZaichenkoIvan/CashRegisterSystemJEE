@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import project.model.dao.OrderDao;
 import project.model.domain.Order;
 import project.model.entity.OrderEntity;
-import project.model.exception.InvalidEntityCreation;
+import project.model.exception.InvalidCreationRuntimeException;
 import project.model.service.OrderService;
 import project.model.service.mapper.OrderMapper;
 
@@ -26,9 +26,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean createOrder(Order Order) {
-        if (Objects.isNull(Order) ) {
+        if (Objects.isNull(Order)) {
             LOGGER.warn("Order is not valid");
-            throw new InvalidEntityCreation("Order is not valid");
+            throw new InvalidCreationRuntimeException("Order is not valid");
         }
 
         return orderDao.save(mapper.mapOrderToOrderEntity(Order));

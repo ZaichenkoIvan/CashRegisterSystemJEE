@@ -19,15 +19,15 @@
         <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
     </select>
 </form>
-<form action = "login" method="post">
+<form action = "user" method="post">
     <label for="email"><fmt:message key="login.label.email" />:</label>
     <input type="text" id="email" name="email">
     <br>
     <label for="password"><fmt:message key="login.label.password" />:</label>
     <input type="password" id="password" name="password">
     <br>
-    <fmt:message key="login.button.submit" var="login" />
-    <input type="submit" name="commandSecurity" value="login">
+    <fmt:message key="login.button.login" var="login" />
+    <input type="submit" name="command" value="login">
 </form>
 
 <a href=register.jsp>

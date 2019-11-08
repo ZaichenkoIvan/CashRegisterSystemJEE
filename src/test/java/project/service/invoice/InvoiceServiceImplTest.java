@@ -11,7 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import project.model.dao.InvoiceDao;
 import project.model.domain.Invoice;
 import project.model.entity.InvoiceEntity;
-import project.model.exception.InvalidEntityCreation;
+import project.model.exception.InvalidCreationRuntimeException;
 import project.model.service.impl.InvoiceServiceImpl;
 import project.model.service.mapper.InvoiceMapper;
 
@@ -58,7 +58,7 @@ public class InvoiceServiceImplTest {
 
     @Test
     public void shouldThrowInvalidEntityCreationWithNullInvoice() {
-        exception.expect(InvalidEntityCreation.class);
+        exception.expect(InvalidCreationRuntimeException.class);
         exception.expectMessage("Invoice is not valid");
 
         service.createInvoice(null);

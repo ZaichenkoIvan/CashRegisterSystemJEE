@@ -2,7 +2,7 @@ package project.model.dao.connector;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.Logger;
-import project.model.exception.InvalidDatabaseConnectionException;
+import project.model.exception.InvalidDatabaseConnectionRuntimeException;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -38,7 +38,7 @@ public final class PoolConnector {
             return dataSource.getConnection();
         } catch (SQLException e) {
             LOGGER.error("Could not get connection from database", e);
-            throw new InvalidDatabaseConnectionException("Could not get connection from database ", e);
+            throw new InvalidDatabaseConnectionRuntimeException("Could not get connection from database ", e);
         }
     }
 }

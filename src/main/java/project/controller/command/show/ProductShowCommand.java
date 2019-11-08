@@ -21,21 +21,19 @@ public class ProductShowCommand implements Command {
 
         List<Product> products = productService.findAll(currentPage, recordsPerPage);
 
-        request.setAttribute("products", products);
-
         int rows = productService.getNumberOfRows();
-
         int nOfPages = rows / recordsPerPage;
-
         if (nOfPages % recordsPerPage > 0) {
             nOfPages++;
         }
 
+        request.setAttribute("products", products);
+        final String command = request.getParameter("command");
+        request.setAttribute("showProducts", command);
         request.setAttribute("noOfPages", nOfPages);
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("recordsPerPage", recordsPerPage);
-        final String command = request.getParameter("commandShow");
-        request.setAttribute("showProducts", command);
+
 
         return "listProducts.jsp";
     }

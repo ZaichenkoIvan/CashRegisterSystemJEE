@@ -24,9 +24,7 @@ public class UserShowCommand implements Command {
         request.setAttribute("users", users);
 
         int rows = userService.getNumberOfRows();
-
         int nOfPages = rows / recordsPerPage;
-
         if (nOfPages % recordsPerPage > 0) {
             nOfPages++;
         }
@@ -34,7 +32,7 @@ public class UserShowCommand implements Command {
         request.setAttribute("noOfPages", nOfPages);
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("recordsPerPage", recordsPerPage);
-        final String command = request.getParameter("commandShow");
+        final String command = request.getParameter("command");
         request.setAttribute("showUsers", command);
 
         return "listUsers.jsp";

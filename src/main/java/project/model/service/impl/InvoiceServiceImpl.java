@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import project.model.dao.InvoiceDao;
 import project.model.domain.Invoice;
 import project.model.entity.InvoiceEntity;
-import project.model.exception.InvalidEntityCreation;
+import project.model.exception.InvalidCreationRuntimeException;
 import project.model.service.InvoiceService;
 import project.model.service.mapper.InvoiceMapper;
 
@@ -26,9 +26,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public boolean createInvoice(Invoice Invoice) {
-        if (Objects.isNull(Invoice) ) {
+        if (Objects.isNull(Invoice)) {
             LOGGER.warn("Invoice is not valid");
-            throw new InvalidEntityCreation("Invoice is not valid");
+            throw new InvalidCreationRuntimeException("Invoice is not valid");
         }
 
         return invoiceDao.save(mapper.mapInvoiceToInvoiceEntity(Invoice));

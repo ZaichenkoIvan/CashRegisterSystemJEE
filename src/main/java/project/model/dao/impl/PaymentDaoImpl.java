@@ -70,7 +70,7 @@ public class PaymentDaoImpl extends AbstractDao<PaymentEntity> implements Paymen
         UserEntity user = UserEntity.builder()
                 .withId(payment.getInt(4))
                 .build();
-        return Optional.of(new PaymentEntity(payment.getInt(1),payment.getInt(2), invoiceEntity, user));
+        return Optional.of(new PaymentEntity(payment.getInt(1), payment.getInt(2), invoiceEntity, user));
     }
 
     @Override
