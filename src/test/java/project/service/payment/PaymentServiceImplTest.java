@@ -11,7 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import project.model.dao.PaymentDao;
 import project.model.domain.Payment;
 import project.model.entity.PaymentEntity;
-import project.model.exception.InvalidEntityCreation;
+import project.model.exception.InvalidCreationRuntimeException;
 import project.model.service.impl.PaymentServiceImpl;
 import project.model.service.mapper.PaymentMapper;
 
@@ -60,7 +60,7 @@ public class PaymentServiceImplTest {
 
     @Test
     public void shouldThrowInvalidEntityCreationWithNullPayment() {
-        exception.expect(InvalidEntityCreation.class);
+        exception.expect(InvalidCreationRuntimeException.class);
         exception.expectMessage("Payment is not valid");
 
         service.createPayment(null);
