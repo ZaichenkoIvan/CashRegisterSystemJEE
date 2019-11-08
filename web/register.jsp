@@ -19,7 +19,7 @@
         <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
     </select>
 </form>
-<form action = "login" method="post">
+<form action = "user" method="post">
     <label for="email"><fmt:message key="login.label.email" />:</label>
     <input type="text" id="email" name="email">
     <br>
@@ -36,7 +36,7 @@
     <input type="text" id="surname" name="surname">
     <br>
     <fmt:message key="login.button.submit" var="register" />
-    <input type="submit" name="commandSecurity" value="register">
+    <input type="submit" name="command" value="register">
 </form>
 
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
