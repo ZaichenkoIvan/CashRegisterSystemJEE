@@ -26,7 +26,7 @@
     <label for="password"><fmt:message key="login.label.password" />:</label>
     <input type="password" id="password" name="password">
     <br>
-    <fmt:message key="login.button.submit" var="login" />
+    <fmt:message key="login.button.login" var="login" />
     <input type="submit" name="command" value="login">
 </form>
 

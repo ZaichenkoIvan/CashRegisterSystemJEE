@@ -34,7 +34,7 @@
 </form>
 
 <form action = "user" method="post">
-  <%--<fmt:message key="login.button.submit" var="login" />--%>
+  <fmt:message key="user.button.logout" var="logout" />
   <input type="submit" name="command" value="logout">
 </form>
 

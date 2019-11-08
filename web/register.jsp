@@ -35,7 +35,7 @@
     <label for="surname"><fmt:message key="login.label.surname" />:</label>
     <input type="text" id="surname" name="surname">
     <br>
-    <fmt:message key="login.button.submit" var="register" />
+    <fmt:message key="login.button.register" var="register" />
     <input type="submit" name="command" value="register">
 </form>
 
