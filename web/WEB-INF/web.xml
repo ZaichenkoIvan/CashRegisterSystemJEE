@@ -8,6 +8,16 @@
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
 
+    <filter>
+        <filter-name>EncodingUtfFilter</filter-name>
+        <filter-class>project.controller.filter.EncodingUtfFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>EncodingUtfFilter</filter-name>
+        <url-pattern>/user</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>project.controller.servlet.UserServlet</servlet-class>
@@ -20,6 +30,10 @@
 
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
+        <location>/problem.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
         <location>/problem.jsp</location>
     </error-page>
 </web-app>
