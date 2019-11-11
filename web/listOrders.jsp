@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Payments</title>
+    <title>Orders</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
 </head>
 
@@ -14,17 +14,17 @@
     <table class="table table-striped table-bordered table-sm">
         <tr>
             <th>Id</th>
-            <th>Payment Value</th>
+            <th>Number</th>
+            <th>Product id</th>
             <th>Invoice id</th>
-            <th>User id</th>
         </tr>
 
-        <c:forEach items="${payments}" var="payment">
+        <c:forEach items="${orders}" var="order">
             <tr>
-                <td>${payment.getId()}</td>
-                <td>${payment.getPaymentValue()}</td>
-                <td>${payment.getInvoice().getId()}</td>
-                <td>${payment.getUser().getId()}</td>
+                <td>${order.getId()}</td>
+                <td>${order.getNumber()}</td>
+                <td>${order.getProduct().getId()}</td>
+                <td>${order.getInvoice().getId()}</td>
             </tr>
         </c:forEach>
     </table>
@@ -34,7 +34,7 @@
     <ul class="pagination">
         <c:if test="${currentPage != 1}">
             <li class="page-item"><a class="page-link"
-                                     href="user?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}&command=${showPayments}">Previous</a>
+                                     href="cash?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}&command=${showOrders}">Previous</a>
             </li>
         </c:if>
 
@@ -47,7 +47,7 @@
                 </c:when>
                 <c:otherwise>
                     <li class="page-item"><a class="page-link"
-                                             href="user?recordsPerPage=${recordsPerPage}&currentPage=${i}&command=${showPayments}">${i}</a>
+                                             href="cash?recordsPerPage=${recordsPerPage}&currentPage=${i}&command=${showOrders}">${i}</a>
                     </li>
                 </c:otherwise>
             </c:choose>
@@ -55,13 +55,13 @@
 
         <c:if test="${currentPage lt noOfPages}">
             <li class="page-item"><a class="page-link"
-                                     href="user?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}&command=${showPayments}">Next</a>
+                                     href="cash?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}&command=${showOrders}">Next</a>
             </li>
         </c:if>
     </ul>
 </nav>
 
-<a href=index.jsp>
+<a href=admin.jsp>
     <button type="submit" class="btn btn-primary">Back</button>
 </a>
 

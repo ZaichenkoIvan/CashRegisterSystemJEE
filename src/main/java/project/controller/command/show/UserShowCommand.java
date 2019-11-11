@@ -35,6 +35,6 @@ public class UserShowCommand implements Command {
         final String command = request.getParameter("command");
         request.setAttribute("showUsers", command);
 
-        return "admin/listUsers.jsp";
+        return "listUsers.jsp";
     }
 }

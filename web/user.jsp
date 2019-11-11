@@ -15,8 +15,8 @@
             <div>
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item active">
-                        <form action = "user" method="post">
-                            <fmt:message key="user.button.logout" var="login" />
+                        <form action = "" method="post">
+                            <fmt:message key="user.button.logout" var="logout" />
                             <input type="submit" class="btn btn-primary" name="command" value="logout">
                         </form>
                     </li>
@@ -38,7 +38,7 @@
         <div class="title-wrap">
             <h2 class="title">Show Info</h2>
 
-            <form action="user" class="col-md-4">
+            <form action="cash" class="col-md-4">
                 <input type="hidden" name="currentPage" value="1">
                 <input type="hidden" name="recordsPerPage" value="5">
 

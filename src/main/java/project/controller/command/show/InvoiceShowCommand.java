@@ -34,6 +34,6 @@ public class InvoiceShowCommand implements Command {
         final String command = request.getParameter("command");
         request.setAttribute("showInvoices", command);
 
-        return "admin/listInvoices.jsp";
+        return "listInvoices.jsp";
     }
 }

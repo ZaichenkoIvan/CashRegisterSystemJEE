@@ -22,9 +22,9 @@ public class LoginCommand implements Command {
         final User user = userService.login(email, password);
         final HttpSession session = request.getSession();
         session.setAttribute("user", user);
-        if(user.getRole()== Role.USER) {
-            return "index.jsp";
+        if (user.getRole() == Role.USER) {
+            return "user.jsp";
         }
-        return "admin/index.jsp";
+        return "admin.jsp";
     }
 }

@@ -35,6 +35,6 @@ public class OrderShowCommand implements Command {
         final String command = request.getParameter("command");
         request.setAttribute("showOrders", command);
 
-        return "admin/listOrders.jsp";
+        return "listOrders.jsp";
     }
 }

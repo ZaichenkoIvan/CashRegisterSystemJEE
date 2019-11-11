@@ -18,7 +18,7 @@
             <div>
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item active">
-                        <form action = "user" method="post">
+                        <form action = "cash" method="post">
                             <fmt:message key="user.button.logout" var="login" />
                             <input type="submit" class="btn btn-primary" name="command" value="logout">
                         </form>
@@ -69,7 +69,7 @@
                 <ul class="pagination">
                     <c:if test="${currentPage != 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="user?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}&command=${showUsers}">Previous</a>
+                                                 href="cash?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}&command=${showUsers}">Previous</a>
                         </li>
                     </c:if>
 
@@ -82,7 +82,7 @@
                             </c:when>
                             <c:otherwise>
                                 <li class="page-item"><a class="page-link"
-                                                         href="user?recordsPerPage=${recordsPerPage}&currentPage=${i}&command=${showUsers}">${i}</a>
+                                                         href="cash?recordsPerPage=${recordsPerPage}&currentPage=${i}&command=${showUsers}">${i}</a>
                                 </li>
                             </c:otherwise>
                         </c:choose>
@@ -90,16 +90,14 @@
 
                     <c:if test="${currentPage lt noOfPages}">
                         <li class="page-item"><a class="page-link"
-                                                 href="user?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}&command=${showUsers}">Next</a>
+                                                 href="cash?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}&command=${showUsers}">Next</a>
                         </li>
                     </c:if>
                 </ul>
             </nav>
-            <a href=index.jsp>
+            <a href=admin.jsp>
                 <button type="submit" class="btn btn-primary">Back</button>
             </a>
-
-
         </div>
     </div>
 </div>
@@ -115,7 +113,7 @@
     .banner {
         width: 100vw;
         min-height: 100vh;
-        background: url("../img/lemon.jpg") center center /cover;
+        background: url("img/lemon.jpg") center center /cover;
         background-repeat: no-repeat;
     }
     .btn-primary, .page-item.active .page-link {

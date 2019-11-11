@@ -38,7 +38,7 @@
     <ul class="pagination">
         <c:if test="${currentPage != 1}">
             <li class="page-item"><a class="page-link"
-                                     href="user?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}&command=${showProducts}">Previous</a>
+                                     href="cash?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}&command=${showProducts}">Previous</a>
             </li>
         </c:if>
 
@@ -51,7 +51,7 @@
                 </c:when>
                 <c:otherwise>
                     <li class="page-item"><a class="page-link"
-                                             href="user?recordsPerPage=${recordsPerPage}&currentPage=${i}&command=${showProducts}">${i}</a>
+                                             href="cash?recordsPerPage=${recordsPerPage}&currentPage=${i}&command=${showProducts}">${i}</a>
                     </li>
                 </c:otherwise>
             </c:choose>
@@ -59,13 +59,13 @@
 
         <c:if test="${currentPage lt noOfPages}">
             <li class="page-item"><a class="page-link"
-                                     href="user?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}&command=${showProducts}">Next</a>
+                                     href="cash?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}&command=${showProducts}">Next</a>
             </li>
         </c:if>
     </ul>
 </nav>
 
-<a href=admin/index.jsp>
+<a href=admin.jsp>
     <button type="submit" class="btn btn-primary">Back</button>
 </a>
 

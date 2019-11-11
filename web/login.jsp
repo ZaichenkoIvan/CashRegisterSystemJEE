@@ -56,7 +56,7 @@
 
 <!-- Login Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form class="modal-dialog" role="document" action="user" method="post">
+    <form class="modal-dialog" role="document" action="cash" method="post">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
@@ -83,7 +83,7 @@
 
 <!-- Registration Modal -->
 <div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form class="modal-dialog" role="document" action="user" method="post">
+    <form class="modal-dialog" role="document" action="cash" method="post">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
