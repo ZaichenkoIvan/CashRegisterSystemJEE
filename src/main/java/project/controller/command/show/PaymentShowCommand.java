@@ -35,6 +35,6 @@ public class PaymentShowCommand implements Command {
         request.setAttribute("recordsPerPage", recordsPerPage);
         request.setAttribute("noOfPages", nOfPages);
 
-        return "listPayments.jsp";
+        return "admin/listPayments.jsp";
     }
 }

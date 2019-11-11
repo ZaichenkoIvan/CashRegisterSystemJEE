@@ -65,7 +65,7 @@
     </ul>
 </nav>
 
-<a href=index.jsp>
+<a href=admin/index.jsp>
     <button type="submit" class="btn btn-primary">Back</button>
 </a>
 

@@ -2,6 +2,7 @@ package project.controller.command.user;
 
 import project.controller.command.Command;
 import project.model.domain.User;
+import project.model.entity.enums.Role;
 import project.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,9 @@ public class LoginCommand implements Command {
         final User user = userService.login(email, password);
         final HttpSession session = request.getSession();
         session.setAttribute("user", user);
-        return "index.jsp";
+        if(user.getRole()== Role.USER) {
+            return "index.jsp";
+        }
+        return "admin/index.jsp";
     }
 }

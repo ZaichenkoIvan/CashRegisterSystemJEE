@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import project.model.domain.User;
 import project.model.exception.InvalidRegistrationRuntimeException;
 
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,10 +12,10 @@ public class UserValidator implements Validator<User> {
 
     private static final String PASSWORD_REGEX = "[a-zA-Z0-9]{4,}";
     private static final String EMAIL_REGEX = "[a-zA-Z0-9]+[@][a-z]{5,}[.][a-z]{3}";
-   // private static final String NAME_REGEX = "[a-zA-Z0-9А-Яа-я()]{2,}/u";
+    private static final String NAME_REGEX = "[a-zA-Z0-9А-Яа-я()]{2,}/u";
     private static final Pattern PASSWORD_PATTERN = Pattern.compile(PASSWORD_REGEX);
     private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
-  //  private static final Pattern NAME_PATTERN = Pattern.compile(NAME_REGEX);
+    private static final Pattern NAME_PATTERN = Pattern.compile(NAME_REGEX);
 
     public void validate(User user) {
         if (user == null) {
@@ -48,21 +47,21 @@ public class UserValidator implements Validator<User> {
         }
     }
 
-//    private void validateName(String name) {
-//        Matcher matcher = NAME_PATTERN.matcher(name);
-//
-//        if (!matcher.find()) {
-//            LOGGER.warn("Incorrect name");
-//            throw new InvalidRegistrationRuntimeException("Incorrect name");
-//        }
-//    }
-//
-//    private void validateSurname(String surname) {
-//        Matcher matcher = NAME_PATTERN.matcher(surname);
-//
-//        if (!matcher.find()) {
-//            LOGGER.warn("Incorrect surname");
-//            throw new InvalidRegistrationRuntimeException("Incorrect surname");
-//        }
-//    }
+    private void validateName(String name) {
+        Matcher matcher = NAME_PATTERN.matcher(name);
+
+        if (!matcher.find()) {
+            LOGGER.warn("Incorrect name");
+            throw new InvalidRegistrationRuntimeException("Incorrect name");
+        }
+    }
+
+    private void validateSurname(String surname) {
+        Matcher matcher = NAME_PATTERN.matcher(surname);
+
+        if (!matcher.find()) {
+            LOGGER.warn("Incorrect surname");
+            throw new InvalidRegistrationRuntimeException("Incorrect surname");
+        }
+    }
 }
