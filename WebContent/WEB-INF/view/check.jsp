@@ -69,13 +69,6 @@
 				</tr>
 			</table>
 		</FORM>
-		<FORM method="POST">
-			<table>
-				<tr>
-					<td><input type="submit" class="button" name="btnCancelCheck" value=<fmt:message key="check.cancelcheck"/> />	</td>
-				</tr>
-			</table>
-		</FORM>
 		 <c:if test="${sessionScope.addcheckspecs.size() > '0'}">
 			<table class="table-border">
 				<tr>

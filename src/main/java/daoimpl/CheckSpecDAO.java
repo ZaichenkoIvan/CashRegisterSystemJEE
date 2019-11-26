@@ -85,21 +85,16 @@ public class CheckSpecDAO implements ICheckSpecDAO<Checkspec> {
 			}
 		}
 		return -1;
-	}	
-	
+	}
 
 	@Override
-    public List<Checkspec> findAll() {
-		return findAll(null);
-	}
-	
-	@Override
-    public List<Checkspec> findAll(String where) {
+    public List<Checkspec> findAllByCheckId(Long idCheck) {
     	List<Checkspec> checkspecs = new ArrayList<>();
 		try (Connection connection = poolConnection.getConnection();
 			PreparedStatement statement = connection
-					.prepareStatement("SELECT * FROM vcheckspec" + (where != null ? " WHERE " + where : "") + " ORDER BY id")) {
-			ResultSet resultSet = statement.executeQuery();			
+					.prepareStatement("SELECT * FROM vcheckspec  WHERE id_check = ? ORDER BY id")) {
+			statement.setLong(1, idCheck);
+			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				Checkspec checkspec = new Checkspec();
 				checkspec.setId(resultSet.getLong("id"));

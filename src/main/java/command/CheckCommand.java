@@ -26,10 +26,6 @@ public class CheckCommand implements Command {
         if (req.getParameter("btnCreateCheck") != null && checkspecs != null && checkspecs.size() > 0) {
             CheckService.addCheck((User) session.getAttribute("user"), checkspecs);
             req.setAttribute("addedCheck", true);
-            //session.setAttribute("addcheckspecs", null);
-            checkspecs.clear();
-        }
-        if (req.getParameter("btnCancelCheck") != null && checkspecs != null) {
             checkspecs.clear();
         }
         return null;

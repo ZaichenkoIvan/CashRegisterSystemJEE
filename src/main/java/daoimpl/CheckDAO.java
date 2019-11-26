@@ -62,35 +62,6 @@ public class CheckDAO implements ICheckDAO<Check> {
     }
 
     @Override
-    public List<Check> findAll() {
-        return findAll(null);
-    }
-
-    @Override
-    public List<Check> findAll(String where) {
-        List<Check> checks = new ArrayList<>();
-        try (Connection connection = poolConnection.getConnection();
-             Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM cashreg.check" + (where != null ? " WHERE " + where : "")
-                    + " ORDER BY id");
-            while (resultSet.next()) {
-                Check check = new Check();
-                check.setId(resultSet.getLong("id"));
-                check.setCrtime(resultSet.getDate("crtime"));
-                check.setCreator(resultSet.getLong("creator"));
-                check.setTotal(resultSet.getDouble("total"));
-                check.setDiscount(resultSet.getDouble("discount"));
-                check.setCanceled(resultSet.getInt("canceled"));
-                check.setRegistration(resultSet.getInt("registration"));
-                checks.add(check);
-            }
-        } catch (SQLException e) {
-            logger.error(e);
-        }
-        return checks;
-    }
-
-    @Override
     public void update(Check check) {
         if (check != null) {
             try (Connection connection = poolConnection.getConnection();

@@ -50,31 +50,6 @@ public class UserDAO implements IUserDAO<User> {
 	}
 
 	@Override
-	public List<User> findAll() {
-		return findAll(null);
-	}
-	
-	@Override
-    public List<User> findAll(String where) {
-		List<User> users = new ArrayList<>();
-		try (Connection connection = poolConnection.getConnection();
-			Statement statement = connection.createStatement()) {
-			ResultSet rs = statement.executeQuery("SELECT * FROM user" + (where != null ? " WHERE " + where : ""));
-			while (rs.next()) {
-				User user = new User();
-				user.setId(rs.getLong("id"));
-				user.setIdUserType(rs.getLong("id_user_type"));
-				//user.setPassword(rs.getString("password"));
-				user.setName(rs.getString("name"));
-				users.add(user);					
-			}				
-		} catch (SQLException e) {
-			logger.error(e);				
-		}
-		return users;
-    }
-	 
-	@Override
 	public void update(User user) {
 		if (user != null) {
 			try(Connection connection = poolConnection.getConnection();

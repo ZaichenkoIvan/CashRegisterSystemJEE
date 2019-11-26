@@ -31,10 +31,9 @@ public class CheckService {
         }
 
 
-
         if (existsGoods != null) {
 
-            if(quant>existsGoods.getQuant()){
+            if (quant > existsGoods.getQuant()) {
                 logger.info("Недостатня кількість товару");
                 throw new NotEnoughGoodsQuantRuntimeException("Недостатня кількість товару");
             }
@@ -74,5 +73,33 @@ public class CheckService {
             }
         }
         checkspecDAO.insertAll(checkspecs);
+    }
+
+    public static List<Checkspec> findAllCheckspecByCheckId(Long checkId) {
+        ICheckSpecDAO<Checkspec> checkspecDAO = DAOFactory.getCheckSpecDAO();
+        return checkspecDAO.findAllByCheckId(checkId);
+    }
+
+    public static Check findById(Long id) {
+        ICheckDAO<Check> checkDAO = DAOFactory.getCheckDAO();
+        return checkDAO.findById(id);
+    }
+
+    public static void cancelCheck(Check check) {
+        check.setCanceled(1);
+        ICheckDAO<Check> checkDAO = DAOFactory.getCheckDAO();
+        checkDAO.update(check);
+    }
+
+    public static void cancelCheckSpec(List<Checkspec> checkspecs, int checkspecnum, Check check){
+        checkspecs.get(checkspecnum - 1).setCanceled(1);
+        ICheckSpecDAO<Checkspec> checkspecDAO = DAOFactory.getCheckSpecDAO();
+        checkspecDAO.update(checkspecs.get(checkspecnum - 1));
+        double total = checkspecs.stream()
+                .filter(spec -> spec.getCanceled() == 0)
+                .mapToDouble(Checkspec::getTotal).sum();
+        check.setTotal(total);
+        ICheckDAO<Check> checkDAO = DAOFactory.getCheckDAO();
+        checkDAO.update(check);
     }
 }

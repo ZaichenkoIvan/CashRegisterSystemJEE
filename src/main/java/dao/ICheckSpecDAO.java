@@ -12,4 +12,6 @@ public interface ICheckSpecDAO<CheckSpec> extends IDAO<CheckSpec> {
 	int insertAll(List<Checkspec> specifications);
 
 	int insertAll(Connection connection, List<Checkspec> specifications);
+
+	List<CheckSpec> findAllByCheckId(Long idCheck);
 }

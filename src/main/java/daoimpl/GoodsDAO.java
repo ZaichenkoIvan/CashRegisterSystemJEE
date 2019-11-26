@@ -49,16 +49,6 @@ public class GoodsDAO implements IGoodsDAO<Goods> {
         return null;
     }
 
-    @Override
-    public List<Goods> findAll() {
-        return findAll(null);
-    }
-
-    @Override
-    public List<Goods> findAll(String where) {
-        return findAll(where, null, null);
-    }
-
     public List<Goods> findAll(Integer page, Integer recordsPerPage) {
         return findAll(null, page, recordsPerPage);
     }

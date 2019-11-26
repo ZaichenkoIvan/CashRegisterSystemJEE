@@ -52,30 +52,7 @@ public class FiscalDAO implements IFiscalDAO<Fiscal> {
 		    }
 		}
 		return null;
-	}	
-
-	@Override
-    public List<Fiscal> findAll() {
-		return findAll(null);
 	}
-	
-	@Override
-    public List<Fiscal> findAll(String where) {
-    	List<Fiscal> fiscals = new ArrayList<>();
-		try (Connection connection = poolConnection.getConnection();
-			Statement statement = connection.createStatement()) {
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM cashreg.fiscal" + (where != null ? " WHERE " + where : ""));			
-			while (resultSet.next()) {
-				Fiscal fiscal = new Fiscal();
-				fiscal.setId(resultSet.getLong("id"));
-				fiscal.setTotal(resultSet.getDouble("total"));
-				fiscals.add(fiscal);				
-			}
-		} catch (SQLException e) {
-			logger.error(e);
-		}
-		return fiscals;
-    }
 	
 	@Override
 	public void update(Fiscal fiscal) {
