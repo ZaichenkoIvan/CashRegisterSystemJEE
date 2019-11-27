@@ -77,8 +77,8 @@ public class GoodsDaoImpl extends AbstractGenericDao<Goods> implements GoodsDao 
         return insert(goods, INSERT);
     }
 
-    public List<Goods> findAll(Integer page, Integer recordsPerPage) {
-        return findPaginatedList(page, recordsPerPage, FIND_ALL);
+    public List<Goods> findAll(int page, int recordsPerPage) {
+        return findPaginatedList((page - 1) * recordsPerPage, recordsPerPage, FIND_ALL);
     }
 
     @Override

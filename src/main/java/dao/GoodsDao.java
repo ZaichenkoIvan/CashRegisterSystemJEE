@@ -9,7 +9,7 @@ public interface GoodsDao extends CrudDao<Goods> {
 
     Goods findGoods(String name);
 
-    List<Goods> findAll(Integer page, Integer recordsPerPage);
+    List<Goods> findAll(int page, int recordsPerPage);
 
     long count();
 

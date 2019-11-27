@@ -110,7 +110,7 @@ public class CheckServiceImpl implements CheckService {
             throw new InvalidDataRuntimeException("Check id is uncorrect");
         }
 
-        return checkDao.findById(id).orElseThrow(() -> null);
+        return checkDao.findById(id).orElseThrow(() -> new InvalidDataRuntimeException("Check id is uncorrect"));
     }
 
     @Override

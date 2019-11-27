@@ -108,7 +108,7 @@ public abstract class AbstractGenericDao<E> {
     }
 
     protected List<E> findPaginatedList(int startIdx, int amountElements, String query) {
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         List<E> list;
         try (Connection connection = connector.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
