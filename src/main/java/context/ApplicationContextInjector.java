@@ -26,6 +26,7 @@ public class ApplicationContextInjector {
     private static final GoodsDao GOODS_DAO = new GoodsDaoImpl(CONNECTOR);
     private static final UserDao USER_DAO = new UserDaoImpl(CONNECTOR);
     private static final UserTypeDao USER_TYPE_DAO = new UserTypeDaoImpl(CONNECTOR);
+    private static final ReportDao REPORT_DAO = new ReportDaoImpl(CONNECTOR, CHECK_DAO, FISCAL_DAO);
 
 //    private static final AdminMapper ADMIN_MAPPER = new AdminMapper();
 //    private static final BusMapper BUS_MAPPER = new BusMapper();
@@ -42,7 +43,7 @@ public class ApplicationContextInjector {
 //    private static final RouteValidator ROUTE_VALIDATOR = new RouteValidator();
 
     private static final CheckService CHECK_SERVICE = new CheckServiceImpl(GOODS_DAO, CHECK_DAO, CHECK_SPEC_DAO);
-    private static final ReportService REPORT_SERVICE = new ReportServiceImpl(CHECK_DAO, FISCAL_DAO, CONNECTOR);
+    private static final ReportService REPORT_SERVICE = new ReportServiceImpl(REPORT_DAO);
     private static final GoodsService GOODS_SERVICE = new GoodsServiceImpl(GOODS_DAO);
     private static final UserService USER_SERVICE = new UserServiceImpl(USER_DAO, USER_TYPE_DAO);
 

@@ -65,8 +65,7 @@
 					</tr>
 				</table>
 				<p class="reptitle">СЛУЖБОВИЙ ЧЕК</p>
-				<a class ="print-doc" href="javascript:(print());"> <fmt:message key="report.print"/></a>
-			</div>			
+			</div>
 		</c:if>
 		
 		<c:if test="${not empty sessionScope.user and sessionScope.user.idUserType == '2' and not empty sessionScope.zReport}">
@@ -138,8 +137,7 @@
 				</table>
 				<p>${sessionScope.zReport.printtime}</p>
 				<p class="reptitle">ФІСКАЛЬНИЙ ЧЕК</p>
-				<a class ="print-doc" href="javascript:(print());"> <fmt:message key="report.print"/></a>
-			</div>			
+			</div>
 		</c:if>
 	</body>
 </html>
