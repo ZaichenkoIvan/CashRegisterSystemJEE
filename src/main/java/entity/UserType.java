@@ -1,12 +1,8 @@
 package main.java.entity;
 
-import java.io.Serializable;
-
-public class UserType implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class UserType {
     private Long id;
-    private String type;    
+    private String type;
     private String description;
 
     public UserType() {
@@ -39,14 +35,14 @@ public class UserType implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || getClass() != obj.getClass())
-			return false;
-		UserType other = (UserType) obj;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        UserType other = (UserType) obj;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -58,5 +54,5 @@ public class UserType implements Serializable {
         int hash = 31;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
-    } 
+    }
 }

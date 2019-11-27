@@ -1,77 +1,72 @@
 package main.java.entity;
 
-import java.io.Serializable;
+public class Goods {
+    private Long id;
+    private int code;
+    private String name;
+    private double quant;
+    private double price;
+    private String measure;
+    private String comments;
 
-public class Goods implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
+    public Goods() {
+    }
 
-	private Long id;
-	private int code;
-	private String name;	
-	private double quant;
-	private double price;
-	private String measure;
-	private String comments;
+    public Long getId() {
+        return this.id;
+    }
 
-	public Goods() {
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Long getId() {
-		return this.id;
-	}
+    public int getCode() {
+        return this.code;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setCode(int code) {
+        this.code = code;
+    }
 
-	public int getCode() {
-		return this.code;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setCode(int code) {
-		this.code = code;
-	}	
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getMeasure() {
+        return this.measure;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setMeasure(String measure) {
+        this.measure = measure;
+    }
 
-	public String getMeasure() {
-		return this.measure;
-	}
+    public double getQuant() {
+        return this.quant;
+    }
 
-	public void setMeasure(String measure) {
-		this.measure = measure;
-	}
+    public void setQuant(double quant) {
+        this.quant = quant;
+    }
 
-	public double getQuant() {
-		return this.quant;
-	}
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-	public void setQuant(double quant) {
-		this.quant = quant;
-	}
-	
-	public void setPrice(double price) {
-		this.price = price;		
-	}
-	
-	public double getPrice() {
-		return this.price;
-	}
-	
-	public String getComments() {
-		return this.comments;
-	}
+    public double getPrice() {
+        return this.price;
+    }
 
-	public void setComments(String comments) {
-		this.comments = comments;
-	}	
+    public String getComments() {
+        return this.comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 
     @Override
     public int hashCode() {
@@ -80,16 +75,16 @@ public class Goods implements Serializable {
         return hash;
     }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || getClass() != obj.getClass())
-			return false;
-		Goods other = (Goods) obj;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Goods other = (Goods) obj;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
-		return true;
-	}
+        return true;
+    }
 }

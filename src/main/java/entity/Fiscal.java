@@ -1,10 +1,6 @@
 package main.java.entity;
 
-import java.io.Serializable;
-
-public class Fiscal implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Fiscal {
     private Long id;
     private Double total;
 
@@ -40,14 +36,14 @@ public class Fiscal implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || getClass() != obj.getClass())
-			return false;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
         Fiscal other = (Fiscal) obj;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
-    }    
+    }
 }

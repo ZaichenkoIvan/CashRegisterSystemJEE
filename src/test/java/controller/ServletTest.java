@@ -19,9 +19,9 @@
 //
 //import command.*;
 //import command.CommandFactory.Commands;
-//import daoimpl.UserDAO;
+//import daoimpl.UserDaoImpl;
 //import entity.User;
-//import service.UserService;
+//import service.UserServiceImpl;
 //
 ///**
 // * @author SergeyK
@@ -54,7 +54,7 @@
 //    	assertTrue(command.getCommand(Commands.CANCEL).getClass().equals(CancelCommand.class));
 //    }
 //
-//    @PrepareForTest( UserService.class )
+//    @PrepareForTest( UserServiceImpl.class )
 //	@Test
 //	public void loginTest() throws ServletException, IOException {
 //        when(request.getServletPath()).thenReturn("/");
@@ -66,25 +66,25 @@
 //        verify(dispatcher).forward(request, response);
 //        verify(request, times(1)).getParameter("btnLogin");
 //
-//        PowerMockito.mockStatic(UserService.class );
-//        when(UserService.findUser(any(String.class), any(String.class))).thenReturn(null);
+//        PowerMockito.mockStatic(UserServiceImpl.class );
+//        when(UserServiceImpl.findUser(any(String.class), any(String.class))).thenReturn(null);
 //        servlet.doPost(request, response);
 //        verify(request, atLeast(1)).getParameter("btnLogin");
 //        verify(request, atLeast(1)).getParameter("email");
-//        UserDAO userDao = mock(UserDAO.class);
+//        UserDaoImpl userDao = mock(UserDaoImpl.class);
 //        when(userDao.findUserByLogin(any(String.class))).thenReturn(null);
 //        servlet.doPost(request, response);
 //	}
 //
-//    @PrepareForTest(UserService.class )
+//    @PrepareForTest(UserServiceImpl.class )
 //    @Test
 //    public void registrationTest() throws ServletException, IOException {
 //        when(request.getServletPath()).thenReturn("/registration");
 //        when(request.getRequestDispatcher("/WEB-INF/view/registration.jsp")).thenReturn(dispatcher);
 //        servlet.doGet(request, response);
 //
-//        PowerMockito.mockStatic(UserService.class );
-//        when(UserService.registration(any(String.class), any(String.class), any(String.class))).thenReturn(new User());
+//        PowerMockito.mockStatic(UserServiceImpl.class );
+//        when(UserServiceImpl.registration(any(String.class), any(String.class), any(String.class))).thenReturn(new User());
 //        when(request.getParameter("btnReg")).thenReturn("Registration");
 //        servlet.doPost(request, response);
 //    }

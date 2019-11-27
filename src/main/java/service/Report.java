@@ -126,8 +126,6 @@ public class Report {
 	public double getNdsTotalC() {
 		return ndsTotalC;
 	}
-	// </editor-fold>
-
 
 	public class Detail {
 

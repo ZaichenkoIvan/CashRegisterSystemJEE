@@ -1,12 +1,8 @@
 package main.java.entity;
 
-import java.io.Serializable;
-
-public class Checkspec implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	private int canceled;
+public class Checkspec {
 	private Long id;
+	private int canceled;
 	private Long idCheck;
 	private Long idGood;
 	private int nds;

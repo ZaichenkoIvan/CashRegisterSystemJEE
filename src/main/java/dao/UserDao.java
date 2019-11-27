@@ -2,7 +2,7 @@ package main.java.dao;
 
 import main.java.entity.User;
 
-public interface IUserDAO<T> extends IDAO<T> {
+public interface UserDao extends CrudDao<User> {
 
     User findUser(String login, String password);
 
