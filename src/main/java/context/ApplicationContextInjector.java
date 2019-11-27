@@ -8,10 +8,12 @@ import main.java.service.CheckService;
 import main.java.service.GoodsService;
 import main.java.service.ReportService;
 import main.java.service.UserService;
+import main.java.service.encoder.EncoderPassword;
 import main.java.service.impl.CheckServiceImpl;
 import main.java.service.impl.GoodsServiceImpl;
 import main.java.service.impl.ReportServiceImpl;
 import main.java.service.impl.UserServiceImpl;
+import main.java.service.validator.UserValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -28,24 +30,15 @@ public class ApplicationContextInjector {
     private static final UserTypeDao USER_TYPE_DAO = new UserTypeDaoImpl(CONNECTOR);
     private static final ReportDao REPORT_DAO = new ReportDaoImpl(CONNECTOR, CHECK_DAO, FISCAL_DAO);
 
-//    private static final AdminMapper ADMIN_MAPPER = new AdminMapper();
-//    private static final BusMapper BUS_MAPPER = new BusMapper();
-//    private static final DriverMapper DRIVER_MAPPER = new DriverMapper();
-//    private static final RouteMapper ROUTE_MAPPER = new RouteMapper();
-//    private static final ScheduleMapper SCHEDULE_MAPPER = new ScheduleMapper();
-//    private static final UserMapper USER_MAPPER = new UserMapper();
+    private static final EncoderPassword ENCODER_PASSWORD = new EncoderPassword();
 
-//    private static final EncoderPassword ENCODER_PASSWORD = new EncoderPassword();
-
-//    private static final AdminValidator ADMIN_VALIDATOR = new AdminValidator();
-//    private static final BusValidator BUS_VALIDATOR = new BusValidator();
-//    private static final DriverValidator DRIVER_VALIDATOR = new DriverValidator();
-//    private static final RouteValidator ROUTE_VALIDATOR = new RouteValidator();
+    private static final UserValidator USER_VALIDATOR = new UserValidator();
 
     private static final CheckService CHECK_SERVICE = new CheckServiceImpl(GOODS_DAO, CHECK_DAO, CHECK_SPEC_DAO);
     private static final ReportService REPORT_SERVICE = new ReportServiceImpl(REPORT_DAO);
     private static final GoodsService GOODS_SERVICE = new GoodsServiceImpl(GOODS_DAO);
-    private static final UserService USER_SERVICE = new UserServiceImpl(USER_DAO, USER_TYPE_DAO);
+    private static final UserService USER_SERVICE =
+            new UserServiceImpl(USER_DAO, USER_TYPE_DAO, ENCODER_PASSWORD, USER_VALIDATOR);
 
     public static Map<String, Command> getNameCommandToCommands() {
         return NAME_COMMAND_TO_COMMANDS;

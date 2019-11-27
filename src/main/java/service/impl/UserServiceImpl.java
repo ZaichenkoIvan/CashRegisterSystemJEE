@@ -4,7 +4,10 @@ import main.java.dao.UserDao;
 import main.java.dao.UserTypeDao;
 import main.java.entity.User;
 import main.java.exception.InvalidDataRuntimeException;
+import main.java.exception.UserNotExistRuntimeException;
 import main.java.service.UserService;
+import main.java.service.encoder.EncoderPassword;
+import main.java.service.validator.UserValidator;
 import org.apache.log4j.Logger;
 
 import java.util.Objects;
@@ -14,10 +17,15 @@ public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
     private final UserTypeDao userTypeDao;
+    private final EncoderPassword encoderPassword;
+    private final UserValidator userValidator;
 
-    public UserServiceImpl(UserDao userDao, UserTypeDao userTypeDao) {
+    public UserServiceImpl(UserDao userDao, UserTypeDao userTypeDao, EncoderPassword encoderPassword,
+                           UserValidator userValidator) {
         this.userDao = userDao;
         this.userTypeDao = userTypeDao;
+        this.encoderPassword = encoderPassword;
+        this.userValidator = userValidator;
     }
 
     public User findUser(String login, String password) {
@@ -26,7 +34,15 @@ public class UserServiceImpl implements UserService {
             throw new InvalidDataRuntimeException("User data for finding is uncorrected");
         }
 
-        return userDao.findUser(login, password);
+        String encodedPassword = encoderPassword.encode(password);
+        User user = userDao.findUser(login, password);
+
+        if (!user.getPassword().equals(encodedPassword)) {
+            LOGGER.error("User with this login and password is not exist");
+            throw new UserNotExistRuntimeException("User with this login and password is not exist");
+        }
+
+        return user;
     }
 
     public User registration(String userName, String login, String password) {
@@ -39,13 +55,14 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
+        String encodedPassword = encoderPassword.encode(password);
         User user = new User();
         user.setName(userName);
         user.setLogin(login);
-        user.setPassword(password);
+        user.setPassword(encodedPassword);
+        userValidator.validate(user);
         user.setIdUserType(userTypeDao.findUserType("cashier"));
         userDao.insert(user);
-        user.setPassword(null);
 
         return user;
     }
