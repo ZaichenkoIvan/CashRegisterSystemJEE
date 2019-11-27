@@ -18,9 +18,12 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
             "(login, password, name, id_user_type) VALUES (?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE user SET login=?, password=?, name=?, id_user_type=? WHERE id=?";
     private static final String FIND_BY_LOGIN = "SELECT * FROM user WHERE login = ?";
-    private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT u.*, t.id AS tid, t.type, t.description FROM user u" +
-            "INNER JOIN user_type t ON t.id = u.id_user_type" +
-            "WHERE u.login = ? AND u.password = ?";
+//    private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT u.*, t.id AS tid, t.type, t.description FROM user u" +
+//            "INNER JOIN user_type t ON t.id = u.id_user_type" +
+//            "WHERE u.login = ? AND u.password = ?";
+        private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM user " +
+            "INNER JOIN user_type ON user_type.id = user.id_user_type " +
+            "WHERE user.login = ? AND user.password = ?";
 
     public UserDaoImpl(PoolConnection poolConnection) {
         super(poolConnection);
@@ -55,7 +58,7 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
         User user = new User();
         try {
             user.setId(resultSet.getLong("id"));
-            user.setLogin(resultSet.getString(""));
+            user.setLogin(resultSet.getString("login"));
             user.setIdUserType(resultSet.getLong("id_user_type"));
             user.setName(resultSet.getString("name"));
         } catch (SQLException e) {
@@ -97,11 +100,12 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
             if (resultSet.first()) {
                 User user = new User();
                 UserType userType = new UserType();
-                user.setId(resultSet.getLong("id"));
+                user.setId(resultSet.getLong("user.id"));
                 user.setLogin(login);
                 user.setIdUserType(resultSet.getLong("id_user_type"));
                 user.setName(resultSet.getString("name"));
-                userType.setId(resultSet.getLong("tid"));
+                user.setPassword(resultSet.getString("password"));
+                userType.setId(resultSet.getLong("id_user_type"));
                 userType.setType(resultSet.getString("type"));
                 userType.setDescription(resultSet.getString("description"));
                 user.setUserType(userType);

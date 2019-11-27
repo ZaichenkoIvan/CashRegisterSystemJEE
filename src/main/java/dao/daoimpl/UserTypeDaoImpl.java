@@ -14,7 +14,7 @@ public class UserTypeDaoImpl extends AbstractGenericDao<UserType> implements Use
     private static final String INSERT = "INSERT INTO user_type " +
             "(type, description) values(?, ?)";
     private static final String UPDATE = "UPDATE user_type SET type=?, description=? WHERE id=?";
-    private static final String FIND_BY_TYPE = "SELECT id FROM user_type WHERE type = ?";
+    private static final String FIND_BY_TYPE = "SELECT * FROM cashreg.user_type WHERE type = ?";
 
     public UserTypeDaoImpl(PoolConnection poolConnection) {
         super(poolConnection);
@@ -45,7 +45,16 @@ public class UserTypeDaoImpl extends AbstractGenericDao<UserType> implements Use
 
     @Override
     protected UserType parseToOne(ResultSet resultSet) {
-        return null;
+        UserType userType = new UserType();
+        try {
+            userType.setId(resultSet.getLong("id"));
+            userType.setType(resultSet.getString("type"));
+            userType.setDescription(resultSet.getString("description"));
+            return userType;
+        } catch (SQLException e) {
+            LOGGER.error("Not find user type in db", e);
+            throw new DatabaseRuntimeException("Not find user type in db", e);
+        }
     }
 
     @Override

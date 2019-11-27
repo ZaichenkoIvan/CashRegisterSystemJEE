@@ -89,7 +89,7 @@ public class ApplicationContextInjector {
                 }
                 break;
             case "/cancel":
-                getNameCommandToCommands().get("CANCEL");
+                return getNameCommandToCommands().get("CANCEL");
             default:
                 return null;
         }

@@ -20,7 +20,7 @@ public class GoodsDaoImpl extends AbstractGenericDao<Goods> implements GoodsDao 
     private static final String FIND_BY_ID = "SELECT * FROM goods WHERE id = ?";
     private static final String FIND_BY_CODE = "SELECT * FROM goods WHERE code = ?";
     private static final String FIND_BY_NAME = "SELECT * FROM goods WHERE lower(name) = ?";
-    private static final String COUNT = "SELECT COUNT(*) AS count FROM cashreg.goods";
+    private static final String COUNT = "SELECT COUNT(*) FROM cashreg.goods";
 
 
     public GoodsDaoImpl(PoolConnection poolConnection) {
