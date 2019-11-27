@@ -21,14 +21,27 @@
     <url-pattern>/cancel</url-pattern>
     <url-pattern>/logout</url-pattern>
   </servlet-mapping>
+
   <filter>
     <filter-name>ReqFilter</filter-name>
-    <filter-class>main.java.controller.ReqFilter</filter-class>
+    <filter-class>main.java.controller.filter.ReqFilter</filter-class>
   </filter>
+
   <filter-mapping>
     <filter-name>ReqFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
+  <filter>
+    <filter-name>LocaleFilter</filter-name>
+    <filter-class>main.java.controller.filter.LocaleFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>LocaleFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <error-page>
     <location>/WEB-INF/view/error.jsp</location>
   </error-page>
