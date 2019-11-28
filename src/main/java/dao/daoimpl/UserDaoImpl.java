@@ -17,13 +17,9 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
     private static final String INSERT = "INSERT INTO user" +
             "(login, password, name, id_user_type) VALUES (?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE user SET login=?, password=?, name=?, id_user_type=? WHERE id=?";
-    private static final String FIND_BY_LOGIN = "SELECT * FROM user WHERE login = ?";
-//    private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT u.*, t.id AS tid, t.type, t.description FROM user u" +
-//            "INNER JOIN user_type t ON t.id = u.id_user_type" +
-//            "WHERE u.login = ? AND u.password = ?";
-        private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM user " +
+        private static final String FIND_BY_LOGIN = "SELECT * FROM user " +
             "INNER JOIN user_type ON user_type.id = user.id_user_type " +
-            "WHERE user.login = ? AND user.password = ?";
+            "WHERE user.login = ?";
 
     public UserDaoImpl(PoolConnection poolConnection) {
         super(poolConnection);
@@ -59,6 +55,7 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
         try {
             user.setId(resultSet.getLong("id"));
             user.setLogin(resultSet.getString("login"));
+            user.setPassword(resultSet.getString("password"));
             user.setIdUserType(resultSet.getLong("id_user_type"));
             user.setName(resultSet.getString("name"));
         } catch (SQLException e) {
@@ -86,16 +83,10 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
 
     @Override
     public User findUserByLogin(String login) {
-        return findByStringParam(login, FIND_BY_LOGIN);
-    }
-
-    @Override
-    public User findUser(String login, String password) {
         try (Connection connection = connector.getConnection();
              PreparedStatement statement = connection
-                     .prepareStatement(FIND_BY_LOGIN_AND_PASSWORD)) {
+                     .prepareStatement(FIND_BY_LOGIN)) {
             statement.setString(1, login);
-            statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.first()) {
                 User user = new User();

@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
         this.userValidator = userValidator;
     }
 
+    @Override
     public User findUser(String login, String password) {
         if (Objects.isNull(login) || Objects.isNull(password)) {
             LOGGER.error("User data for finding is uncorrected");
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserService {
         }
 
         String encodedPassword = encoderPassword.encode(password);
-        User user = userDao.findUser(login, password);
+        User user = userDao.findUserByLogin(login);
 
         if (!user.getPassword().equals(encodedPassword)) {
             LOGGER.error("User with this login and password is not exist");
@@ -45,6 +46,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
     public User registration(String userName, String login, String password) {
         if (Objects.isNull(login) || Objects.isNull(password)) {
             LOGGER.error("User data for registration is uncorrected");
@@ -59,8 +61,10 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(userName);
         user.setLogin(login);
-        user.setPassword(encodedPassword);
+        user.setPassword(password);
         userValidator.validate(user);
+
+        user.setPassword(encodedPassword);
         user.setIdUserType(userTypeDao.findUserType("cashier"));
         userDao.insert(user);
 
