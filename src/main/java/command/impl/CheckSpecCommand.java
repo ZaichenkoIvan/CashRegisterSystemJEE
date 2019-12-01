@@ -28,17 +28,15 @@ public class CheckSpecCommand implements Command {
 			session.setAttribute("addcheckspecs", checkspecs);
 		}
 		String xcode = req.getParameter("xcode");
-		String xname = req.getParameter("xname");
+//		String xname = req.getParameter("xname");
 		try {
 			Double quant = Double.valueOf(req.getParameter("quant"));			
-			Checkspec spec = checkService.addCheckSpec(xcode, xname, quant, req.getParameter("nds"));
+			Checkspec spec = checkService.addCheckSpec(xcode, quant, req.getParameter("nds"));
 			if (spec != null) {
 				checkspecs.add(spec);
 			} else {
 				if (xcode != null && !xcode.isEmpty()) {
 					req.setAttribute("goodsCodeNotFound", xcode);
-				} else {
-					req.setAttribute("goodsNameNotFound", xname);
 				}
 			}
 		} catch (NumberFormatException e) {

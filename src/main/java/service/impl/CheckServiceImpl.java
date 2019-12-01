@@ -31,7 +31,7 @@ public class CheckServiceImpl implements CheckService {
     }
 
     @Override
-    public Checkspec addCheckSpec(String xcode, String xname, Double quant, String nds) {
+    public Checkspec addCheckSpec(String xcode, Double quant, String nds) {
         if (Objects.isNull(nds) || Integer.valueOf(nds) < 0 || Integer.valueOf(nds) > 100
                 || quant < 0 || quant > 100000) {
             LOGGER.error("Data of checkspec is uncorrected");
@@ -43,8 +43,6 @@ public class CheckServiceImpl implements CheckService {
         if (xcode != null && !xcode.isEmpty()) {
             code = Integer.parseInt(xcode);
             existsGoods = goodsDao.findGoods(code);
-        } else if (xname != null && !xname.isEmpty()) {
-            existsGoods = goodsDao.findGoods(xname);
         }
 
         if (existsGoods != null) {

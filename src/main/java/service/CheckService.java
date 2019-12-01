@@ -7,7 +7,7 @@ import main.java.entity.User;
 import java.util.List;
 
 public interface CheckService {
-    Checkspec addCheckSpec(String xcode, String xname, Double quant, String nds);
+    Checkspec addCheckSpec(String xcode, Double quant, String nds);
 
     void addCheck(User user, List<Checkspec> checkspecs);
 
