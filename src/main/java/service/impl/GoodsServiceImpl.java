@@ -22,7 +22,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Long addGoods(int code, String name, double quant, double price, String measure, String comments) {
         if (quant < 0 || price < 0 || quant > 100000 || price > 100000 || code < 0) {
-            LOGGER.error("Good data is uncorrected");
+            LOGGER.warn("Good data is uncorrected");
             throw new InvalidDataRuntimeException("Good data is uncorrected");
         }
 
@@ -35,18 +35,10 @@ public class GoodsServiceImpl implements GoodsService {
         goods.setComments(comments);
         Goods existsGood = goodsDao.findGoods(code);
         if (existsGood != null) {
-            LOGGER.info("Товар с кодом " + code + " уже существует");
+            LOGGER.warn("Товар с кодом " + code + " уже существует");
             return -1L;
-        } else {
-            existsGood = goodsDao.findGoods(name);
-            if (existsGood != null) {
-                LOGGER.info("Товар " + name + " уже существует");
-                return -2L;
-            } else {
-                LOGGER.info("Товар добавлен");
-                return goodsDao.insert(goods);
-            }
         }
+        return goodsDao.insert(goods);
     }
 
     @Override
@@ -64,7 +56,7 @@ public class GoodsServiceImpl implements GoodsService {
     public void changeGoods(Integer changecode, Double changequant, Double changeprice) {
         if (Objects.isNull(changequant) || Objects.isNull(changeprice) || changequant < 0 || changeprice < 0 ||
                 changequant > 100000 || changeprice > 100000 || changecode < 0) {
-            LOGGER.error("Good data for update is uncorrected");
+            LOGGER.warn("Good data for update is uncorrected");
             throw new InvalidDataRuntimeException("Good data for update is uncorrected");
         }
 

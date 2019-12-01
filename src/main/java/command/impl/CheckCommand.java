@@ -23,7 +23,7 @@ public class CheckCommand implements Command {
         HttpSession session = req.getSession();
         @SuppressWarnings("unchecked")
         List<Checkspec> checkspecs = (List<Checkspec>) session.getAttribute("addcheckspecs");
-        if (req.getParameter("btnCreateCheck") != null && checkspecs != null && checkspecs.size() > 0) {
+        if (req.getParameter("btnCreateCheck") != null) {
             checkService.addCheck((User) session.getAttribute("user"), checkspecs);
             req.setAttribute("addedCheck", true);
             checkspecs.clear();

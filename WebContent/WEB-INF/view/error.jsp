@@ -26,8 +26,8 @@
 	</c:if>
 	<c:if test="${pageContext.errorData.statusCode != 404}">
 		<h1><fmt:message key="error.title"/>.</h1>
-	  	Url: ${pageContext.errorData.requestURI} is failed  <br/>
-	  	Servlet name: ${pageContext.errorData.servletName}  <br/>
+	  	<%--Url: ${pageContext.errorData.requestURI} is failed  <br/>--%>
+	  	<%--Servlet name: ${pageContext.errorData.servletName}  <br/>--%>
 	  	Status code: ${pageContext.errorData.statusCode}  <br/>
 	  	Exception: ${pageContext.exception}  <br/>
 	  	Message from exception: ${pageContext.exception.message}

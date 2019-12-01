@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUser(String login, String password) {
         if (Objects.isNull(login) || Objects.isNull(password)) {
-            LOGGER.error("User data for finding is uncorrected");
+            LOGGER.warn("User data for finding is uncorrected");
             throw new InvalidDataRuntimeException("User data for finding is uncorrected");
         }
 
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
         User user = userDao.findUserByLogin(login);
 
         if (!user.getPassword().equals(encodedPassword)) {
-            LOGGER.error("User with this login and password is not exist");
+            LOGGER.warn("User with this login and password is not exist");
             throw new UserNotExistRuntimeException("User with this login and password is not exist");
         }
 
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User registration(String userName, String login, String password) {
         if (Objects.isNull(login) || Objects.isNull(password)) {
-            LOGGER.error("User data for registration is uncorrected");
+            LOGGER.warn("User data for registration is uncorrected");
             throw new InvalidDataRuntimeException("User data for registration is uncorrected");
         }
 

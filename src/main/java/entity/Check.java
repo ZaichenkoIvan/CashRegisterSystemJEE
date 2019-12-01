@@ -108,9 +108,6 @@ public class Check {
         if (obj == null || getClass() != obj.getClass())
             return false;
         Check other = (Check) obj;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 }

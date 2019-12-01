@@ -24,10 +24,9 @@ public class RegistrationCommand implements Command {
 		User user = userService.registration(req.getParameter("name"), req.getParameter("email"), req.getParameter("password"));
 		if(user != null) {
 			req.getSession().setAttribute("user", user);
-			LOGGER.info("Регистрация нового пользователя " + req.getParameter("name"));
 			return "check";
 		} else {
-			LOGGER.info("Регистрация не удалась. Пользователь с таким email уже существует");
+			LOGGER.warn("User with this email exist");
 			req.setAttribute("existsLogin",  req.getParameter("email"));
 			return null;
 		}		
