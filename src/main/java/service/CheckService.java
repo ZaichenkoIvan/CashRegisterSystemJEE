@@ -1,13 +1,13 @@
 package main.java.service;
 
-import main.java.entity.Check;
-import main.java.entity.Checkspec;
-import main.java.entity.User;
+import main.java.domain.Check;
+import main.java.domain.Checkspec;
+import main.java.domain.User;
 
 import java.util.List;
 
 public interface CheckService {
-    Checkspec addCheckSpec(Integer xcode, Double quant, String nds);
+    Checkspec addCheckSpec(Integer code, Double quant, String nds);
 
     void addCheck(User user, List<Checkspec> checkspecs);
 

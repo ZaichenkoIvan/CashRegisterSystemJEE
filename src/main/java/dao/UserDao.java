@@ -1,7 +1,9 @@
 package main.java.dao;
 
-import main.java.entity.User;
+import main.java.entity.UserEntity;
 
-public interface UserDao extends CrudDao<User> {
-    User findUserByLogin(String login);
+import java.util.Optional;
+
+public interface UserDao extends CrudDao<UserEntity> {
+    Optional<UserEntity> findUserByLogin(String login);
 }

@@ -1,8 +1,8 @@
 package main.java.command.impl;
 
 import main.java.command.Command;
-import main.java.entity.Check;
-import main.java.entity.Checkspec;
+import main.java.domain.Check;
+import main.java.domain.Checkspec;
 import main.java.service.CheckService;
 import main.java.service.Report;
 import main.java.service.ReportService;
@@ -24,15 +24,20 @@ public class CancelCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String url =null;
+        String url = null;
         HttpSession session = req.getSession();
         if (req.getParameter("btnSearchCheck") != null) {
             Long checkid = Long.valueOf(req.getParameter("checkid"));
             Check check = checkService.findById(checkid);
             List<Checkspec> checkspecs = checkService.findAllCheckspecByCheckId(checkid);
+            if (check != null) {
                 session.setAttribute("check", check);
                 session.setAttribute("checkspecs", checkspecs);
                 session.setAttribute("checkfind", null);
+            } else {
+                session.setAttribute("check", null);
+                session.setAttribute("checkfind", checkid);
+            }
             url = "cancel";
         }
         if (req.getParameter("btnCancelCheck") != null) {
@@ -55,14 +60,14 @@ public class CancelCommand implements Command {
             }
             url = "cancel";
         }
-
         if (req.getParameter("btnXReport") != null) {
             Report xReport = reportService.getDataReport();
             session.setAttribute("xReport", xReport);
             session.setAttribute("zReport", null);
             url = "report";
         } else if (req.getParameter("btnZReport") != null) {
-            Report zReport = reportService.getDataZReport();
+            Report zReport;
+            zReport = reportService.getDataZReport();
             session.setAttribute("xReport", null);
             session.setAttribute("zReport", zReport);
 

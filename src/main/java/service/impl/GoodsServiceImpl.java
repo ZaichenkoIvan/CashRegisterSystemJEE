@@ -1,22 +1,28 @@
 package main.java.service.impl;
 
 import main.java.dao.GoodsDao;
-import main.java.entity.Goods;
+import main.java.domain.Goods;
+import main.java.entity.GoodsEntity;
 import main.java.exception.InvalidDataRuntimeException;
 import main.java.service.GoodsService;
+import main.java.service.mapper.GoodMapper;
 import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class GoodsServiceImpl implements GoodsService {
 
     private static final Logger LOGGER = Logger.getLogger(GoodsServiceImpl.class);
 
     private final GoodsDao goodsDao;
+    private final GoodMapper goodMapper;
 
-    public GoodsServiceImpl(GoodsDao goodsDao) {
+    public GoodsServiceImpl(GoodsDao goodsDao, GoodMapper goodMapper) {
         this.goodsDao = goodsDao;
+        this.goodMapper = goodMapper;
     }
 
     @Override
@@ -33,18 +39,23 @@ public class GoodsServiceImpl implements GoodsService {
         goods.setPrice(price);
         goods.setMeasure(measure);
         goods.setComments(comments);
-        Goods existsGood = goodsDao.findGoods(code);
-        if (existsGood != null) {
+        Optional<GoodsEntity> existsGood = goodsDao.findGoods(code);
+
+        if (existsGood.isPresent()) {
             LOGGER.warn("Товар с кодом " + code + " уже существует");
             return -1L;
         }
-        return goodsDao.insert(goods);
+
+        GoodsEntity goodsEntity = goodMapper.goodToGoodEntity(goods);
+        return goodsDao.insert(goodsEntity);
     }
 
     @Override
     public List<Goods> view(int page, int recordsPerPage) {
-        List<Goods> goods = goodsDao.findAll(page, recordsPerPage);
-        return (goods.size() > 0 ? goods : null);
+        List<GoodsEntity> goods = goodsDao.findAll(page, recordsPerPage);
+        return goods.stream()
+                .map(goodMapper::goodEntityToGood)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -60,11 +71,11 @@ public class GoodsServiceImpl implements GoodsService {
             throw new InvalidDataRuntimeException("Good data for update is uncorrected");
         }
 
-        Goods goods = goodsDao.findGoods(changecode);
-        if (Objects.nonNull(goods)) {
-            goods.setQuant(changequant);
-            goods.setPrice(changeprice);
-            goodsDao.update(goods);
+        Optional<GoodsEntity> goods = goodsDao.findGoods(changecode);
+        if (goods.isPresent()) {
+            goods.get().setQuant(changequant);
+            goods.get().setPrice(changeprice);
+            goodsDao.update(goods.get());
         }
     }
 }

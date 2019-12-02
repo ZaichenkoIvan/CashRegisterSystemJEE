@@ -3,7 +3,7 @@ package main.java.dao.daoimpl;
 import main.java.dao.AbstractGenericDao;
 import main.java.dao.CheckSpecDao;
 import main.java.dao.PoolConnection;
-import main.java.entity.Checkspec;
+import main.java.entity.CheckspecEntity;
 import main.java.exception.DatabaseRuntimeException;
 
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class CheckSpecDaoImpl extends AbstractGenericDao<Checkspec> implements CheckSpecDao {
+public class CheckSpecDaoImpl extends AbstractGenericDao<CheckspecEntity> implements CheckSpecDao {
     private static final String INSERT = "INSERT INTO checkspec" +
             "(id_check, id_good, quant, price, total, nds, ndstotal, canceled) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String FIND_ALL_BY_CHECK_ID = "SELECT * FROM vcheckspec  WHERE id_check = ? ORDER BY id";
@@ -26,7 +26,7 @@ public class CheckSpecDaoImpl extends AbstractGenericDao<Checkspec> implements C
     }
 
     @Override
-    protected void setInsertProperties(PreparedStatement statement, Checkspec checkspec) {
+    protected void setInsertProperties(PreparedStatement statement, CheckspecEntity checkspec) {
         try {
             statement.setLong(1, checkspec.getIdCheck());
             statement.setLong(2, checkspec.getIdGood());
@@ -43,7 +43,7 @@ public class CheckSpecDaoImpl extends AbstractGenericDao<Checkspec> implements C
     }
 
     @Override
-    protected void setUpdateProperties(PreparedStatement statement, Checkspec checkspec) {
+    protected void setUpdateProperties(PreparedStatement statement, CheckspecEntity checkspec) {
         setInsertProperties(statement, checkspec);
         try {
             statement.setLong(9, checkspec.getId());
@@ -54,8 +54,8 @@ public class CheckSpecDaoImpl extends AbstractGenericDao<Checkspec> implements C
     }
 
     @Override
-    protected Checkspec parseToOne(ResultSet resultSet) {
-        Checkspec checkspec = new Checkspec();
+    protected CheckspecEntity parseToOne(ResultSet resultSet) {
+        CheckspecEntity checkspec = new CheckspecEntity();
         try {
             checkspec.setId(resultSet.getLong("id"));
             checkspec.setIdCheck(resultSet.getLong("id_check"));
@@ -77,30 +77,30 @@ public class CheckSpecDaoImpl extends AbstractGenericDao<Checkspec> implements C
     }
 
     @Override
-    public Long insert(Checkspec checkspec) {
+    public Long insert(CheckspecEntity checkspec) {
         return insert(checkspec, INSERT);
     }
 
     @Override
-    public void insertAll(List<Checkspec> specifications) {
-        for (Checkspec checkspec : specifications
+    public void insertAll(List<CheckspecEntity> specifications) {
+        for (CheckspecEntity checkspec : specifications
         ) {
             insert(checkspec);
         }
     }
 
     @Override
-    public List<Checkspec> findAllByCheckId(Long idCheck) {
+    public List<CheckspecEntity> findAllByCheckId(Long idCheck) {
         return findListByLongParam(idCheck, FIND_ALL_BY_CHECK_ID);
     }
 
     @Override
-    public void update(Checkspec checkspec) {
+    public void update(CheckspecEntity checkspec) {
         update(checkspec, UPDATE_BY_ID);
     }
 
     @Override
-    public Optional<Checkspec> findById(Long id) {
+    public Optional<CheckspecEntity> findById(Long id) {
         return Optional.ofNullable(findByLongParam(id, FIND_BY_ID));
     }
 }

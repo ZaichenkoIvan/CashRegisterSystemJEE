@@ -1,17 +1,16 @@
 package main.java.dao;
 
-import main.java.entity.Goods;
+import main.java.entity.GoodsEntity;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface GoodsDao extends CrudDao<Goods> {
-    Goods findGoods(int code);
+public interface GoodsDao extends CrudDao<GoodsEntity> {
+    Optional<GoodsEntity> findGoods(int code);
 
-    Goods findGoods(String name);
-
-    List<Goods> findAll(int page, int recordsPerPage);
+    List<GoodsEntity> findAll(int page, int recordsPerPage);
 
     long count();
 
-    void update(Goods goods);
+    void update(GoodsEntity goods);
 }

@@ -3,19 +3,27 @@ package main.java.service.impl;
 import main.java.dao.CheckDao;
 import main.java.dao.CheckSpecDao;
 import main.java.dao.GoodsDao;
-import main.java.entity.Check;
-import main.java.entity.Checkspec;
-import main.java.entity.Goods;
-import main.java.entity.User;
+import main.java.domain.Check;
+import main.java.domain.Checkspec;
+import main.java.domain.Goods;
+import main.java.domain.User;
+import main.java.entity.CheckEntity;
+import main.java.entity.CheckspecEntity;
+import main.java.entity.GoodsEntity;
 import main.java.exception.InvalidDataRuntimeException;
 import main.java.exception.NotEnoughGoodsQuantRuntimeException;
 import main.java.service.CheckService;
+import main.java.service.mapper.CheckMapper;
+import main.java.service.mapper.CheckSpecMapper;
+import main.java.service.mapper.GoodMapper;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CheckServiceImpl implements CheckService {
     private static final Logger LOGGER = Logger.getLogger(CheckServiceImpl.class);
@@ -23,11 +31,18 @@ public class CheckServiceImpl implements CheckService {
     private final GoodsDao goodsDao;
     private final CheckDao checkDao;
     private final CheckSpecDao checkSpecDao;
+    private final GoodMapper goodMapper;
+    private final CheckMapper checkMapper;
+    private final CheckSpecMapper checkSpecMapper;
 
-    public CheckServiceImpl(GoodsDao goodsDao, CheckDao checkDao, CheckSpecDao checkSpecDao) {
+    public CheckServiceImpl(GoodsDao goodsDao, CheckDao checkDao, CheckSpecDao checkSpecDao,
+                            GoodMapper goodMapper, CheckMapper checkMapper, CheckSpecMapper checkSpecMapper) {
         this.goodsDao = goodsDao;
         this.checkDao = checkDao;
         this.checkSpecDao = checkSpecDao;
+        this.goodMapper = goodMapper;
+        this.checkMapper = checkMapper;
+        this.checkSpecMapper = checkSpecMapper;
     }
 
     @Override
@@ -38,8 +53,10 @@ public class CheckServiceImpl implements CheckService {
             throw new InvalidDataRuntimeException("Data of checkspec is uncorrect");
         }
 
-        Goods existsGoods = goodsDao.findGoods(code);
-        if (existsGoods == null) {
+        Optional<GoodsEntity> goodsEntity = goodsDao.findGoods(code);
+        Goods existsGoods = goodMapper.goodEntityToGood(goodsEntity.orElse(null));
+
+        if (Objects.isNull(existsGoods)) {
             return null;
         }
 
@@ -72,17 +89,23 @@ public class CheckServiceImpl implements CheckService {
 
         double total = checkspecs.stream().mapToDouble(Checkspec::getTotal).sum();
         check.setTotal(total);
-        Long idCheck = checkDao.insert(check);
+
+        CheckEntity checkEntity = checkMapper.checkToCheckEntity(check);
+        Long idCheck = checkDao.insert(checkEntity);
         for (Checkspec checkspec : checkspecs
         ) {
             checkspec.setIdCheck(idCheck);
-            Optional<Goods> goods = goodsDao.findById(checkspec.getIdGood());
+            Optional<GoodsEntity> goods = goodsDao.findById(checkspec.getIdGood());
             if (goods.isPresent()) {
                 goods.get().setQuant(goods.get().getQuant() - checkspec.getQuant());
                 goodsDao.update(goods.get());
             }
         }
-        checkSpecDao.insertAll(checkspecs);
+
+        List<CheckspecEntity> checkspecEnteties = checkspecs.stream()
+                .map(checkSpecMapper::checkspecToCheckspecEntity)
+                .collect(Collectors.toList());
+        checkSpecDao.insertAll(checkspecEnteties);
     }
 
     @Override
@@ -92,7 +115,13 @@ public class CheckServiceImpl implements CheckService {
             throw new InvalidDataRuntimeException("Check id is uncorrect");
         }
 
-        return checkSpecDao.findAllByCheckId(checkId);
+        List<CheckspecEntity> orderEntities = checkSpecDao.findAllByCheckId(checkId);
+
+        return orderEntities.isEmpty() ?
+                Collections.emptyList() :
+                orderEntities.stream()
+                        .map(checkSpecMapper::checkspecEntityToCheckspec)
+                        .collect(Collectors.toList());
     }
 
     @Override
@@ -102,7 +131,9 @@ public class CheckServiceImpl implements CheckService {
             throw new InvalidDataRuntimeException("Check id is uncorrect");
         }
 
-        return checkDao.findById(id).orElseThrow(() -> new InvalidDataRuntimeException("Check id is uncorrect"));
+        Optional<CheckEntity> check = checkDao.findById(id);
+        return check.map(checkMapper::checkEntityToCheck)
+                .orElseThrow(() -> new InvalidDataRuntimeException("Check id is uncorrect"));
     }
 
     @Override
@@ -113,7 +144,8 @@ public class CheckServiceImpl implements CheckService {
         }
 
         check.setCanceled(1);
-        checkDao.update(check);
+        CheckEntity checkEntity = checkMapper.checkToCheckEntity(check);
+        checkDao.update(checkEntity);
     }
 
     @Override
@@ -124,11 +156,17 @@ public class CheckServiceImpl implements CheckService {
         }
 
         checkspecs.get(checkspecnum - 1).setCanceled(1);
-        checkSpecDao.update(checkspecs.get(checkspecnum - 1));
+        Checkspec checkspec = checkspecs.get(checkspecnum - 1);
+
+        CheckspecEntity checkspecEntity = checkSpecMapper.checkspecToCheckspecEntity(checkspec);
+        checkSpecDao.update(checkspecEntity);
+
         double total = checkspecs.stream()
                 .filter(spec -> spec.getCanceled() == 0)
                 .mapToDouble(Checkspec::getTotal).sum();
         check.setTotal(total);
-        checkDao.update(check);
+
+        CheckEntity checkEntity = checkMapper.checkToCheckEntity(check);
+        checkDao.update(checkEntity);
     }
 }

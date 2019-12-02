@@ -1,16 +1,17 @@
 package main.java.dao.daoimpl;
 
-import java.sql.*;
-import java.util.Optional;
-
 import main.java.dao.AbstractGenericDao;
 import main.java.dao.PoolConnection;
+import main.java.dao.UserTypeDao;
+import main.java.entity.UserTypeEntity;
 import main.java.exception.DatabaseRuntimeException;
 
-import main.java.dao.UserTypeDao;
-import main.java.entity.UserType;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Optional;
 
-public class UserTypeDaoImpl extends AbstractGenericDao<UserType> implements UserTypeDao {
+public class UserTypeDaoImpl extends AbstractGenericDao<UserTypeEntity> implements UserTypeDao {
     private static final String INSERT = "INSERT INTO user_type " +
             "(type, description) values(?, ?)";
     private static final String UPDATE = "UPDATE user_type SET type=?, description=? WHERE id=?";
@@ -21,7 +22,7 @@ public class UserTypeDaoImpl extends AbstractGenericDao<UserType> implements Use
     }
 
     @Override
-    protected void setInsertProperties(PreparedStatement statement, UserType usertype) {
+    protected void setInsertProperties(PreparedStatement statement, UserTypeEntity usertype) {
         try {
             statement.setString(1, usertype.getType());
             statement.setString(2, usertype.getDescription());
@@ -32,7 +33,7 @@ public class UserTypeDaoImpl extends AbstractGenericDao<UserType> implements Use
     }
 
     @Override
-    protected void setUpdateProperties(PreparedStatement statement, UserType usertype) {
+    protected void setUpdateProperties(PreparedStatement statement, UserTypeEntity usertype) {
         try {
             statement.setString(1, usertype.getType());
             statement.setString(2, usertype.getDescription());
@@ -44,8 +45,8 @@ public class UserTypeDaoImpl extends AbstractGenericDao<UserType> implements Use
     }
 
     @Override
-    protected UserType parseToOne(ResultSet resultSet) {
-        UserType userType = new UserType();
+    protected UserTypeEntity parseToOne(ResultSet resultSet) {
+        UserTypeEntity userType = new UserTypeEntity();
         try {
             userType.setId(resultSet.getLong("id"));
             userType.setType(resultSet.getString("type"));
@@ -58,17 +59,17 @@ public class UserTypeDaoImpl extends AbstractGenericDao<UserType> implements Use
     }
 
     @Override
-    public Optional<UserType> findById(Long id) {
+    public Optional<UserTypeEntity> findById(Long id) {
         throw new UnsupportedOperationException("Not implementation yet");
     }
 
     @Override
-    public Long insert(UserType usertype) {
+    public Long insert(UserTypeEntity usertype) {
         return insert(usertype, INSERT);
     }
 
     @Override
-    public void update(UserType usertype) {
+    public void update(UserTypeEntity usertype) {
         update(usertype, UPDATE);
     }
 

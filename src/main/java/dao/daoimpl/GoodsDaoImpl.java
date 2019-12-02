@@ -3,7 +3,7 @@ package main.java.dao.daoimpl;
 import main.java.dao.AbstractGenericDao;
 import main.java.dao.GoodsDao;
 import main.java.dao.PoolConnection;
-import main.java.entity.Goods;
+import main.java.entity.GoodsEntity;
 import main.java.exception.DatabaseRuntimeException;
 
 import java.sql.PreparedStatement;
@@ -12,14 +12,13 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class GoodsDaoImpl extends AbstractGenericDao<Goods> implements GoodsDao {
+public class GoodsDaoImpl extends AbstractGenericDao<GoodsEntity> implements GoodsDao {
     private static final String INSERT = "INSERT INTO goods " +
             "(code, name, quant, price, measure, comments) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE goods SET code=?, name=?, quant=?, price=?, measure=?, comments=? WHERE id=?";
     private static final String FIND_ALL = "SELECT * FROM goods ORDER BY code LIMIT ?,?";
     private static final String FIND_BY_ID = "SELECT * FROM goods WHERE id = ?";
     private static final String FIND_BY_CODE = "SELECT * FROM goods WHERE code = ?";
-    private static final String FIND_BY_NAME = "SELECT * FROM goods WHERE lower(name) = ?";
     private static final String COUNT = "SELECT COUNT(*) FROM cashreg.goods";
 
 
@@ -28,7 +27,7 @@ public class GoodsDaoImpl extends AbstractGenericDao<Goods> implements GoodsDao 
     }
 
     @Override
-    protected void setInsertProperties(PreparedStatement statement, Goods goods) {
+    protected void setInsertProperties(PreparedStatement statement, GoodsEntity goods) {
         try {
             statement.setInt(1, goods.getCode());
             statement.setString(2, goods.getName());
@@ -44,7 +43,7 @@ public class GoodsDaoImpl extends AbstractGenericDao<Goods> implements GoodsDao 
     }
 
     @Override
-    protected void setUpdateProperties(PreparedStatement statement, Goods goods) {
+    protected void setUpdateProperties(PreparedStatement statement, GoodsEntity goods) {
         setInsertProperties(statement, goods);
         try {
             statement.setLong(7, goods.getId());
@@ -55,8 +54,8 @@ public class GoodsDaoImpl extends AbstractGenericDao<Goods> implements GoodsDao 
     }
 
     @Override
-    protected Goods parseToOne(ResultSet resultSet) {
-        Goods goods = new Goods();
+    protected GoodsEntity parseToOne(ResultSet resultSet) {
+        GoodsEntity goods = new GoodsEntity();
         try {
             goods.setId(resultSet.getLong("id"));
             goods.setCode(resultSet.getInt("code"));
@@ -73,11 +72,11 @@ public class GoodsDaoImpl extends AbstractGenericDao<Goods> implements GoodsDao 
     }
 
     @Override
-    public Long insert(Goods goods) {
+    public Long insert(GoodsEntity goods) {
         return insert(goods, INSERT);
     }
 
-    public List<Goods> findAll(int page, int recordsPerPage) {
+    public List<GoodsEntity> findAll(int page, int recordsPerPage) {
         return findPaginatedList((page - 1) * recordsPerPage, recordsPerPage, FIND_ALL);
     }
 
@@ -87,23 +86,18 @@ public class GoodsDaoImpl extends AbstractGenericDao<Goods> implements GoodsDao 
     }
 
     @Override
-    public void update(Goods goods) {
+    public void update(GoodsEntity goods) {
         update(goods, UPDATE);
     }
 
 
     @Override
-    public Optional<Goods> findById(Long id) {
+    public Optional<GoodsEntity> findById(Long id) {
         return Optional.ofNullable(findByLongParam(id, FIND_BY_ID));
     }
 
     @Override
-    public Goods findGoods(int code) {
-        return findByIntParam(code, FIND_BY_CODE);
-    }
-
-    @Override
-    public Goods findGoods(String name) {
-        return findByStringParam(name, FIND_BY_NAME);
+    public Optional<GoodsEntity> findGoods(int code) {
+        return Optional.ofNullable(findByIntParam(code, FIND_BY_CODE));
     }
 }

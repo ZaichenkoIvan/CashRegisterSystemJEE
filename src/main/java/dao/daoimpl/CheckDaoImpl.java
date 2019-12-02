@@ -3,7 +3,7 @@ package main.java.dao.daoimpl;
 import main.java.dao.AbstractGenericDao;
 import main.java.dao.CheckDao;
 import main.java.dao.PoolConnection;
-import main.java.entity.Check;
+import main.java.entity.CheckEntity;
 import main.java.exception.DatabaseRuntimeException;
 
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class CheckDaoImpl extends AbstractGenericDao<Check> implements CheckDao {
+public class CheckDaoImpl extends AbstractGenericDao<CheckEntity> implements CheckDao {
     private static final String INSERT = "INSERT INTO cashreg.check (creator, total, discount, canceled) "
             + "VALUES (?, ?, ?, ?)";
     private static final String UPDATE_BY_ID = "UPDATE cashreg.check SET creator = ?, total = ?, discount = ?, canceled = ?," +
@@ -26,7 +26,7 @@ public class CheckDaoImpl extends AbstractGenericDao<Check> implements CheckDao 
     }
 
     @Override
-    protected void setInsertProperties(PreparedStatement statement, Check check) {
+    protected void setInsertProperties(PreparedStatement statement, CheckEntity check) {
         try {
             statement.setLong(1, check.getCreator());
             statement.setDouble(2, check.getTotal());
@@ -39,7 +39,7 @@ public class CheckDaoImpl extends AbstractGenericDao<Check> implements CheckDao 
     }
 
     @Override
-    protected void setUpdateProperties(PreparedStatement statement, Check check) {
+    protected void setUpdateProperties(PreparedStatement statement, CheckEntity check) {
         setInsertProperties(statement, check);
         try {
             statement.setObject(5, check.getRegistration());
@@ -51,8 +51,8 @@ public class CheckDaoImpl extends AbstractGenericDao<Check> implements CheckDao 
     }
 
     @Override
-    protected Check parseToOne(ResultSet resultSet) {
-        Check check = new Check();
+    protected CheckEntity parseToOne(ResultSet resultSet) {
+        CheckEntity check = new CheckEntity();
         try {
             check.setId(resultSet.getLong("id"));
             check.setCrtime(resultSet.getDate("crtime"));
@@ -69,17 +69,17 @@ public class CheckDaoImpl extends AbstractGenericDao<Check> implements CheckDao 
     }
 
     @Override
-    public Long insert(Check check) {
+    public Long insert(CheckEntity check) {
         return insert(check, INSERT);
     }
 
     @Override
-    public void update(Check check) {
+    public void update(CheckEntity check) {
         update(check, UPDATE_BY_ID);
     }
 
     @Override
-    public Optional<Check> findById(Long id) {
+    public Optional<CheckEntity> findById(Long id) {
         return Optional.ofNullable(findByLongParam(id, SELECT_BY_ID));
     }
 

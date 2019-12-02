@@ -1,8 +1,7 @@
 package main.java.dao;
 
-import main.java.entity.UserType;
+import main.java.entity.UserTypeEntity;
 
-public interface UserTypeDao extends CrudDao<UserType> {
-
+public interface UserTypeDao extends CrudDao<UserTypeEntity> {
 	Long findUserType(String type);
 }

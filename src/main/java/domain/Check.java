@@ -1,7 +1,7 @@
-package main.java.entity;
+package main.java.domain;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.Objects;
 
 public class Check {
     private Long id;
@@ -11,7 +11,6 @@ public class Check {
     private double discount;
     private double total;
     private Integer registration;
-    private List<Checkspec> checkspecs;
 
     public Check() {
     }
@@ -72,42 +71,39 @@ public class Check {
         this.registration = registration;
     }
 
-    public List<Checkspec> getCheckspecs() {
-        return this.checkspecs;
-    }
-
-    public void setCheckspecs(List<Checkspec> checkspecs) {
-        this.checkspecs = checkspecs;
-    }
-
-    public Checkspec addCheckspec(Checkspec checkspec) {
-        getCheckspecs().add(checkspec);
-        checkspec.setCheck(this);
-
-        return checkspec;
-    }
-
-    public Checkspec removeCheckspec(Checkspec checkspec) {
-        getCheckspecs().remove(checkspec);
-        checkspec.setCheck(null);
-
-        return checkspec;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Check check = (Check) o;
+        return canceled == check.canceled &&
+                Double.compare(check.discount, discount) == 0 &&
+                Double.compare(check.total, total) == 0 &&
+                Objects.equals(id, check.id) &&
+                Objects.equals(creator, check.creator) &&
+                Objects.equals(crtime, check.crtime) &&
+                Objects.equals(registration, check.registration);
     }
 
     @Override
     public int hashCode() {
-        int hash = 31;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+        return Objects.hash(id, canceled, creator, crtime, discount, total, registration);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-        Check other = (Check) obj;
-        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
+    public String toString() {
+        return "Check{" +
+                "id=" + id +
+                ", canceled=" + canceled +
+                ", creator=" + creator +
+                ", crtime=" + crtime +
+                ", discount=" + discount +
+                ", total=" + total +
+                ", registration=" + registration +
+                '}';
     }
 }

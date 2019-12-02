@@ -1,12 +1,12 @@
 package main.java.dao;
 
-import main.java.entity.Checkspec;
+import main.java.entity.CheckspecEntity;
 
 import java.util.List;
 
-public interface CheckSpecDao extends CrudDao<Checkspec> {
+public interface CheckSpecDao extends CrudDao<CheckspecEntity> {
 
-    void insertAll(List<Checkspec> specifications);
+    void insertAll(List<CheckspecEntity> specifications);
 
-    List<Checkspec> findAllByCheckId(Long idCheck);
+    List<CheckspecEntity> findAllByCheckId(Long idCheck);
 }

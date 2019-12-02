@@ -1,14 +1,14 @@
 package main.java.command.impl;
 
+import main.java.command.Command;
+import main.java.domain.Checkspec;
+import main.java.service.CheckService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.*;
-
-import main.java.command.Command;
-import main.java.entity.*;
-import main.java.service.CheckService;
-import main.java.service.impl.CheckServiceImpl;
 
 public class CheckSpecCommand implements Command {
     private final CheckService checkService;
@@ -27,15 +27,12 @@ public class CheckSpecCommand implements Command {
             checkspecs = new ArrayList<>();
             session.setAttribute("addcheckspecs", checkspecs);
         }
-//		String xname = req.getParameter("xname");
+        Integer xcode = Integer.valueOf(req.getParameter("xcode"));
         try {
-            Integer xcode = Integer.valueOf(req.getParameter("xcode"));
             Double quant = Double.valueOf(req.getParameter("quant"));
             Checkspec spec = checkService.addCheckSpec(xcode, quant, req.getParameter("nds"));
             if (spec != null) {
                 checkspecs.add(spec);
-            } else {
-                req.setAttribute("goodsCodeNotFound", xcode);
             }
         } catch (NumberFormatException e) {
             req.setAttribute("wronginput", true);

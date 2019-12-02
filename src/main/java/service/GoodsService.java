@@ -1,6 +1,6 @@
 package main.java.service;
 
-import main.java.entity.Goods;
+import main.java.domain.Goods;
 
 import java.util.List;
 

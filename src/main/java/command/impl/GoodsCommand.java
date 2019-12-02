@@ -1,7 +1,7 @@
 package main.java.command.impl;
 
 import main.java.command.Command;
-import main.java.entity.Goods;
+import main.java.domain.Goods;
 import main.java.service.GoodsService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,9 +36,9 @@ public class GoodsCommand implements Command {
         if (req.getParameter("btnChangeGoods") != null) {
             try {
                 String changequant = req.getParameter("changequant");
-                Double newQuant = (!changequant.isEmpty() ? Double.valueOf(changequant) : null);
+                Double newQuant = (changequant != null && !changequant.isEmpty() ? Double.valueOf(changequant) : null);
                 String changeprice = req.getParameter("changeprice");
-                Double newPrice = (!changeprice.isEmpty() ? Double.valueOf(changeprice) : null);
+                Double newPrice = (changeprice != null && !changeprice.isEmpty() ? Double.valueOf(changeprice) : null);
 
                 goodsService.changeGoods(Integer.valueOf(req.getParameter("changecode")), newQuant, newPrice);
             } catch (NumberFormatException e) {

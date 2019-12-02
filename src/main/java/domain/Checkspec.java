@@ -1,4 +1,6 @@
-package main.java.entity;
+package main.java.domain;
+
+import java.util.Objects;
 
 public class Checkspec {
 	private Long id;
@@ -96,9 +98,9 @@ public class Checkspec {
 	public void setCheck(Check check) {
 		this.check = check;
 	}
-	
+
 	public int getXcode() {
-		return this.xcode;
+		return xcode;
 	}
 
 	public void setXcode(int xcode) {
@@ -106,29 +108,56 @@ public class Checkspec {
 	}
 
 	public String getXname() {
-		return this.xname;
+		return xname;
 	}
 
 	public void setXname(String xname) {
 		this.xname = xname;
 	}
 
-    @Override
-    public int hashCode() {
-        int hash = 31;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Checkspec checkspec = (Checkspec) o;
+		return canceled == checkspec.canceled &&
+				nds == checkspec.nds &&
+				Double.compare(checkspec.ndstotal, ndstotal) == 0 &&
+				Double.compare(checkspec.price, price) == 0 &&
+				Double.compare(checkspec.quant, quant) == 0 &&
+				Double.compare(checkspec.total, total) == 0 &&
+				xcode == checkspec.xcode &&
+				Objects.equals(id, checkspec.id) &&
+				Objects.equals(idCheck, checkspec.idCheck) &&
+				Objects.equals(idGood, checkspec.idGood) &&
+				Objects.equals(xname, checkspec.xname) &&
+				Objects.equals(check, checkspec.check);
+	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || getClass() != obj.getClass())
-			return false;
-		Checkspec other = (Checkspec) obj;
-		if (id != other.id)
-			return false;
-		return true;
+	public int hashCode() {
+		return Objects.hash(id, canceled, idCheck, idGood, nds, ndstotal, price, quant, total, xcode, xname, check);
+	}
+
+	@Override
+	public String toString() {
+		return "Checkspec{" +
+				"id=" + id +
+				", canceled=" + canceled +
+				", idCheck=" + idCheck +
+				", idGood=" + idGood +
+				", nds=" + nds +
+				", ndstotal=" + ndstotal +
+				", price=" + price +
+				", quant=" + quant +
+				", total=" + total +
+				", xcode=" + xcode +
+				", xname='" + xname + '\'' +
+				", check=" + check +
+				'}';
 	}
 }

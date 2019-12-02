@@ -1,8 +1,8 @@
 package main.java.command.impl;
 
 import main.java.command.Command;
-import main.java.entity.Checkspec;
-import main.java.entity.User;
+import main.java.domain.Checkspec;
+import main.java.domain.User;
 import main.java.service.CheckService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +23,7 @@ public class CheckCommand implements Command {
         HttpSession session = req.getSession();
         @SuppressWarnings("unchecked")
         List<Checkspec> checkspecs = (List<Checkspec>) session.getAttribute("addcheckspecs");
-        if (req.getParameter("btnCreateCheck") != null) {
+        if (req.getParameter("btnCreateCheck") != null && checkspecs != null && checkspecs.size() > 0) {
             checkService.addCheck((User) session.getAttribute("user"), checkspecs);
             req.setAttribute("addedCheck", true);
             checkspecs.clear();

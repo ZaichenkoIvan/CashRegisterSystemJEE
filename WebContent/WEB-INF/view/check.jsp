@@ -28,35 +28,23 @@
 		   <c:if test="${not empty addedCheck and addedCheck eq 'false'}">
 		      <fmt:message key="check.error"/>!
 		   </c:if>
-		  <!-- <c:if test="${not empty addedCheckSpec}">
-		      Товар с кодом ${addedCheckSpec} успешно добавлен!
-		   </c:if> -->
 		   <c:if test="${not empty wronginput}"><fmt:message key="check.wronginput"/>!</c:if>
 		   <c:if test="${not empty goodsCodeNotFound}"><fmt:message key="check.code"/> ${goodsCodeNotFound} <fmt:message key="check.codenotfound"/>!</c:if>
 		   <c:if test="${not empty goodsNameNotFound}"><fmt:message key="check.goodname"/> ${goodsNameNotFound} <fmt:message key="check.namenotfound"/>!</c:if>
 		</h4>
 		<FORM method="POST" name="addcheck">
 			<table>
-				<%--<tr>--%>
-					<%--<td style="text-align: left"><fmt:message key="check.goodname"/>:</td>--%>
-					<%--<td><input id="id_name" name="xname" type="text" size="45" autocomplete="on"/></td>--%>
-				<%--</tr>--%>
-				<%--<tr>--%>
 					<td style="text-align: left"><fmt:message key="check.code"/>:</td>
 					<td><input id="id_code" name="xcode" type="number" size="4" min="0" step="1"/></td>
 				</tr>
 				<tr>
 					<td style="text-align: left"><fmt:message key="check.quant"/>:</td>
-					<td><input name="quant" type="number" value="0" min="0" step="0.1" required /></td>
+					<td><input name="quant" type="number" value="1" min="0" step="0.1" required /></td>
 				</tr>
 				<tr>
 					<td style="text-align: left"><fmt:message key="check.nds"/>:</td>
 					<td><input name="nds" type="number" value="20"/></td>
 				</tr>
-				<!-- <tr>
-					<td style="text-align: left"><fmt:message key="check.price"/>:</td>
-					<td><input name="price" type="number" min="0" step="0.01" required /></td>
-				</tr> -->
 				<tr>
 					<td><input type="submit" class="button" name="btnAddCheckspec" value=<fmt:message key="check.addgood"/> />	</td>
 				</tr>

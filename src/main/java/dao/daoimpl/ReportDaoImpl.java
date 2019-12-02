@@ -4,7 +4,7 @@ import main.java.dao.CheckDao;
 import main.java.dao.FiscalDao;
 import main.java.dao.PoolConnection;
 import main.java.dao.ReportDao;
-import main.java.entity.Fiscal;
+import main.java.entity.FiscalEntity;
 import main.java.service.Report;
 import org.apache.log4j.Logger;
 
@@ -92,7 +92,7 @@ public class ReportDaoImpl implements ReportDao {
              Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(QueryZReport);
             while (rs.next()) {
-                Fiscal fiscal = new Fiscal();
+                FiscalEntity fiscal = new FiscalEntity();
                 fiscal.setTotal(rs.getDouble("sumtotal"));
                 Long[] repNumber = new Long[1];
                 checkDao.update(1);

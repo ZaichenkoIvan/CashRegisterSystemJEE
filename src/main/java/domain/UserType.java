@@ -1,4 +1,6 @@
-package main.java.entity;
+package main.java.domain;
+
+import java.util.Objects;
 
 public class UserType {
     private Long id;
@@ -6,10 +8,6 @@ public class UserType {
     private String description;
 
     public UserType() {
-    }
-
-    public UserType(Long id) {
-        this.id = id;
     }
 
     public Long getId() {
@@ -37,22 +35,30 @@ public class UserType {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-        UserType other = (UserType) obj;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        return true;
+        UserType userType = (UserType) o;
+        return Objects.equals(id, userType.id) &&
+                Objects.equals(type, userType.type) &&
+                Objects.equals(description, userType.description);
     }
 
     @Override
     public int hashCode() {
-        int hash = 31;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+        return Objects.hash(id, type, description);
+    }
+
+    @Override
+    public String toString() {
+        return "UserType{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

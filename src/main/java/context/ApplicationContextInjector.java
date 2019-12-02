@@ -13,6 +13,7 @@ import main.java.service.impl.CheckServiceImpl;
 import main.java.service.impl.GoodsServiceImpl;
 import main.java.service.impl.ReportServiceImpl;
 import main.java.service.impl.UserServiceImpl;
+import main.java.service.mapper.*;
 import main.java.service.validator.UserValidator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,13 +35,20 @@ public class ApplicationContextInjector {
 
     private static final UserValidator USER_VALIDATOR = new UserValidator();
 
-    private static final CheckService CHECK_SERVICE = new CheckServiceImpl(GOODS_DAO, CHECK_DAO, CHECK_SPEC_DAO);
-    private static final ReportService REPORT_SERVICE = new ReportServiceImpl(REPORT_DAO);
-    private static final GoodsService GOODS_SERVICE = new GoodsServiceImpl(GOODS_DAO);
-    private static final UserService USER_SERVICE =
-            new UserServiceImpl(USER_DAO, USER_TYPE_DAO, ENCODER_PASSWORD, USER_VALIDATOR);
+    private static final CheckMapper CHECK_MAPPER = new CheckMapper();
+    private static final CheckSpecMapper CHECK_SPEC_MAPPER = new CheckSpecMapper(CHECK_MAPPER);
+    private static final GoodMapper GOOD_MAPPER = new GoodMapper();
+    private static final UserTypeMapper USER_TYPE_MAPPER = new UserTypeMapper();
+    private static final UserMapper USER_MAPPER = new UserMapper(USER_TYPE_MAPPER);
 
-    public static Map<String, Command> getNameCommandToCommands() {
+    private static final CheckService CHECK_SERVICE = new CheckServiceImpl(GOODS_DAO, CHECK_DAO, CHECK_SPEC_DAO,
+            GOOD_MAPPER, CHECK_MAPPER, CHECK_SPEC_MAPPER);
+    private static final ReportService REPORT_SERVICE = new ReportServiceImpl(REPORT_DAO);
+    private static final GoodsService GOODS_SERVICE = new GoodsServiceImpl(GOODS_DAO, GOOD_MAPPER);
+    private static final UserService USER_SERVICE =
+            new UserServiceImpl(USER_DAO, USER_TYPE_DAO, ENCODER_PASSWORD, USER_VALIDATOR, USER_MAPPER);
+
+    private static Map<String, Command> getNameCommandToCommands() {
         return NAME_COMMAND_TO_COMMANDS;
     }
 
@@ -95,7 +103,7 @@ public class ApplicationContextInjector {
     private ApplicationContextInjector() {
     }
 
-    public static ApplicationContextInjector getInstance() {
+    public static void getInstance() {
         if (injector == null) {
             synchronized (ApplicationContextInjector.class) {
                 if (injector == null) {
@@ -103,22 +111,5 @@ public class ApplicationContextInjector {
                 }
             }
         }
-        return injector;
-    }
-
-    public static CheckService getCheckService() {
-        return CHECK_SERVICE;
-    }
-
-    public static ReportService getReportService() {
-        return REPORT_SERVICE;
-    }
-
-    public static GoodsService getGoodsService() {
-        return GOODS_SERVICE;
-    }
-
-    public UserService getUserService() {
-        return USER_SERVICE;
     }
 }

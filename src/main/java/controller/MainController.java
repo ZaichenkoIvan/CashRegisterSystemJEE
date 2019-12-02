@@ -15,7 +15,7 @@ public class MainController extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-		String logfilename = getInitParameter("logfile");// logfilename - получает имя файла конфигурации из параметра инициализации сервлета
+		String logfilename = getInitParameter("logfile");
 		String pref = getServletContext().getRealPath("/");
 		PropertyConfigurator.configure(pref+logfilename);
         ApplicationContextInjector.getInstance();
@@ -45,6 +45,7 @@ public class MainController extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/view" + page + ".jsp").forward(req, resp);
         }
     }
+
     private String getPage(HttpServletRequest req) {
         String page = req.getServletPath();
         if (page.equals("/") || page.equals("/login") || page.equals("/logout") ) {
