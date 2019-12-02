@@ -25,20 +25,17 @@ public class GoodsCommand implements Command {
                     Double.valueOf(req.getParameter("price")), req.getParameter("measure"), req.getParameter("comments"));
             if (goodsId > 0) {
                 req.setAttribute("addedGood", name);
-            } else if (goodsId == -1) {
+            } else {
                 req.setAttribute("addedGood", null);
                 req.setAttribute("existsCode", code);
-            } else if (goodsId == -2) {
-                req.setAttribute("addedGood", null);
-                req.setAttribute("existsName", name);
             }
         }
         if (req.getParameter("btnChangeGoods") != null) {
             try {
                 String changequant = req.getParameter("changequant");
-                Double newQuant = (changequant != null && !changequant.isEmpty() ? Double.valueOf(changequant) : null);
+                Double newQuant = (!changequant.isEmpty() ? Double.valueOf(changequant) : null);
                 String changeprice = req.getParameter("changeprice");
-                Double newPrice = (changeprice != null && !changeprice.isEmpty() ? Double.valueOf(changeprice) : null);
+                Double newPrice = (!changeprice.isEmpty() ? Double.valueOf(changeprice) : null);
 
                 goodsService.changeGoods(Integer.valueOf(req.getParameter("changecode")), newQuant, newPrice);
             } catch (NumberFormatException e) {

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainController extends HttpServlet {
 
@@ -34,13 +35,14 @@ public class MainController extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Command command = ApplicationContextInjector.getCommand(req);
         String path = null;
-        if (command != null) {
+        if (Objects.nonNull(command)) {
             path = command.execute(req, resp);
-            if (path != null) {
+            if (Objects.nonNull(path)) {
                 resp.sendRedirect(path);
             }
         }
-        if (command == null || path == null) {
+
+        if (Objects.isNull(command) || Objects.isNull(path)) {
             String page = getPage(req);
             req.getRequestDispatcher("/WEB-INF/view" + page + ".jsp").forward(req, resp);
         }
