@@ -1,9 +1,7 @@
-package main.java.service.validator;
+package service.validator;
 
-
-
-import main.java.domain.User;
-import main.java.exception.InvalidDataRuntimeException;
+import domain.User;
+import exception.InvalidDataRuntimeException;
 
 import java.util.regex.Pattern;
 

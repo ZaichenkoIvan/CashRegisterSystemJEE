@@ -1,4 +1,4 @@
-package main.java.controller.filter;
+package controller.filter;
 
 import java.io.IOException;
 

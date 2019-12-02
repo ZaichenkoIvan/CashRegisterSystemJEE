@@ -1,20 +1,20 @@
-package main.java.context;
+package context;
 
-import main.java.command.Command;
-import main.java.command.impl.*;
-import main.java.dao.*;
-import main.java.dao.daoimpl.*;
-import main.java.service.CheckService;
-import main.java.service.GoodsService;
-import main.java.service.ReportService;
-import main.java.service.UserService;
-import main.java.service.encoder.EncoderPassword;
-import main.java.service.impl.CheckServiceImpl;
-import main.java.service.impl.GoodsServiceImpl;
-import main.java.service.impl.ReportServiceImpl;
-import main.java.service.impl.UserServiceImpl;
-import main.java.service.mapper.*;
-import main.java.service.validator.UserValidator;
+import command.Command;
+import command.impl.*;
+import dao.*;
+import dao.daoimpl.*;
+import service.CheckService;
+import service.GoodsService;
+import service.ReportService;
+import service.UserService;
+import service.encoder.EncoderPassword;
+import service.impl.CheckServiceImpl;
+import service.impl.GoodsServiceImpl;
+import service.impl.ReportServiceImpl;
+import service.impl.UserServiceImpl;
+import service.mapper.*;
+import service.validator.UserValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;

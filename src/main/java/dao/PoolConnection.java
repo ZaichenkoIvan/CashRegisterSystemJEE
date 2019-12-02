@@ -1,7 +1,6 @@
-package main.java.dao;
+package dao;
 
-
-import main.java.exception.DatabaseRuntimeException;
+import exception.DatabaseRuntimeException;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.Logger;
 

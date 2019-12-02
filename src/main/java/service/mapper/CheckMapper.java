@@ -1,7 +1,7 @@
-package main.java.service.mapper;
+package service.mapper;
 
-import main.java.domain.Check;
-import main.java.entity.CheckEntity;
+import domain.Check;
+import entity.CheckEntity;
 
 import java.util.Objects;
 

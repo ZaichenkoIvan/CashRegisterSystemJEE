@@ -1,6 +1,6 @@
-package main.java.dao;
+package dao;
 
-import main.java.entity.FiscalEntity;
+import entity.FiscalEntity;
 
 public interface FiscalDao extends CrudDao<FiscalEntity> {
 

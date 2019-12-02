@@ -1,8 +1,8 @@
-package main.java.service;
+package service;
 
-import main.java.domain.Check;
-import main.java.domain.Checkspec;
-import main.java.domain.User;
+import domain.Check;
+import domain.Checkspec;
+import domain.User;
 
 import java.util.List;
 

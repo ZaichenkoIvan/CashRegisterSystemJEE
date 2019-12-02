@@ -6,7 +6,7 @@
   </welcome-file-list>
   <servlet>
     <servlet-name>CashRegister</servlet-name>
-    <servlet-class>main.java.controller.MainController</servlet-class>
+    <servlet-class>controller.MainController</servlet-class>
     <init-param>
       <param-name>logfile</param-name>
       <param-value>WEB-INF/log4j.properties</param-value>
@@ -24,7 +24,7 @@
 
   <filter>
     <filter-name>ReqFilter</filter-name>
-    <filter-class>main.java.controller.filter.ReqFilter</filter-class>
+    <filter-class>controller.filter.ReqFilter</filter-class>
   </filter>
 
   <filter-mapping>
@@ -34,7 +34,7 @@
 
   <filter>
     <filter-name>LocaleFilter</filter-name>
-    <filter-class>main.java.controller.filter.LocaleFilter</filter-class>
+    <filter-class>controller.filter.LocaleFilter</filter-class>
   </filter>
 
   <filter-mapping>

@@ -1,6 +1,6 @@
-package main.java.service.validator;
+package service.validator;
 
-import main.java.exception.InvalidDataRuntimeException;
+import exception.InvalidDataRuntimeException;
 import org.apache.log4j.Logger;
 
 import java.util.regex.Matcher;

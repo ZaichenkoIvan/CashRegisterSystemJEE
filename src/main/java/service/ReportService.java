@@ -1,4 +1,6 @@
-package main.java.service;
+package service;
+
+import domain.Report;
 
 public interface ReportService {
     Report getDataReport();

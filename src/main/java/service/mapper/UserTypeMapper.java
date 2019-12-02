@@ -1,7 +1,7 @@
-package main.java.service.mapper;
+package service.mapper;
 
-import main.java.domain.UserType;
-import main.java.entity.UserTypeEntity;
+import domain.UserType;
+import entity.UserTypeEntity;
 
 import java.util.Objects;
 

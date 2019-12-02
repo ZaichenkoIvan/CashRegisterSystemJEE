@@ -1,4 +1,4 @@
-package main.java.exception;
+package exception;
 
 public class EncodePasswordRuntimeException extends RuntimeException {
     public EncodePasswordRuntimeException() {

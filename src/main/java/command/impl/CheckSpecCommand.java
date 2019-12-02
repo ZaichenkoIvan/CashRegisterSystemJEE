@@ -1,13 +1,13 @@
-package main.java.command.impl;
+package command.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.*;
 
-import main.java.command.Command;
-import main.java.domain.Checkspec;
-import main.java.service.CheckService;
+import command.Command;
+import domain.Checkspec;
+import service.CheckService;
 
 public class CheckSpecCommand implements Command {
     private final CheckService checkService;

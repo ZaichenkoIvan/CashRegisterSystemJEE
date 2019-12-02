@@ -1,9 +1,9 @@
-package main.java.service.impl;
+package service.impl;
 
-import main.java.dao.ReportDao;
-import main.java.exception.NotCreateReportRuntimeException;
-import main.java.service.Report;
-import main.java.service.ReportService;
+import dao.ReportDao;
+import domain.Report;
+import exception.NotCreateReportRuntimeException;
+import service.ReportService;
 
 public class ReportServiceImpl implements ReportService {
     private final ReportDao reportDao;

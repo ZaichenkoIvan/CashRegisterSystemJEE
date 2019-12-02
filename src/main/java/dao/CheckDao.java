@@ -1,6 +1,6 @@
-package main.java.dao;
+package dao;
 
-import main.java.entity.CheckEntity;
+import entity.CheckEntity;
 
 public interface CheckDao extends CrudDao<CheckEntity> {
     Long insert(CheckEntity check);

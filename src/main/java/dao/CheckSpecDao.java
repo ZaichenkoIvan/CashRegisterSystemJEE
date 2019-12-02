@@ -1,6 +1,6 @@
-package main.java.dao;
+package dao;
 
-import main.java.entity.CheckspecEntity;
+import entity.CheckspecEntity;
 
 import java.util.List;
 

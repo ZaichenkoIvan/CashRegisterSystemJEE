@@ -1,11 +1,11 @@
-package main.java.dao.daoimpl;
+package dao.daoimpl;
 
-import main.java.dao.CheckDao;
-import main.java.dao.FiscalDao;
-import main.java.dao.PoolConnection;
-import main.java.dao.ReportDao;
-import main.java.entity.FiscalEntity;
-import main.java.service.Report;
+import dao.CheckDao;
+import dao.FiscalDao;
+import dao.PoolConnection;
+import dao.ReportDao;
+import domain.Report;
+import entity.FiscalEntity;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;

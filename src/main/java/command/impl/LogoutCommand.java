@@ -1,6 +1,6 @@
-package main.java.command.impl;
+package command.impl;
 
-import main.java.command.Command;
+import command.Command;
 
 import javax.servlet.http.*;
 

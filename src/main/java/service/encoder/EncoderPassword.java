@@ -1,6 +1,6 @@
-package main.java.service.encoder;
+package service.encoder;
 
-import main.java.exception.EncodePasswordRuntimeException;
+import exception.EncodePasswordRuntimeException;
 import org.apache.log4j.Logger;
 
 import java.security.MessageDigest;

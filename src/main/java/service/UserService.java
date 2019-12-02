@@ -1,6 +1,6 @@
-package main.java.service;
+package service;
 
-import main.java.domain.User;
+import domain.User;
 
 public interface UserService {
     User findUser(String login, String password);

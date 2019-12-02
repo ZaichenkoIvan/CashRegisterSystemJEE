@@ -1,7 +1,7 @@
-package main.java.service.mapper;
+package service.mapper;
 
-import main.java.domain.Goods;
-import main.java.entity.GoodsEntity;
+import domain.Goods;
+import entity.GoodsEntity;
 
 import java.util.Objects;
 

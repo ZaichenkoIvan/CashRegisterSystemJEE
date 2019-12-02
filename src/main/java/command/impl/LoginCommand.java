@@ -1,9 +1,9 @@
-package main.java.command.impl;
+package command.impl;
 
-import main.java.command.Command;
-import main.java.domain.User;
-import main.java.domain.UserType;
-import main.java.service.UserService;
+import command.Command;
+import domain.User;
+import domain.UserType;
+import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

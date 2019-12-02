@@ -1,11 +1,11 @@
-package main.java.service.impl;
+package service.impl;
 
-import main.java.dao.GoodsDao;
-import main.java.domain.Goods;
-import main.java.entity.GoodsEntity;
-import main.java.exception.InvalidDataRuntimeException;
-import main.java.service.GoodsService;
-import main.java.service.mapper.GoodMapper;
+import dao.GoodsDao;
+import domain.Goods;
+import entity.GoodsEntity;
+import exception.InvalidDataRuntimeException;
+import service.GoodsService;
+import service.mapper.GoodMapper;
 import org.apache.log4j.Logger;
 
 import java.util.List;

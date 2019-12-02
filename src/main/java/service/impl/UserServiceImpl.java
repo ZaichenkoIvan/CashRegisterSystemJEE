@@ -1,15 +1,15 @@
-package main.java.service.impl;
+package service.impl;
 
-import main.java.dao.UserDao;
-import main.java.dao.UserTypeDao;
-import main.java.domain.User;
-import main.java.entity.UserEntity;
-import main.java.exception.ActionWithUserRuntimeException;
-import main.java.exception.InvalidDataRuntimeException;
-import main.java.service.UserService;
-import main.java.service.encoder.EncoderPassword;
-import main.java.service.mapper.UserMapper;
-import main.java.service.validator.UserValidator;
+import dao.UserDao;
+import dao.UserTypeDao;
+import domain.User;
+import entity.UserEntity;
+import exception.ActionWithUserRuntimeException;
+import exception.InvalidDataRuntimeException;
+import service.UserService;
+import service.encoder.EncoderPassword;
+import service.mapper.UserMapper;
+import service.validator.UserValidator;
 import org.apache.log4j.Logger;
 
 import java.util.Objects;

@@ -1,10 +1,10 @@
-package main.java.dao.daoimpl;
+package dao.daoimpl;
 
-import main.java.dao.AbstractGenericDao;
-import main.java.dao.CheckDao;
-import main.java.dao.PoolConnection;
-import main.java.entity.CheckEntity;
-import main.java.exception.DatabaseRuntimeException;
+import dao.AbstractGenericDao;
+import dao.CheckDao;
+import dao.PoolConnection;
+import entity.CheckEntity;
+import exception.DatabaseRuntimeException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

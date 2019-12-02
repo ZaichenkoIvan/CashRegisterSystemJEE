@@ -1,10 +1,10 @@
-package main.java.dao.daoimpl;
+package dao.daoimpl;
 
-import main.java.dao.AbstractGenericDao;
-import main.java.dao.FiscalDao;
-import main.java.dao.PoolConnection;
-import main.java.entity.FiscalEntity;
-import main.java.exception.DatabaseRuntimeException;
+import dao.AbstractGenericDao;
+import dao.FiscalDao;
+import dao.PoolConnection;
+import entity.FiscalEntity;
+import exception.DatabaseRuntimeException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

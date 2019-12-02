@@ -1,7 +1,7 @@
-package main.java.controller;
+package controller;
 
-import main.java.command.Command;
-import main.java.context.ApplicationContextInjector;
+import command.Command;
+import context.ApplicationContextInjector;
 import org.apache.log4j.PropertyConfigurator;
 
 import javax.servlet.ServletException;

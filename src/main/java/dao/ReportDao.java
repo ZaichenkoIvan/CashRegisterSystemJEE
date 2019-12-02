@@ -1,6 +1,6 @@
-package main.java.dao;
+package dao;
 
-import main.java.service.Report;
+import domain.Report;
 
 import java.util.Optional;
 

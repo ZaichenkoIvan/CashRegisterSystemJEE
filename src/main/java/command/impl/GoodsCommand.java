@@ -1,8 +1,8 @@
-package main.java.command.impl;
+package command.impl;
 
-import main.java.command.Command;
-import main.java.domain.Goods;
-import main.java.service.GoodsService;
+import command.Command;
+import domain.Goods;
+import service.GoodsService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

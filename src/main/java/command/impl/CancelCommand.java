@@ -1,11 +1,11 @@
-package main.java.command.impl;
+package command.impl;
 
-import main.java.command.Command;
-import main.java.domain.Check;
-import main.java.domain.Checkspec;
-import main.java.service.CheckService;
-import main.java.service.Report;
-import main.java.service.ReportService;
+import command.Command;
+import domain.Check;
+import domain.Checkspec;
+import domain.Report;
+import service.CheckService;
+import service.ReportService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

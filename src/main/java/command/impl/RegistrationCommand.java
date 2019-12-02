@@ -1,12 +1,11 @@
-package main.java.command.impl;
+package command.impl;
 
-import javax.servlet.http.*;
+import command.Command;
+import domain.User;
+import service.UserService;
 
-import main.java.command.Command;
-import main.java.service.UserService;
-import org.apache.log4j.Logger;
-
-import main.java.domain.User;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class RegistrationCommand implements Command {
 	private final UserService userService;

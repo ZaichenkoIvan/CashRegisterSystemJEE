@@ -1,6 +1,6 @@
-package main.java.dao;
+package dao;
 
-import main.java.entity.GoodsEntity;
+import entity.GoodsEntity;
 
 import java.util.List;
 import java.util.Optional;

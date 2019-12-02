@@ -1,6 +1,6 @@
-package main.java.service;
+package service;
 
-import main.java.domain.Goods;
+import domain.Goods;
 
 import java.util.List;
 
