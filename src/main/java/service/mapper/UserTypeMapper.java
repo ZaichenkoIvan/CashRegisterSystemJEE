@@ -6,7 +6,7 @@ import entity.UserTypeEntity;
 import java.util.Objects;
 
 public class UserTypeMapper {
-    UserType userTypeEntityToUserType(UserTypeEntity userTypeEntity) {
+    public UserType userTypeEntityToUserType(UserTypeEntity userTypeEntity) {
         if (Objects.isNull(userTypeEntity)) {
             return null;
         }
@@ -18,7 +18,7 @@ public class UserTypeMapper {
         return userType;
     }
 
-    UserTypeEntity userTypeToUserTypeEntity(UserType userType) {
+    public UserTypeEntity userTypeToUserTypeEntity(UserType userType) {
         if (Objects.isNull(userType)) {
             return null;
         }

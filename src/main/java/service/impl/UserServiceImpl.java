@@ -6,11 +6,11 @@ import domain.User;
 import entity.UserEntity;
 import exception.ActionWithUserRuntimeException;
 import exception.InvalidDataRuntimeException;
+import org.apache.log4j.Logger;
 import service.UserService;
 import service.encoder.EncoderPassword;
 import service.mapper.UserMapper;
 import service.validator.UserValidator;
-import org.apache.log4j.Logger;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registration(String userName, String login, String password) {
-        if (Objects.isNull(login) || Objects.isNull(password)) {
+        if (Objects.isNull(login) || Objects.isNull(password) || Objects.isNull(userName)) {
             LOGGER.warn("User data for registration is uncorrected");
             throw new InvalidDataRuntimeException("User data for registration is uncorrected");
         }
