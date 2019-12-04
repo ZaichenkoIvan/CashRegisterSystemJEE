@@ -34,6 +34,11 @@
 		</h4>
 		<FORM method="POST" name="addcheck">
 			<table>
+				<tr>
+					<td style="text-align: left"><fmt:message key="check.goodname"/>:</td>
+					<td><input id="id_name" name="xname" type="text" size="45" autocomplete="on"/></td>
+				</tr>
+				<tr>
 					<td style="text-align: left"><fmt:message key="check.code"/>:</td>
 					<td><input id="id_code" name="xcode" type="number" size="4" min="0" step="1"/></td>
 				</tr>

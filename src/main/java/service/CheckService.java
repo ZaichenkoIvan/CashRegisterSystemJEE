@@ -7,7 +7,7 @@ import domain.User;
 import java.util.List;
 
 public interface CheckService {
-    Checkspec addCheckSpec(Integer code, Double quant, String nds);
+    Checkspec addCheckSpec(String name, String code, Double quant, String nds);
 
     void addCheck(User user, List<Checkspec> checkspecs);
 

@@ -19,6 +19,7 @@ public class GoodsDaoImpl extends AbstractGenericDao<GoodsEntity> implements Goo
     private static final String FIND_ALL = "SELECT * FROM goods ORDER BY code LIMIT ?,?";
     private static final String FIND_BY_ID = "SELECT * FROM goods WHERE id = ?";
     private static final String FIND_BY_CODE = "SELECT * FROM goods WHERE code = ?";
+    private static final String FIND_BY_NAME = "SELECT * FROM goods WHERE name = ?";
     private static final String COUNT = "SELECT COUNT(*) FROM cashreg.goods";
 
 
@@ -99,5 +100,10 @@ public class GoodsDaoImpl extends AbstractGenericDao<GoodsEntity> implements Goo
     @Override
     public Optional<GoodsEntity> findGoods(int code) {
         return Optional.ofNullable(findByIntParam(code, FIND_BY_CODE));
+    }
+
+    @Override
+    public Optional<GoodsEntity> findGoods(String name) {
+        return Optional.ofNullable(findByStringParam(name, FIND_BY_NAME));
     }
 }

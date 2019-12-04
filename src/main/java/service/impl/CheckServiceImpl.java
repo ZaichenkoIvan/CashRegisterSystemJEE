@@ -46,14 +46,17 @@ public class CheckServiceImpl implements CheckService {
     }
 
     @Override
-    public Checkspec addCheckSpec(Integer code, Double quant, String nds) {
-        if (Objects.isNull(code) || Objects.isNull(nds) || Integer.valueOf(nds) < 0 || Integer.valueOf(nds) > 100
+    public Checkspec addCheckSpec(String name, String code, Double quant, String nds) {
+        if (Objects.isNull(nds) || Integer.valueOf(nds) < 0 || Integer.valueOf(nds) > 100
                 || quant < 0 || quant > 100000) {
             LOGGER.error("Data of checkspec is uncorrected");
             throw new InvalidDataRuntimeException("Data of checkspec is uncorrect");
         }
 
-        Optional<GoodsEntity> goodsEntity = goodsDao.findGoods(code);
+        Optional<GoodsEntity> goodsEntity = name.isEmpty()
+                ? goodsDao.findGoods(Integer.valueOf(code))
+                : goodsDao.findGoods(name);
+
         Goods existsGoods = goodMapper.goodEntityToGood(goodsEntity.orElse(null));
 
         if (Objects.isNull(existsGoods)) {
@@ -116,11 +119,11 @@ public class CheckServiceImpl implements CheckService {
         }
 
         List<CheckspecEntity> orderEntities = checkSpecDao.findAllByCheckId(checkId);
-        for (CheckspecEntity checkspecEntity: orderEntities
-             ) {
+        for (CheckspecEntity checkspecEntity : orderEntities
+        ) {
             Optional<GoodsEntity> goodsEntity = goodsDao.findById(checkspecEntity.getIdGood());
             Goods goods = goodsEntity.map(goodMapper::goodEntityToGood)
-                    .orElseThrow( () -> new InvalidDataRuntimeException("Order is not exist"));
+                    .orElseThrow(() -> new InvalidDataRuntimeException("Order is not exist"));
             checkspecEntity.setXcode(goods.getCode());
             checkspecEntity.setXname(goods.getName());
         }

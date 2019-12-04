@@ -89,36 +89,30 @@ public class CheckServiceImplTest {
     public void shouldThrowInvalidDataRuntimeExceptionWithIncorrectQuantInAddCheckspec() {
         exception.expect(InvalidDataRuntimeException.class);
 
-        service.addCheckSpec(100, -100.0, "100");
+        service.addCheckSpec("Name", "100", -100.0, "100");
     }
 
     @Test
     public void shouldThrowInvalidDataRuntimeExceptionWithIncorrectNdsInAddCheckspec() {
         exception.expect(InvalidDataRuntimeException.class);
 
-        service.addCheckSpec(100, 100.0, "-100");
+        service.addCheckSpec("Name","100", 100.0, "-100");
     }
 
     @Test
     public void shouldThrowInvalidDataRuntimeExceptionWithNullNdsInAddCheckspec() {
         exception.expect(InvalidDataRuntimeException.class);
 
-        service.addCheckSpec(100, 100.0, null);
-    }
-
-    @Test
-    public void shouldThrowInvalidDataRuntimeExceptionWithNullCodeInAddCheckspec() {
-        exception.expect(InvalidDataRuntimeException.class);
-
-        service.addCheckSpec(null, 100.0, "100");
+        service.addCheckSpec("Name","100", 100.0, null);
     }
 
     @Test
     public void shouldDontFindGoodInThisCheckspec() {
         when(goodsDao.findGoods(anyInt())).thenReturn(Optional.empty());
+        when(goodsDao.findGoods(anyString())).thenReturn(Optional.empty());
         when(goodMapper.goodEntityToGood(any(GoodsEntity.class))).thenReturn(null);
 
-        Checkspec checkspec = service.addCheckSpec(100, 100.0, "100");
+        Checkspec checkspec = service.addCheckSpec("Name","100", 100.0, "100");
 
         assertThat(checkspec, nullValue());
     }
@@ -127,9 +121,10 @@ public class CheckServiceImplTest {
     public void shouldThrowNotEnoughGoodsQuantRuntimeExceptionWithNullCodeInAddCheckspec() {
         exception.expect(NotEnoughGoodsQuantRuntimeException.class);
         when(goodsDao.findGoods(anyInt())).thenReturn(Optional.ofNullable(GOODS_ENTITY));
+        when(goodsDao.findGoods(anyString())).thenReturn(Optional.ofNullable(GOODS_ENTITY));
         when(goodMapper.goodEntityToGood(any(GoodsEntity.class))).thenReturn(GOOD);
 
-        service.addCheckSpec(100, 1000.0, "100");
+        service.addCheckSpec("Name", "100", 1000.0, "100");
     }
 
     @Test
@@ -241,9 +236,10 @@ public class CheckServiceImplTest {
     @Test
     public void shouldSaveCheckspec() {
         when(goodsDao.findGoods(anyInt())).thenReturn(Optional.ofNullable(GOODS_ENTITY));
+        when(goodsDao.findGoods(anyString())).thenReturn(Optional.ofNullable(GOODS_ENTITY));
         when(goodMapper.goodEntityToGood(any(GoodsEntity.class))).thenReturn(GOOD);
 
-        Checkspec actual = service.addCheckSpec(100, 100.0, "100");
+        Checkspec actual = service.addCheckSpec("Name","100", 100.0, "100");
 
         Checkspec checkspec = new Checkspec();
         checkspec.setQuant(100.0);

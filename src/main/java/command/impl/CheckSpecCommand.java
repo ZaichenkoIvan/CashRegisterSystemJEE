@@ -26,10 +26,11 @@ public class CheckSpecCommand implements Command {
             checkspecs = new ArrayList<>();
             session.setAttribute("addcheckspecs", checkspecs);
         }
-        Integer xcode = Integer.valueOf(req.getParameter("xcode"));
+        String xcode = req.getParameter("xcode");
+        String xname = req.getParameter("xname");
         try {
             Double quant = Double.valueOf(req.getParameter("quant"));
-            Checkspec spec = checkService.addCheckSpec(xcode, quant, req.getParameter("nds"));
+            Checkspec spec = checkService.addCheckSpec(xname, xcode, quant, req.getParameter("nds"));
             if (spec != null) {
                 checkspecs.add(spec);
             }
