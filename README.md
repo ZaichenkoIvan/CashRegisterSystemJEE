@@ -7,16 +7,24 @@
  
 ## You should install to launch the project:
 -JDK 8
+
 -MySQl
+
 -Tomcat
+
 -Maven
 
 ## Installation instructions:
 -Clone or download project from GitHub
+
 -Open folder "CashRegisterSystemJEE/WebContent/WEB-INF/sql/createDatabase.sql"
+
 -Create and insert database at MySQL
--"mvn clean install" in the console
+
+-"mvn clean package -DskipTests" command for build
+
 -deploy "*.war" file to Tomcat from /target
+
 -start up Tomcat, launch your web browser, navigate to application URL
 
 ### Data for login
