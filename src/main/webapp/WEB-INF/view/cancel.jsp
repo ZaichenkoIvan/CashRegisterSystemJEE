@@ -13,6 +13,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <title><fmt:message key="title"/></title>
   	<style>	
+	    <%--<%@include file="/css/style.css"%>--%>
 	    <%@include file="/css/style.css"%>
 	</style>
  </head> 
