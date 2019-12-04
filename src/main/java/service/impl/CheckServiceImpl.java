@@ -116,6 +116,14 @@ public class CheckServiceImpl implements CheckService {
         }
 
         List<CheckspecEntity> orderEntities = checkSpecDao.findAllByCheckId(checkId);
+        for (CheckspecEntity checkspecEntity: orderEntities
+             ) {
+            Optional<GoodsEntity> goodsEntity = goodsDao.findById(checkspecEntity.getIdGood());
+            Goods goods = goodsEntity.map(goodMapper::goodEntityToGood)
+                    .orElseThrow( () -> new InvalidDataRuntimeException("Order is not exist"));
+            checkspecEntity.setXcode(goods.getCode());
+            checkspecEntity.setXname(goods.getName());
+        }
 
         return orderEntities.isEmpty() ?
                 Collections.emptyList() :

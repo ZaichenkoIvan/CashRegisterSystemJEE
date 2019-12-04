@@ -15,7 +15,7 @@ import java.util.Optional;
 public class CheckSpecDaoImpl extends AbstractGenericDao<CheckspecEntity> implements CheckSpecDao {
     private static final String INSERT = "INSERT INTO checkspec" +
             "(id_check, id_good, quant, price, total, nds, ndstotal, canceled) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String FIND_ALL_BY_CHECK_ID = "SELECT * FROM vcheckspec  WHERE id_check = ? ORDER BY id";
+    private static final String FIND_ALL_BY_CHECK_ID = "SELECT * FROM checkspec  WHERE id_check = ? ORDER BY id";
     private static final String UPDATE_BY_ID = "UPDATE checkspec SET id_check = ?, id_good = ?, quant = ?, price = ?," +
             " total = ?, nds = ?, ndstotal = ?, canceled = ? WHERE id = ?";
     private static final String FIND_BY_ID = "SELECT * FROM checkspec WHERE id = ?";
@@ -66,8 +66,8 @@ public class CheckSpecDaoImpl extends AbstractGenericDao<CheckspecEntity> implem
             checkspec.setNds(resultSet.getInt("nds"));
             checkspec.setNdstotal(resultSet.getDouble("ndstotal"));
             checkspec.setCanceled(resultSet.getInt("canceled"));
-            checkspec.setXcode(resultSet.getInt("xcode"));
-            checkspec.setXname(resultSet.getString("xname"));
+//            checkspec.setXcode(resultSet.getInt("xcode"));
+//            checkspec.setXname(resultSet.getString("xname"));
         } catch (SQLException e) {
             LOGGER.error("Not find checkspec in db", e);
             throw new DatabaseRuntimeException("Not find checkspec in db", e);

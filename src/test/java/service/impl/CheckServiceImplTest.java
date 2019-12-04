@@ -177,13 +177,14 @@ public class CheckServiceImplTest {
     @Test
     public void shouldFindAllCheckspecByCheckId() {
         when(checkSpecDao.findAllByCheckId(anyLong())).thenReturn(CHECKSPEC_ENTITIES);
+        when(goodsDao.findById(anyLong())).thenReturn(Optional.ofNullable(GOODS_ENTITY));
         when(checkSpecMapper.checkspecEntityToCheckspec(any(CheckspecEntity.class))).thenReturn(CHECKSPEC);
+        when(goodMapper.goodEntityToGood(any(GoodsEntity.class))).thenReturn(GOOD);
 
         List<Checkspec> checkspecs = service.findAllCheckspecByCheckId(CHECK.getId());
 
         assertThat(checkspecs, is(CHECKSPECS));
     }
-
 
     @Test
     public void shouldReturnCheck() {

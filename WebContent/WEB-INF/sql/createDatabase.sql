@@ -80,19 +80,3 @@ CREATE TABLE `fiscal` (
   `total` double DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-DROP TABLE IF EXISTS `vcheckspec`;
-SET @saved_cs_client     = @@character_set_client;
-/*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `vcheckspec` AS SELECT
- 1 AS `id`,
- 1 AS `id_check`,
- 1 AS `id_good`,
- 1 AS `quant`,
- 1 AS `price`,
- 1 AS `total`,
- 1 AS `nds`,
- 1 AS `ndstotal`,
- 1 AS `canceled`,
- 1 AS `xname`,
- 1 AS `xcode`*/;
-SET character_set_client = @saved_cs_client;
