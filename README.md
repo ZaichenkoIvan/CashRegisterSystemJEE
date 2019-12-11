@@ -19,7 +19,9 @@
 
 -Open folder "CashRegisterSystemJEE/WebContent/WEB-INF/sql/createDatabase.sql"
 
--Create and insert database at MySQL
+-Create database at MySQL
+
+-Insert data in database at MySQL
 
 -"mvn clean package -DskipTests" command for build
 
