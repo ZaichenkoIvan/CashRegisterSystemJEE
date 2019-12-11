@@ -24,7 +24,7 @@ public class FiscalDaoImpl extends AbstractGenericDao<FiscalEntity> implements F
         try {
             statement.setDouble(1, fiscal.getTotal());
         } catch (SQLException e) {
-            LOGGER.error("Not insert fiscal in db", e);
+            LOGGER.warn("Not insert fiscal in db", e);
             throw new DatabaseRuntimeException("Not insert fiscal in db", e);
         }
     }
@@ -35,7 +35,7 @@ public class FiscalDaoImpl extends AbstractGenericDao<FiscalEntity> implements F
             statement.setDouble(1, fiscal.getTotal());
             statement.setLong(2, fiscal.getId());
         } catch (SQLException e) {
-            LOGGER.error("Not update fiscal in db", e);
+            LOGGER.warn("Not update fiscal in db", e);
             throw new DatabaseRuntimeException("Not update fiscal in db", e);
         }
     }

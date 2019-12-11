@@ -33,7 +33,7 @@ public class CheckDaoImpl extends AbstractGenericDao<CheckEntity> implements Che
             statement.setDouble(3, check.getDiscount());
             statement.setInt(4, check.getCanceled());
         } catch (SQLException e) {
-            LOGGER.error("Not insert check in db", e);
+            LOGGER.warn("Not insert check in db", e);
             throw new DatabaseRuntimeException("Not insert check in db", e);
         }
     }
@@ -45,7 +45,7 @@ public class CheckDaoImpl extends AbstractGenericDao<CheckEntity> implements Che
             statement.setObject(5, check.getRegistration());
             statement.setLong(6, check.getId());
         } catch (SQLException e) {
-            LOGGER.error("Not update check in db", e);
+            LOGGER.warn("Not update check in db", e);
             throw new DatabaseRuntimeException("Not update check in db", e);
         }
     }
@@ -62,7 +62,7 @@ public class CheckDaoImpl extends AbstractGenericDao<CheckEntity> implements Che
             check.setCanceled(resultSet.getInt("canceled"));
             check.setRegistration((Integer) resultSet.getObject("registration"));
         } catch (SQLException e) {
-            LOGGER.error("Not find check in db", e);
+            LOGGER.warn("Not find check in db", e);
             throw new DatabaseRuntimeException("Not find check in db", e);
         }
         return check;
@@ -91,7 +91,7 @@ public class CheckDaoImpl extends AbstractGenericDao<CheckEntity> implements Che
             statement.setInt(1, value);
             rows = statement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("Check update() error", e);
+            LOGGER.warn("Check update() error", e);
         }
         return rows;
     }

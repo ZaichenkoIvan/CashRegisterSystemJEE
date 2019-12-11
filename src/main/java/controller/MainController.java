@@ -16,9 +16,9 @@ public class MainController extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-		String logfilename = getInitParameter("logfile");
-		String pref = getServletContext().getRealPath("/");
-		PropertyConfigurator.configure(pref+logfilename);
+        String logfilename = getInitParameter("logfile");
+        String pref = getServletContext().getRealPath("/");
+        PropertyConfigurator.configure(pref + logfilename);
         ApplicationContextInjector.getInstance();
     }
 
@@ -50,10 +50,9 @@ public class MainController extends HttpServlet {
 
     private String getPage(HttpServletRequest req) {
         String page = req.getServletPath();
-        if (page.equals("/") || page.equals("/login") || page.equals("/logout") ) {
+        if (page.equals("/") || page.equals("/login") || page.equals("/logout")) {
             page = "/index";
         }
         return page;
     }
 }
-

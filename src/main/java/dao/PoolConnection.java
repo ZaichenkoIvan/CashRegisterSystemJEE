@@ -36,12 +36,12 @@ public class PoolConnection {
         }
     }
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         LOGGER.info("Getting connection");
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
-            LOGGER.error("Cant get database connection", e);
+            LOGGER.warn("Cant get database connection", e);
             throw new DatabaseRuntimeException("Cant get database connection");
         }
     }

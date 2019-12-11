@@ -29,8 +29,8 @@ public class ReportDaoImpl implements ReportDao {
             "	FROM checkspec s" +
             "	INNER JOIN cashreg.check c ON c.id = s.id_check" +
             "	LEFT JOIN (SELECT COUNT(c1.canceled) AS countcanceled FROM cashreg.check c1 " +
-            "			 		WHERE c1.canceled = 1 /*AND cast(c1.crtime as date) = current_date()*/) cancel ON true" +
-            "	WHERE c.canceled = 0 AND s.canceled = 0 /*AND cast(c.crtime as date) = current_date()*/" +    //закоментировано для debug-а
+            "			 		WHERE c1.canceled = 1 ) cancel ON true" +
+            "	WHERE c.canceled = 0 AND s.canceled = 0 " +
             "	GROUP BY s.nds, cancel.countcanceled";
 
     private static String QueryZReport = "SELECT current_timestamp() AS printtime," +
@@ -47,7 +47,7 @@ public class ReportDaoImpl implements ReportDao {
             "	round(SUM(SUM(s.ndstotal)) OVER(), 2) AS sumndstotal " +
             "	FROM checkspec s" +
             "	INNER JOIN cashreg.check c ON c.id = s.id_check" +
-            "	WHERE c.canceled = 0 AND s.canceled = 0 /*AND cast(c.crtime as date) = current_date()*/" +    //закоментировано для debug-а
+            "	WHERE c.canceled = 0 AND s.canceled = 0" +
             "		AND c.registration IS NULL";
 
     private PoolConnection poolConnection;
@@ -79,7 +79,7 @@ public class ReportDaoImpl implements ReportDao {
                         rs.getDouble("total")));
             }
         } catch (SQLException e) {
-            LOGGER.error("Не удалось сформировать X-отчет", e);
+            LOGGER.warn("Не удалось сформировать X-отчет", e);
         }
         return Optional.of(rep);
     }
@@ -113,7 +113,7 @@ public class ReportDaoImpl implements ReportDao {
                         .build();
             }
         } catch (SQLException e) {
-            LOGGER.error("Не удалось сформировать Z-отчет", e);
+            LOGGER.warn("Не удалось сформировать Z-отчет", e);
         }
         return Optional.ofNullable(zReport);
     }

@@ -29,7 +29,7 @@ public abstract class AbstractGenericDao<E> {
                 return resultSet.getLong(1);
             }
         } catch (SQLException e) {
-            LOGGER.error("Can not insert element", e);
+            LOGGER.warn("Can not insert element", e);
             throw new DatabaseRuntimeException("Can not insert element", e);
         }
         return null;
@@ -44,7 +44,7 @@ public abstract class AbstractGenericDao<E> {
                 return parseToOne(resultSet);
             }
         } catch (SQLException e) {
-            LOGGER.error("Can not get element", e);
+            LOGGER.warn("Can not get element", e);
             throw new DatabaseRuntimeException("Can not get element", e);
         }
         return null;
@@ -59,7 +59,7 @@ public abstract class AbstractGenericDao<E> {
                 return parseToOne(resultSet);
             }
         } catch (SQLException e) {
-            LOGGER.error("Can not get element", e);
+            LOGGER.warn("Can not get element", e);
             throw new DatabaseRuntimeException("Can not get element", e);
         }
         return null;
@@ -74,7 +74,7 @@ public abstract class AbstractGenericDao<E> {
                 return parseToOne(resultSet);
             }
         } catch (SQLException e) {
-            LOGGER.error("Can not get element", e);
+            LOGGER.warn("Can not get element", e);
             throw new DatabaseRuntimeException("Can not get element", e);
         }
         return null;
@@ -86,7 +86,7 @@ public abstract class AbstractGenericDao<E> {
             setUpdateProperties(preparedStatement, entity);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("Can not update element", e);
+            LOGGER.warn("Can not update element", e);
             throw new DatabaseRuntimeException("Can not update element", e);
         }
     }
@@ -101,7 +101,7 @@ public abstract class AbstractGenericDao<E> {
                 return resultSet.getInt("COUNT(*)");
             }
         } catch (SQLException e) {
-            LOGGER.error("Can not get count elements", e);
+            LOGGER.warn("Can not get count elements", e);
             throw new DatabaseRuntimeException("Can not get count elements", e);
         }
         return 0;
@@ -117,7 +117,7 @@ public abstract class AbstractGenericDao<E> {
             resultSet = statement.executeQuery();
             list = parseAll(resultSet);
         } catch (SQLException e) {
-            LOGGER.error("Can not get paganation list", e);
+            LOGGER.warn("Can not get paganation list", e);
             throw new DatabaseRuntimeException("Can not get paganation list", e);
         }
         return list;
@@ -133,7 +133,7 @@ public abstract class AbstractGenericDao<E> {
             resultSet = statement.executeQuery();
             list = parseAll(resultSet);
         } catch (SQLException e) {
-            LOGGER.error("Can not get list element", e);
+            LOGGER.warn("Can not get list element", e);
             throw new DatabaseRuntimeException("Can not get list element", e);
         }
         return list;
@@ -146,7 +146,7 @@ public abstract class AbstractGenericDao<E> {
                 elements.add(parseToOne(resultSet));
             }
         } catch (SQLException e) {
-            LOGGER.error("Can not parse elements", e);
+            LOGGER.warn("Can not parse elements", e);
             throw new DatabaseRuntimeException("Can not parse elements", e);
         }
         return elements;

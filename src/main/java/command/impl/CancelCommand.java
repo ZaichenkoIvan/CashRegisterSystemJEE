@@ -24,15 +24,15 @@ public class CancelCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String url =null;
+        String url = null;
         HttpSession session = req.getSession();
         if (req.getParameter("btnSearchCheck") != null) {
             Long checkid = Long.valueOf(req.getParameter("checkid"));
             Check check = checkService.findById(checkid);
             List<Checkspec> checkspecs = checkService.findAllCheckspecByCheckId(checkid);
-                session.setAttribute("check", check);
-                session.setAttribute("checkspecs", checkspecs);
-                session.setAttribute("checkfind", null);
+            session.setAttribute("check", check);
+            session.setAttribute("checkspecs", checkspecs);
+            session.setAttribute("checkfind", null);
             url = "cancel";
         }
         if (req.getParameter("btnCancelCheck") != null) {

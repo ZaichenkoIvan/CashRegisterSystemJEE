@@ -4,9 +4,9 @@ import dao.GoodsDao;
 import domain.Goods;
 import entity.GoodsEntity;
 import exception.InvalidDataRuntimeException;
+import org.apache.log4j.Logger;
 import service.GoodsService;
 import service.mapper.GoodMapper;
-import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Objects;

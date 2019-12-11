@@ -3,161 +3,161 @@ package domain;
 import java.util.Objects;
 
 public class Checkspec {
-	private Long id;
-	private int canceled;
-	private Long idCheck;
-	private Long idGood;
-	private int nds;
-	private double ndstotal;
-	private double price;
-	private double quant;
-	private double total;
-	private int xcode;
-	private String xname;
-	private Check check;
-	
-	public Checkspec() {
-	}
+    private Long id;
+    private int canceled;
+    private Long idCheck;
+    private Long idGood;
+    private int nds;
+    private double ndstotal;
+    private double price;
+    private double quant;
+    private double total;
+    private int xcode;
+    private String xname;
+    private Check check;
 
-	public int getCanceled() {
-		return this.canceled;
-	}
+    public Checkspec() {
+    }
 
-	public void setCanceled(int canceled) {
-		this.canceled = canceled;
-	}
+    public int getCanceled() {
+        return this.canceled;
+    }
 
-	public Long getId() {
-		return this.id;
-	}
+    public void setCanceled(int canceled) {
+        this.canceled = canceled;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return this.id;
+    }
 
-	public Long getIdCheck() {
-		return this.idCheck;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setIdCheck(Long idCheck) {
-		this.idCheck = idCheck;
-	}
+    public Long getIdCheck() {
+        return this.idCheck;
+    }
 
-	public Long getIdGood() {
-		return this.idGood;
-	}
+    public void setIdCheck(Long idCheck) {
+        this.idCheck = idCheck;
+    }
 
-	public void setIdGood(Long idGood) {
-		this.idGood = idGood;
-	}
+    public Long getIdGood() {
+        return this.idGood;
+    }
 
-	public int getNds() {
-		return this.nds;
-	}
+    public void setIdGood(Long idGood) {
+        this.idGood = idGood;
+    }
 
-	public void setNds(int nds) {
-		this.nds = nds;
-	}
+    public int getNds() {
+        return this.nds;
+    }
 
-	public double getNdstotal() {
-		return this.ndstotal;
-	}
+    public void setNds(int nds) {
+        this.nds = nds;
+    }
 
-	public void setNdstotal(double ndstotal) {
-		this.ndstotal = ndstotal;
-	}
+    public double getNdstotal() {
+        return this.ndstotal;
+    }
 
-	public double getPrice() {
-		return this.price;
-	}
+    public void setNdstotal(double ndstotal) {
+        this.ndstotal = ndstotal;
+    }
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
+    public double getPrice() {
+        return this.price;
+    }
 
-	public double getQuant() {
-		return this.quant;
-	}
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-	public void setQuant(double quant) {
-		this.quant = quant;
-	}
+    public double getQuant() {
+        return this.quant;
+    }
 
-	public double getTotal() {
-		return this.total;
-	}
+    public void setQuant(double quant) {
+        this.quant = quant;
+    }
 
-	public void setTotal(double total) {
-		this.total = total;
-	}
-	
-	public Check getCheck() {
-		return this.check;
-	}
+    public double getTotal() {
+        return this.total;
+    }
 
-	public void setCheck(Check check) {
-		this.check = check;
-	}
+    public void setTotal(double total) {
+        this.total = total;
+    }
 
-	public int getXcode() {
-		return xcode;
-	}
+    public Check getCheck() {
+        return this.check;
+    }
 
-	public void setXcode(int xcode) {
-		this.xcode = xcode;
-	}
+    public void setCheck(Check check) {
+        this.check = check;
+    }
 
-	public String getXname() {
-		return xname;
-	}
+    public int getXcode() {
+        return xcode;
+    }
 
-	public void setXname(String xname) {
-		this.xname = xname;
-	}
+    public void setXcode(int xcode) {
+        this.xcode = xcode;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		Checkspec checkspec = (Checkspec) o;
-		return canceled == checkspec.canceled &&
-				nds == checkspec.nds &&
-				Double.compare(checkspec.ndstotal, ndstotal) == 0 &&
-				Double.compare(checkspec.price, price) == 0 &&
-				Double.compare(checkspec.quant, quant) == 0 &&
-				Double.compare(checkspec.total, total) == 0 &&
-				xcode == checkspec.xcode &&
-				Objects.equals(id, checkspec.id) &&
-				Objects.equals(idCheck, checkspec.idCheck) &&
-				Objects.equals(idGood, checkspec.idGood) &&
-				Objects.equals(xname, checkspec.xname) &&
-				Objects.equals(check, checkspec.check);
-	}
+    public String getXname() {
+        return xname;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, canceled, idCheck, idGood, nds, ndstotal, price, quant, total, xcode, xname, check);
-	}
+    public void setXname(String xname) {
+        this.xname = xname;
+    }
 
-	@Override
-	public String toString() {
-		return "Checkspec{" +
-				"id=" + id +
-				", canceled=" + canceled +
-				", idCheck=" + idCheck +
-				", idGood=" + idGood +
-				", nds=" + nds +
-				", ndstotal=" + ndstotal +
-				", price=" + price +
-				", quant=" + quant +
-				", total=" + total +
-				", xcode=" + xcode +
-				", xname='" + xname + '\'' +
-				", check=" + check +
-				'}';
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Checkspec checkspec = (Checkspec) o;
+        return canceled == checkspec.canceled &&
+                nds == checkspec.nds &&
+                Double.compare(checkspec.ndstotal, ndstotal) == 0 &&
+                Double.compare(checkspec.price, price) == 0 &&
+                Double.compare(checkspec.quant, quant) == 0 &&
+                Double.compare(checkspec.total, total) == 0 &&
+                xcode == checkspec.xcode &&
+                Objects.equals(id, checkspec.id) &&
+                Objects.equals(idCheck, checkspec.idCheck) &&
+                Objects.equals(idGood, checkspec.idGood) &&
+                Objects.equals(xname, checkspec.xname) &&
+                Objects.equals(check, checkspec.check);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, canceled, idCheck, idGood, nds, ndstotal, price, quant, total, xcode, xname, check);
+    }
+
+    @Override
+    public String toString() {
+        return "Checkspec{" +
+                "id=" + id +
+                ", canceled=" + canceled +
+                ", idCheck=" + idCheck +
+                ", idGood=" + idGood +
+                ", nds=" + nds +
+                ", ndstotal=" + ndstotal +
+                ", price=" + price +
+                ", quant=" + quant +
+                ", total=" + total +
+                ", xcode=" + xcode +
+                ", xname='" + xname + '\'' +
+                ", check=" + check +
+                '}';
+    }
 }

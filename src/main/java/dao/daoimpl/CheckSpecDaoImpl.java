@@ -37,7 +37,7 @@ public class CheckSpecDaoImpl extends AbstractGenericDao<CheckspecEntity> implem
             statement.setDouble(7, checkspec.getNdstotal());
             statement.setInt(8, checkspec.getCanceled());
         } catch (SQLException e) {
-            LOGGER.error("Not insert checkspec in db", e);
+            LOGGER.warn("Not insert checkspec in db", e);
             throw new DatabaseRuntimeException("Not insert checkspec in db", e);
         }
     }
@@ -48,7 +48,7 @@ public class CheckSpecDaoImpl extends AbstractGenericDao<CheckspecEntity> implem
         try {
             statement.setLong(9, checkspec.getId());
         } catch (SQLException e) {
-            LOGGER.error("Not update checkspec in db", e);
+            LOGGER.warn("Not update checkspec in db", e);
             throw new DatabaseRuntimeException("Not update checkspec in db", e);
         }
     }
@@ -66,10 +66,8 @@ public class CheckSpecDaoImpl extends AbstractGenericDao<CheckspecEntity> implem
             checkspec.setNds(resultSet.getInt("nds"));
             checkspec.setNdstotal(resultSet.getDouble("ndstotal"));
             checkspec.setCanceled(resultSet.getInt("canceled"));
-//            checkspec.setXcode(resultSet.getInt("xcode"));
-//            checkspec.setXname(resultSet.getString("xname"));
         } catch (SQLException e) {
-            LOGGER.error("Not find checkspec in db", e);
+            LOGGER.warn("Not find checkspec in db", e);
             throw new DatabaseRuntimeException("Not find checkspec in db", e);
         }
 

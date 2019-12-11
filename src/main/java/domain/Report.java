@@ -6,225 +6,237 @@ import java.util.List;
 
 public class Report {
 
-	private long number;
-	private Timestamp printtime;
-	private int countCheck;
-	private int countCancelCheck;
-	private double totalA;
-	private double ndsTotalA;
-	private double totalB;
-	private double ndsTotalB;
-	private double totalC;
-	private double ndsTotalC;
-	private double sumNdsTotal;
-	private double sumTotal;
-	private List<Detail> detail = new ArrayList<>();
-	
-	public Report() {
-	}
+    private long number;
+    private Timestamp printtime;
+    private int countCheck;
+    private int countCancelCheck;
+    private double totalA;
+    private double ndsTotalA;
+    private double totalB;
+    private double ndsTotalB;
+    private double totalC;
+    private double ndsTotalC;
+    private double sumNdsTotal;
+    private double sumTotal;
+    private List<Detail> detail = new ArrayList<>();
 
-	public void setNumber(long number) {
-		this.number = number;
-	}
+    public Report() {
+    }
 
-	public long getNumber() {
-		return number;
-	}
+    public void setNumber(long number) {
+        this.number = number;
+    }
 
-	public void setPrinttime(Timestamp printtime) {
-		this.printtime = printtime;		
-	}
+    public long getNumber() {
+        return number;
+    }
 
-	public Timestamp getPrinttime() {
-		return printtime;
-	}
+    public void setPrinttime(Timestamp printtime) {
+        this.printtime = printtime;
+    }
 
-	public void setCountCheck(int countCheck) {
-		this.countCheck = countCheck;
-	}
+    public Timestamp getPrinttime() {
+        return printtime;
+    }
 
-	public int getCountCheck() {
-		return countCheck;
-	}
+    public void setCountCheck(int countCheck) {
+        this.countCheck = countCheck;
+    }
 
-	public void setCountCancelCheck(int countCancelCheck) {
-		this.countCancelCheck = countCancelCheck;
-	}
+    public int getCountCheck() {
+        return countCheck;
+    }
 
-	public int getCountCancelCheck() {
-		return countCancelCheck;
-	}
+    public void setCountCancelCheck(int countCancelCheck) {
+        this.countCancelCheck = countCancelCheck;
+    }
 
-	public List<Detail> getDetail() {
-		return detail;
-	}
+    public int getCountCancelCheck() {
+        return countCancelCheck;
+    }
 
-	public void setDetail(List<Detail> detail) {
-		this.detail = detail;
-	}
-	
-	public double getSumNdsTotal() {
-		return sumNdsTotal;
-	}
+    public List<Detail> getDetail() {
+        return detail;
+    }
 
-	public void setSumNdsTotal(double sumNdsTotal) {
-		this.sumNdsTotal = sumNdsTotal;
-	}
+    public void setDetail(List<Detail> detail) {
+        this.detail = detail;
+    }
 
-	public double getSumTotal() {
-		return sumTotal;
-	}
-	
-	public void setSumTotal(double sumTotal) {
-		this.sumTotal = sumTotal;
-	}
+    public double getSumNdsTotal() {
+        return sumNdsTotal;
+    }
 
-	public double getTotalA() {
-		return totalA;
-	}
+    public void setSumNdsTotal(double sumNdsTotal) {
+        this.sumNdsTotal = sumNdsTotal;
+    }
 
-	public void setTotalA(double totalA) {
-		this.totalA = totalA;
-	}
+    public double getSumTotal() {
+        return sumTotal;
+    }
 
-	public double getNdsTotalA() {
-		return ndsTotalA;
-	}
+    public void setSumTotal(double sumTotal) {
+        this.sumTotal = sumTotal;
+    }
 
-	public void setNdsTotalA(double ndsTotalA) {
-		this.ndsTotalA = ndsTotalA;
-	}
+    public double getTotalA() {
+        return totalA;
+    }
 
-	public double getTotalB() {
-		return totalB;
-	}
+    public void setTotalA(double totalA) {
+        this.totalA = totalA;
+    }
 
-	public void setTotalB(double totalB) {
-		this.totalB = totalB;
-	}
+    public double getNdsTotalA() {
+        return ndsTotalA;
+    }
 
-	public double getNdsTotalB() {
-		return ndsTotalB;
-	}
+    public void setNdsTotalA(double ndsTotalA) {
+        this.ndsTotalA = ndsTotalA;
+    }
 
-	public void setNdsTotalB(double ndsTotalB) {
-		this.ndsTotalB = ndsTotalB;
-	}
+    public double getTotalB() {
+        return totalB;
+    }
 
-	public void setNdsTotalC(double ndsTotalC) {
-		this.ndsTotalC = ndsTotalC;
-	}	
+    public void setTotalB(double totalB) {
+        this.totalB = totalB;
+    }
 
-	public double getTotalC() {
-		return totalC;
-	}
+    public double getNdsTotalB() {
+        return ndsTotalB;
+    }
 
-	public void setTotalC(double totalC) {
-		this.totalC = totalC;
-	}
+    public void setNdsTotalB(double ndsTotalB) {
+        this.ndsTotalB = ndsTotalB;
+    }
 
-	public double getNdsTotalC() {
-		return ndsTotalC;
-	}
+    public void setNdsTotalC(double ndsTotalC) {
+        this.ndsTotalC = ndsTotalC;
+    }
 
-	public class Detail {
+    public double getTotalC() {
+        return totalC;
+    }
 
-		private int nds;
-		private double ndsTotal;
-		private double total;
-		
-		public Detail() {
-			super();
-		}		
+    public void setTotalC(double totalC) {
+        this.totalC = totalC;
+    }
 
-		public Detail(int nds, double ndsTotal, double total) {
-			this.nds = nds;
-			this.ndsTotal = ndsTotal;
-			this.total = total;
-		}
+    public double getNdsTotalC() {
+        return ndsTotalC;
+    }
 
-		public int getNds() {
-			return nds;
-		}
+    public class Detail {
 
-		public void setNds(int nds) {
-			this.nds = nds;
-		}
+        private int nds;
+        private double ndsTotal;
+        private double total;
 
-		public double getNdsTotal() {
-			return ndsTotal;
-		}
+        public Detail() {
+            super();
+        }
 
-		public void setNdsTotal(double ndsTotal) {
-			this.ndsTotal = ndsTotal;
-		}
+        public Detail(int nds, double ndsTotal, double total) {
+            this.nds = nds;
+            this.ndsTotal = ndsTotal;
+            this.total = total;
+        }
 
-		public double getTotal() {
-			return total;
-		}
-		
-		public void setTotal(double total) {
-			this.total = total;
-		}
-	}
+        public int getNds() {
+            return nds;
+        }
+
+        public void setNds(int nds) {
+            this.nds = nds;
+        }
+
+        public double getNdsTotal() {
+            return ndsTotal;
+        }
+
+        public void setNdsTotal(double ndsTotal) {
+            this.ndsTotal = ndsTotal;
+        }
+
+        public double getTotal() {
+            return total;
+        }
+
+        public void setTotal(double total) {
+            this.total = total;
+        }
+    }
 
     public class Builder {
         private Report newReport;
- 
+
         public Builder() {
-        	newReport = new Report();
+            newReport = new Report();
         }
- 
-        public Report build(){
+
+        public Report build() {
             return newReport;
         }
-		public Builder addNumber(long number) {
-			newReport.setNumber(number);
-			return this;
-		}	
-		public Builder addPrinttime(Timestamp printtime) {
-			newReport.printtime = printtime;
-			return this;
-		}		
-		public Builder addCountCheck(int countCheck) {
-			newReport.countCheck = countCheck;
-			return this;
-		}
-		public Builder addCountCancelCheck(int countCancelCheck) {
-			newReport.countCancelCheck = countCancelCheck;
-			return this;
-		}
-		public Builder addSumTotal(double sumTotal) {
-			newReport.sumTotal = sumTotal;
-			return this;
-		}
-		public Builder addSumNdsTotal(double sumNdsTotal) {
-			newReport.sumNdsTotal = sumNdsTotal;
-			return this;
-		}
-		public Builder addTotalA(double totalA) {
-			newReport.totalA = totalA;
-			return this;
-		}
-		public Builder addTotalB(double totalB) {
-			newReport.totalB = totalB;
-			return this;
-		}
-		public Builder addTotalC(double totalC) {
-			newReport.totalC = totalC;
-			return this;
-		}
-		public Builder addNdsTotalA(double ndsTotalA) {
-			newReport.ndsTotalA = ndsTotalA;
-			return this;
-		}
-		public Builder addNdsTotalB(double ndsTotalB) {
-			newReport.ndsTotalB = ndsTotalB;
-			return this;
-		}
-		public Builder addNdsTotalC(double ndsTotalC) {
-			newReport.ndsTotalC = ndsTotalC;
-			return this;
-		}
+
+        public Builder addNumber(long number) {
+            newReport.setNumber(number);
+            return this;
+        }
+
+        public Builder addPrinttime(Timestamp printtime) {
+            newReport.printtime = printtime;
+            return this;
+        }
+
+        public Builder addCountCheck(int countCheck) {
+            newReport.countCheck = countCheck;
+            return this;
+        }
+
+        public Builder addCountCancelCheck(int countCancelCheck) {
+            newReport.countCancelCheck = countCancelCheck;
+            return this;
+        }
+
+        public Builder addSumTotal(double sumTotal) {
+            newReport.sumTotal = sumTotal;
+            return this;
+        }
+
+        public Builder addSumNdsTotal(double sumNdsTotal) {
+            newReport.sumNdsTotal = sumNdsTotal;
+            return this;
+        }
+
+        public Builder addTotalA(double totalA) {
+            newReport.totalA = totalA;
+            return this;
+        }
+
+        public Builder addTotalB(double totalB) {
+            newReport.totalB = totalB;
+            return this;
+        }
+
+        public Builder addTotalC(double totalC) {
+            newReport.totalC = totalC;
+            return this;
+        }
+
+        public Builder addNdsTotalA(double ndsTotalA) {
+            newReport.ndsTotalA = ndsTotalA;
+            return this;
+        }
+
+        public Builder addNdsTotalB(double ndsTotalB) {
+            newReport.ndsTotalB = ndsTotalB;
+            return this;
+        }
+
+        public Builder addNdsTotalC(double ndsTotalC) {
+            newReport.ndsTotalC = ndsTotalC;
+            return this;
+        }
     }
 }

@@ -37,7 +37,7 @@ public class GoodsDaoImpl extends AbstractGenericDao<GoodsEntity> implements Goo
             statement.setString(5, goods.getMeasure());
             statement.setString(6, goods.getComments());
         } catch (SQLException e) {
-            LOGGER.error("Not insert good in db", e);
+            LOGGER.warn("Not insert good in db", e);
             throw new DatabaseRuntimeException("Not insert good in db", e);
         }
 
@@ -49,7 +49,7 @@ public class GoodsDaoImpl extends AbstractGenericDao<GoodsEntity> implements Goo
         try {
             statement.setLong(7, goods.getId());
         } catch (SQLException e) {
-            LOGGER.error("Not update good in db", e);
+            LOGGER.warn("Not update good in db", e);
             throw new DatabaseRuntimeException("Not update good in db", e);
         }
     }
@@ -66,7 +66,7 @@ public class GoodsDaoImpl extends AbstractGenericDao<GoodsEntity> implements Goo
             goods.setMeasure(resultSet.getString("measure"));
             goods.setComments(resultSet.getString("comments"));
         } catch (SQLException e) {
-            LOGGER.error("Not find good in db", e);
+            LOGGER.warn("Not find good in db", e);
             throw new DatabaseRuntimeException("Not find good in db", e);
         }
         return goods;

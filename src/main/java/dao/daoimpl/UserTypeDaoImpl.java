@@ -27,7 +27,7 @@ public class UserTypeDaoImpl extends AbstractGenericDao<UserTypeEntity> implemen
             statement.setString(1, usertype.getType());
             statement.setString(2, usertype.getDescription());
         } catch (SQLException e) {
-            LOGGER.error("Not insert user type in db", e);
+            LOGGER.warn("Not insert user type in db", e);
             throw new DatabaseRuntimeException("Not insert user type in db", e);
         }
     }
@@ -39,7 +39,7 @@ public class UserTypeDaoImpl extends AbstractGenericDao<UserTypeEntity> implemen
             statement.setString(2, usertype.getDescription());
             statement.setLong(3, usertype.getId());
         } catch (SQLException e) {
-            LOGGER.error("Not update user type in db", e);
+            LOGGER.warn("Not update user type in db", e);
             throw new DatabaseRuntimeException("Not update user type in db", e);
         }
     }
@@ -53,7 +53,7 @@ public class UserTypeDaoImpl extends AbstractGenericDao<UserTypeEntity> implemen
             userType.setDescription(resultSet.getString("description"));
             return userType;
         } catch (SQLException e) {
-            LOGGER.error("Not find user type in db", e);
+            LOGGER.warn("Not find user type in db", e);
             throw new DatabaseRuntimeException("Not find user type in db", e);
         }
     }

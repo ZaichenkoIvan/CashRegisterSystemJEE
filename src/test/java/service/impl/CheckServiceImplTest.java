@@ -96,14 +96,14 @@ public class CheckServiceImplTest {
     public void shouldThrowInvalidDataRuntimeExceptionWithIncorrectNdsInAddCheckspec() {
         exception.expect(InvalidDataRuntimeException.class);
 
-        service.addCheckSpec("Name","100", 100.0, "-100");
+        service.addCheckSpec("Name", "100", 100.0, "-100");
     }
 
     @Test
     public void shouldThrowInvalidDataRuntimeExceptionWithNullNdsInAddCheckspec() {
         exception.expect(InvalidDataRuntimeException.class);
 
-        service.addCheckSpec("Name","100", 100.0, null);
+        service.addCheckSpec("Name", "100", 100.0, null);
     }
 
     @Test
@@ -112,7 +112,7 @@ public class CheckServiceImplTest {
         when(goodsDao.findGoods(anyString())).thenReturn(Optional.empty());
         when(goodMapper.goodEntityToGood(any(GoodsEntity.class))).thenReturn(null);
 
-        Checkspec checkspec = service.addCheckSpec("Name","100", 100.0, "100");
+        Checkspec checkspec = service.addCheckSpec("Name", "100", 100.0, "100");
 
         assertThat(checkspec, nullValue());
     }
@@ -239,7 +239,7 @@ public class CheckServiceImplTest {
         when(goodsDao.findGoods(anyString())).thenReturn(Optional.ofNullable(GOODS_ENTITY));
         when(goodMapper.goodEntityToGood(any(GoodsEntity.class))).thenReturn(GOOD);
 
-        Checkspec actual = service.addCheckSpec("Name","100", 100.0, "100");
+        Checkspec actual = service.addCheckSpec("Name", "100", 100.0, "100");
 
         Checkspec checkspec = new Checkspec();
         checkspec.setQuant(100.0);

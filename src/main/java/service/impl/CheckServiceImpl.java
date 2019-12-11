@@ -49,7 +49,7 @@ public class CheckServiceImpl implements CheckService {
     public Checkspec addCheckSpec(String name, String code, Double quant, String nds) {
         if (Objects.isNull(nds) || Integer.valueOf(nds) < 0 || Integer.valueOf(nds) > 100
                 || quant < 0 || quant > 100000) {
-            LOGGER.error("Data of checkspec is uncorrected");
+            LOGGER.warn("Data of checkspec is uncorrected");
             throw new InvalidDataRuntimeException("Data of checkspec is uncorrect");
         }
 

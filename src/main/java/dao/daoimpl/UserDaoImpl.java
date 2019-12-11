@@ -33,7 +33,7 @@ public class UserDaoImpl extends AbstractGenericDao<UserEntity> implements UserD
             statement.setString(3, user.getName());
             statement.setLong(4, user.getIdUserType());
         } catch (SQLException e) {
-            LOGGER.error("Not insert user in db", e);
+            LOGGER.warn("Not insert user in db", e);
             throw new DatabaseRuntimeException("Not insert user in db", e);
         }
     }
@@ -44,7 +44,7 @@ public class UserDaoImpl extends AbstractGenericDao<UserEntity> implements UserD
         try {
             statement.setLong(5, user.getId());
         } catch (SQLException e) {
-            LOGGER.error("Not update user in db", e);
+            LOGGER.warn("Not update user in db", e);
             throw new DatabaseRuntimeException("Not update user in db", e);
         }
     }
@@ -59,7 +59,7 @@ public class UserDaoImpl extends AbstractGenericDao<UserEntity> implements UserD
             user.setIdUserType(resultSet.getLong("id_user_type"));
             user.setName(resultSet.getString("name"));
         } catch (SQLException e) {
-            LOGGER.error("Not find user in db", e);
+            LOGGER.warn("Not find user in db", e);
             throw new DatabaseRuntimeException("Not find user in db", e);
         }
 
@@ -103,7 +103,7 @@ public class UserDaoImpl extends AbstractGenericDao<UserEntity> implements UserD
                 return Optional.of(user);
             }
         } catch (SQLException e) {
-            LOGGER.error("Not find user in db", e);
+            LOGGER.warn("Not find user in db", e);
             throw new DatabaseRuntimeException("Not find user in db", e);
         }
         return null;
